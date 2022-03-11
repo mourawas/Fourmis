@@ -4,11 +4,10 @@
 using namespace std;
 
 class Grille {
-	private:
+private:
 	vector<vector<bool>> grid;
 	const int g_max
-	public:
-	Grille(int g_max_);
-	:g_max (g_max_) {}
-	
+public:
+	Grille(int g_max_) : g_max(g_max_) {}
+}
 	
