@@ -2,7 +2,7 @@
 
 CXX     = g++
 CXXFLAGS = -g -Wall -std=c++11
-CXXFILES = squarecell.cc error_squarecell.cc
+CXXFILES = squarecell.cc error_squarecell.cc prog.cc simulation.cc
 OFILES = $(CXXFILES:.cc=.o)
 
 # Definition de la premiere regle
@@ -30,4 +30,5 @@ clean:
 # DO NOT DELETE THIS LINE
 squarecell.o: squarecell.cc squarecell.h error_squarecell.h
 error_squarecell.o: error_squarecell.cc error_squarecell.h
-
+prog.o: prog.cc simulation.h squarecell.h
+simulation.o: simulation.cc simulation.h
