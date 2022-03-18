@@ -4,24 +4,27 @@
 using namespace std;
 
 struct Point {
-    unsigned int x, y;
+    unsigned int x;
+    unsigned int y;
 };
 
-void initialiseGrille(vector<vector<bool>>& grille, const unsigned int& g_max);
+void initialiseGrille(vector<vector<bool> > & grille, const unsigned int& g_max);
+ 
+void initialiseCarre(vector<vector<bool> > & grille, Point& p, unsigned int& dim);
 
-void initialiseCarre(vector<vector<bool>>& grille, Point& p, unsigned int& dim);
+void supprimerCarre(vector<vector<bool> > & grille, Point& p, unsigned int& dim);
 
-void supprimerCarre(vector<vector<bool>>& grille, Point& p, unsigned int& dim);
+bool superposition(vector<vector<bool> > & grille, Point& p1, Point& p2, unsigned int& dim1, unsigned int& dim2, const unsigned int& g_max);
 
-bool superposition(vector<vector<bool>>& grille, Point& p1, Point& p2, unsigned int& dim1, unsigned int& dim2, const unsigned int& g_max);
-
-void testCarre(vector<vector<bool>>& grille, Point& p, unsigned int& dim, const unsigned int& g_max);
+void testCarre(vector<vector<bool> > & grille, Point& p, unsigned int& dim, const unsigned int& g_max);
 
 int main()
 {
     const unsigned int g_max = 100;
-    vector<vector<bool>> grille;
-    Point p1{ 110, 5 }, p2{ 10, 10 };
+    vector<vector<bool> > grille;
+    
+    Point p1 = { 5, 5 };
+    Point p2 = { 10, 10 };
 
     unsigned int dim1 = 6, dim2 = 5;
 
@@ -43,7 +46,7 @@ int main()
     cout << grille[12][12] << endl;
 }
 
-void initialiseGrille(vector<vector<bool>>& grille, const unsigned int& g_max) {
+void initialiseGrille(vector<vector<bool> > & grille, const unsigned int& g_max) {
     for (size_t i = 0; i < g_max; ++i) {
         grille.push_back(vector<bool>());
         for (size_t j = 0; j < g_max; ++j) {
@@ -52,7 +55,7 @@ void initialiseGrille(vector<vector<bool>>& grille, const unsigned int& g_max) {
     }
 }
 
-void testCarre(vector<vector<bool>>& grille, Point& p, unsigned int& dim, const unsigned int& g_max) {
+void testCarre(vector<vector<bool> > & grille, Point& p, unsigned int& dim, const unsigned int& g_max) {
     bool erreur = false;
     if (p.x > g_max - 1) {
         erreur = true;
@@ -72,7 +75,7 @@ void testCarre(vector<vector<bool>>& grille, Point& p, unsigned int& dim, const 
     }
 }
 
-void initialiseCarre(vector<vector<bool>>& grille, Point& p, unsigned int& dim) {
+void initialiseCarre(vector<vector<bool> > & grille, Point& p, unsigned int& dim) {
     for (size_t i = p.x; i <= p.x + dim; i++) {
         for (size_t j = p.y; j <= p.y + dim; j++) {
             grille[i][j] = true;
@@ -80,7 +83,7 @@ void initialiseCarre(vector<vector<bool>>& grille, Point& p, unsigned int& dim) 
     }
 }
 
-bool superposition(vector<vector<bool>>& grille, Point& p1, Point& p2, unsigned int& dim1, unsigned int& dim2, const unsigned int& g_max) {
+bool superposition(vector<vector<bool> > & grille, Point& p1, Point& p2, unsigned int& dim1, unsigned int& dim2, const unsigned int& g_max) {
     unsigned int compteur = 0;
     for (size_t i = 0; i < (g_max - 1); ++i) {
         for (size_t j = 0; j < (g_max - 1); ++j) {
@@ -95,7 +98,7 @@ bool superposition(vector<vector<bool>>& grille, Point& p1, Point& p2, unsigned 
     return false;
 }
 
-void supprimerCarre(vector<vector<bool>>& grille, Point& p, unsigned int& dim) {
+void supprimerCarre(vector<vector<bool> > & grille, Point& p, unsigned int& dim) {
     for (size_t i = p.x; i <= p.x + dim; i++) {
         for (size_t j = p.y; j <= p.y + dim; j++) {
             grille[i][j] = false;
