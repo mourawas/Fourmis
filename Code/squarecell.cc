@@ -57,16 +57,16 @@ void initialiseGrille(vector<vector<bool> > & grille, const unsigned int& g_max)
 
 void testCarre(vector<vector<bool> > & grille, Point& p, unsigned int& dim, const unsigned int& g_max) {
     bool erreur = false;
-    if (p.x > g_max - 1) {
+    if (p.x > (g_max - 1)) {
         erreur = true;
     }
-    else if (p.y > g_max - 1) {
+    else if (p.y > (g_max - 1)) {
         erreur = true;
     }
-    else if ((p.x + dim) > g_max - 1) {
+    else if ((p.x + dim) > (g_max - 1)) {
         erreur = true;
     }
-    else if ((p.y + dim) > g_max - 1) {
+    else if ((p.y + dim) > (g_max - 1)) {
         erreur = true;
     }
     if (erreur) {
