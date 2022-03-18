@@ -21,13 +21,13 @@ int main()
 {
     const unsigned int g_max = 100;
     vector<vector<bool>> grille;
-    Point p1{ 5, 5 }, p2{ 10, 10 };
+    Point p1{ 110, 5 }, p2{ 10, 10 };
 
     unsigned int dim1 = 6, dim2 = 5;
 
     initialiseGrille(grille, g_max);
     testCarre(grille, p1, dim1, g_max);
-    testCarre(grille, p1, dim1, g_max);
+    testCarre(grille, p2, dim2, g_max);
     initialiseCarre(grille, p1, dim1);
     initialiseCarre(grille, p2, dim2);
     bool sup = superposition(grille, p1, p2, dim1, dim2, g_max);
@@ -68,7 +68,7 @@ void testCarre(vector<vector<bool>>& grille, Point& p, unsigned int& dim, const 
     }
     if (erreur) {
         cout << "ERREUR" << endl;
-        //exit(0);
+        exit(0);
     }
 }
 
