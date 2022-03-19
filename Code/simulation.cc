@@ -27,4 +27,118 @@ void lecture(char * nom_fichier)
 
 void decodage_ligne(string line){
 	
+	enum Etat_lecture {nbN, Nourriture, nbF, Fourmiliere, Col, Def, Pro, Fini};
+	
+	istringstream data(line);
+	
+	static int etat = nbN;
+	static int count = 0, countC = 0, countD = 0, countP = 0, total = 0, countF = 0;
+	int x1, y1, age, x, y, side, total_food, nbC, nbD, nbP, totF;
+	bool food = false;
+	
+	switch(etat)
+	{
+	case nbN:
+		data >> total;
+		count = 0;
+		if(total == 0){
+			etat = nbF;
+		}else {
+			etat = Nourriture;
+		}
+		//Mettre dans une classe
+		cout << "Nombre nourriture : " << total << endl;
+		break;
+		
+	case Nourriture:
+		data >> x1 >> y1;
+		++count;
+		if(count == total){
+			etat = nbF;
+		}
+		//Mettre dans une classe
+		cout << "Nourriture " << count << " : " << x1 << " " << y1 << endl;
+		break;
+		
+	case nbF:
+		data >> totF;
+		if(totF == 0){
+			etat = Fini;
+		}else{
+			etat = Fourmiliere;
+		}
+		//Mettre dans une classe
+		break;
+		
+	case Fourmiliere:
+		if(countF == totF){
+			etat = Fini;
+			break;
+		}
+		data >> x >> y >> side >> x1 >> y1 >> total_food >> nbC >> nbD >> nbP;
+		//Mettre dans une classe
+		//Une fois que countC = nbC, on passe a Def
+		//Quand Pro est fini, si encore fourmiliere on revient ici
+		
+		cout << "Fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << x1 << " " << y1 << " " << total_food << " " << nbC << " " << nbD << " " << nbP << endl;
+		
+		etat = Col;
+		countC = 0, countD = 0, countP = 0;
+		break;
+		
+	case Col:
+		if(nbC == 0){
+			etat = Def;
+			break;
+		}
+		++countC;
+		data >> x1 >> y1 >> age >> food;
+		if(countC == nbC){
+			etat = Def;
+		}
+		//Mettre dans une classe
+		cout << "Collector " << countC << " : " <<  x1 << " " << y1 << " " << age << " " << food << endl;
+		break;
+		
+	case Def:
+		if(nbD == 0){
+			etat = Pro;
+			break;
+		}
+		++countD;
+		data >> x1 >> y1 >> age;
+		if(countD == nbD){
+			etat = Pro;
+		}
+		//Mettre dans une classe
+		cout << "Defensor " << countD << " : " <<  x1 << " " << y1 << " " << age << endl;
+		break;
+
+	case Pro:
+		if(nbP == 0){
+			etat = Fourmiliere;
+			++countF;
+			break;
+		}
+		++countP;
+		data >> x1 >> y1 >> age;
+		
+		if(countP == nbP){
+			etat = Fourmiliere;
+		}
+		//Mettre dans une classe
+		cout << "Protector " << countP << " : " <<  x1 << " " << y1 << " " << age << endl;
+		
+		break;
+	
+	case Fini:
+		cout << "Fini" << endl;
+		exit(0);
+	}
 }
+
+
+
+
+
+

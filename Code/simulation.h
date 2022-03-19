@@ -1,3 +1,5 @@
+#include <string>
+
 void lecture(char* nom_fichier);
 
-void decodage_ligne(string line);
+void decodage_ligne(std::string line);
