@@ -34,7 +34,8 @@ void decodage_ligne(string line){
 	static int etat = nbN;
 	static int count = 0, countC = 0, countD = 0, countP = 0, total = 0, countF = 0;
 	int x1, y1, age, x, y, side, total_food, nbC, nbD, nbP, totF;
-	bool food = false;
+	bool foodb;
+	string foods;
 	
 	switch(etat)
 	{
@@ -82,8 +83,19 @@ void decodage_ligne(string line){
 		
 		cout << "Fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << x1 << " " << y1 << " " << total_food << " " << nbC << " " << nbD << " " << nbP << endl;
 		
-		etat = Col;
+		if(nbC) {
+			etat = Col;
+		}else if(nbD) {
+			etat = Def;
+		}else if(nbP) {
+			etat = Pro;
+		}else {
+			++countF;
+			etat = Fourmiliere;
+		}
+			
 		countC = 0, countD = 0, countP = 0;
+		//cout << nbP << endl;
 		break;
 		
 	case Col:
@@ -91,13 +103,20 @@ void decodage_ligne(string line){
 			etat = Def;
 			break;
 		}
+		//on arrive pas ici 2e fourmil
 		++countC;
-		data >> x1 >> y1 >> age >> food;
+		data >> x1 >> y1 >> age >> foods;
 		if(countC == nbC){
 			etat = Def;
 		}
+		if(foods == "true"){
+			foodb = 1;
+		}else{
+			foodb = 0;
+		}
+		
 		//Mettre dans une classe
-		cout << "Collector " << countC << " : " <<  x1 << " " << y1 << " " << age << " " << food << endl;
+		cout << "Collector " << countC << " : " <<  x1 << " " << y1 << " " << age << " " << foodb << endl;
 		break;
 		
 	case Def:
@@ -129,11 +148,13 @@ void decodage_ligne(string line){
 		//Mettre dans une classe
 		cout << "Protector " << countP << " : " <<  x1 << " " << y1 << " " << age << endl;
 		
+		++countF;
+		
 		break;
 	
 	case Fini:
 		cout << "Fini" << endl;
-		exit(0);
+		break;
 	}
 }
 
