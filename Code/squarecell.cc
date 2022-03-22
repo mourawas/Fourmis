@@ -13,35 +13,35 @@ void initialiseGrille(vector<vector<bool> > & grille, const unsigned int& g_max)
     }
 }
 
-void testCarre(vector<vector<bool> > & grille, Point& p, unsigned int& dim, const unsigned int& g_max) {
+void testCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_max) {
 	    
-    if (p.x > (g_max)) {
-        cout << error_squarecell::print_index(p.x, g_max-1) << endl;
+    if (c.p.x > (g_max)) {
+        cout << error_squarecell::print_index(c.p.x, g_max-1) << endl;
         exit(EXIT_FAILURE);
     }
-    else if (p.y > (g_max)) {
-        cout << error_squarecell::print_index(p.x, g_max-1) << endl;
+    else if (c.p.y > (g_max)) {
+        cout << error_squarecell::print_index(c.p.x, g_max-1) << endl;
         exit(EXIT_FAILURE);
     }
-    else if ((p.x + dim) > (g_max)) {
-        cout << error_squarecell::print_outside(p.x, dim, g_max-1) << endl;
+    else if ((c.p.x + c.dim) > (g_max)) {
+        cout << error_squarecell::print_outside(c.p.x, c.dim, g_max-1) << endl;
         exit(EXIT_FAILURE);
     }
-    else if ((p.y + dim) > (g_max)) {
-        cout << error_squarecell::print_outside(p.y, dim, g_max-1) << endl;
+    else if ((c.p.y + c.dim) > (g_max)) {
+        cout << error_squarecell::print_outside(c.p.y, c.dim, g_max-1) << endl;
         exit(EXIT_FAILURE);
     }
 }
 
-void initialiseCarre(vector<vector<bool> > & grille, Point& p, unsigned int& dim, const unsigned int& g_max) {
-    for (size_t i = p.y; i <p.y + dim; ++i) {
-        for (size_t j = p.x; j < p.x + dim; ++j) {
+void initialiseCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_max) {
+    for (size_t i = c.p.y; i <c.p.y + c.dim; ++i) {
+        for (size_t j = c.p.x; j < c.p.x + c.dim; ++j) {
             grille[g_max-1-i][j] = true;
         }
     }
 }
 
-bool superposition(vector<vector<bool> > & grille, Point& p1, Point& p2, unsigned int& dim1, unsigned int& dim2, const unsigned int& g_max) {
+bool superposition(vector<vector<bool> > & grille, Carre& c1, Carre& c2, const unsigned int& g_max) {
     unsigned int compteur = 0;
     for (size_t i = 0; i < g_max; ++i) {
         for (size_t j = 0; j < g_max; ++j) {
@@ -50,15 +50,15 @@ bool superposition(vector<vector<bool> > & grille, Point& p1, Point& p2, unsigne
             }
         }
     }
-    if (compteur != ((dim1 * dim1) + (dim2 * dim2))) {
+    if (compteur != ((c1.dim * c1.dim) + (c2.dim * c2.dim))) {
         return true;
     }
     return false;
 }
 
-void supprimerCarre(vector<vector<bool> > & grille, Point& p, unsigned int& dim, const unsigned int& g_max) {
-    for (size_t i = p.y; i <p.y + dim; ++i) {
-        for (size_t j = p.x; j < p.x + dim; ++j) {
+void supprimerCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_max) {
+    for (size_t i = c.p.y; i < c.p.y + c.dim; ++i) {
+        for (size_t j = c.p.x; j < c.p.x + c.dim; ++j) {
             grille[g_max-1-i][j] = false;
         }
     }
