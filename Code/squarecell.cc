@@ -41,6 +41,11 @@ void initialiseCarre(vector<vector<bool> > & grille, Carre& c, const unsigned in
     }
 }
 
+Carre creeCarre (unsigned int& x,unsigned int& y, unsigned& dim)
+{
+    Carre c = {{x,y},dim};
+}
+
 bool superposition(vector<vector<bool> > & grille, Carre& c1, Carre& c2, const unsigned int& g_max) {
     unsigned int compteur = 0;
     for (size_t i = 0; i < g_max; ++i) {

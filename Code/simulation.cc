@@ -77,6 +77,7 @@ void decodage_ligne(string line){
 			break;
 		}
 		data >> x >> y >> side >> x1 >> y1 >> total_food >> nbC >> nbD >> nbP;
+            
 		//Mettre dans une classe
 		//Une fois que countC = nbC, on passe a Def
 		//Quand Pro est fini, si encore fourmiliere on revient ici
