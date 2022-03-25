@@ -1,4 +1,7 @@
 #include "simulation.h"
+#include "squarecell.h"
+#include "nourriture.h"
+#include "fourmiliere.h"
 #include <cstdlib>
 #include <string>
 #include <iostream>
