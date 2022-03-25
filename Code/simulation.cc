@@ -81,7 +81,7 @@ void decodage_ligne(string line){
 		//Mettre dans une classe
 		//Une fois que countC = nbC, on passe a Def
 		//Quand Pro est fini, si encore fourmiliere on revient ici
-        pushback(x,y,side,x1,y1,total_food,nbC,nbD,nbP);
+        //pushbackf(x,y,side,x1,y1,total_food,nbC,nbD,nbP);
             
 		cout << "Fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << x1 << " " << y1 << " " << total_food << " " << nbC << " " << nbD << " " << nbP << endl;
 		

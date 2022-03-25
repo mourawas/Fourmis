@@ -9,8 +9,8 @@ int main(int argc, char * argv[])
 		exit(0);
 	}
 	
-	lecture(argv[1]);
-	*/
+	lecture(argv[1]);*/
+	
 	
 	const unsigned int g_max = 10;
     vector<vector<bool> > grille;
@@ -20,6 +20,8 @@ int main(int argc, char * argv[])
     Carre c1 = {{ 5, 5 }, 2};
     Carre c2 = {{ 7, 7 }, 3};
     Carre c3 = {{4, 4}, 2};
+    
+    
     
     /*E_c_i.push_pack(c1);
     E_c_i.push_pack(c2);

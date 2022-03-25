@@ -41,9 +41,10 @@ void initialiseCarre(vector<vector<bool> > & grille, Carre& c, const unsigned in
     }
 }
 
-Carre creeCarre (unsigned int& x,unsigned int& y, unsigned& dim)
+Carre creeCarre(unsigned int& x,unsigned int& y, unsigned int& dim)
 {
-    Carre c = {{x,y},dim};
+	Carre c = {{x,y},dim};
+    return c;
 }
 
 bool superposition(vector<vector<bool> > & grille, Carre& c1, Carre& c2, const unsigned int& g_max) {
@@ -83,18 +84,17 @@ void afficheGrille(vector<vector<bool> > & grille){
 	}
 }
 
-bool multisuperposition ( vector <Carre> v)
+bool multisuperposition (vector <Carre>& v, vector<vector<bool> >& grille, const unsigned int& g_max)
 {
-    bool t=0;
-    for (size_t i(0), i<v.size();++i){
-        for (size_t j(i+1),j< v.size();++j){
-            if(superposition(grille,v[i],v[j])){
-                cout << i<<"eme carré se superpose avec le "<< j<< "eme
-                carré"<< endl;
+    bool t = 0;
+    for (size_t i(0); i < v.size(); ++i){
+        for (size_t j(i+1); j < v.size(); ++j){
+            if(superposition(grille, v[i], v[j], g_max)){
+                cout << i<< "eme carré se superpose avec le " << j << "eme carré" << endl;
             }else
             {
                 cout << "pas de superposition"<< endl;
-                t=1
+                t = 1;
             }
         }
     }

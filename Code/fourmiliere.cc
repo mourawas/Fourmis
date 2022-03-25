@@ -1,32 +1,19 @@
 #include <iostream>
 #include "squarecell.h"
 #include "fourmis.h"
-#include "nouriture.h"
-#include "foumiliere.h"
+#include "nourriture.h"
+#include "fourmiliere.h"
  
-
-void pushbackF (unsigned x, unsigned y, unsigned side , unsigned x1, unsigned y1, unsigned total_food, unsigned nbC, unsigned nbD, unsigned nbP)
+void pushbackF (unsigned int& x, unsigned int& y, unsigned int& side , unsigned int& x1, unsigned int& y1, unsigned int& total_food, unsigned int& nbC, unsigned int& nbD, unsigned int& nbP)
 {
-     c=creeCarre (x,y,side);
-     g=creeCarre (x1,y1,1);
+	
+	unsigned int a = 3;
+	Carre c;
+	Carre g;
+    c = creeCarre(x,y,side);
+    g = creeCarre(x1,y1,a);
      
-     Fourmiliere (c,g);
-     vectF.push_back(F);
+    Fourmiliere fourmiliere (c,g, nbC, nbD, nbP, total_food);
+    
+    vectF.push_back(fourmiliere);
  }
-bool multisuperposition ( vector <Fourmiliere> v)
-{
-    bool t=0;
-    for (size_t i(0), i<v.size();++i){
-        for (size_t j(i+1),j< v.size();++j){
-            if ( superposition(grille,tab[i].getcarre(),tab[j].getcarre())){
-                cout << i<<"eme carré se superpose avec le "<< j<< "eme carré"<< endl;
-            }
-            else
-            {
-                cout << "pas de superposition"<< endl;
-                t=1
-            }
-        }
-    }
-    return t;
-}
