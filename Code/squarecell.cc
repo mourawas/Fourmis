@@ -84,19 +84,15 @@ void afficheGrille(vector<vector<bool> > & grille){
 	}
 }
 
-bool multisuperposition (vector <Carre>& v, vector<vector<bool> >& grille, const unsigned int& g_max)
+bool multisuperposition ( vector <Carre>& v,vector < vector<bool> >& grid, const unsigned int& g_max)
 {
-    bool t = 0;
     for (size_t i(0); i < v.size(); ++i){
-        for (size_t j(i+1); j < v.size(); ++j){
-            if(superposition(grille, v[i], v[j], g_max)){
-                cout << i<< "eme carré se superpose avec le " << j << "eme carré" << endl;
-            }else
-            {
-                cout << "pas de superposition"<< endl;
-                t = 1;
+        for (size_t j(i+1);j < v.size(); ++j){
+            if(superposition(grid, v[i], v[j], g_max) == 0){
+                cout << "passage"<< endl;
+                return true;
             }
         }
     }
-    return t;
+    return false;
 }
