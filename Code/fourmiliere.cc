@@ -13,17 +13,20 @@ void pushbackF (unsigned x, unsigned y, unsigned side , unsigned x1, unsigned y1
      Fourmiliere (c,g);
      vectF.push_back(F);
  }
-void multisuperposition ( vector <Fourmiliere> v)
+bool multisuperposition ( vector <Fourmiliere> v)
 {
+    bool t=0;
     for (size_t i(0), i<v.size();++i){
         for (size_t j(i+1),j< v.size();++j){
-            if ( superposition(grille,tab[i].setcarre(),tab[j].setcarre())){
+            if ( superposition(grille,tab[i].getcarre(),tab[j].getcarre())){
                 cout << i<<"eme carré se superpose avec le "<< j<< "eme carré"<< endl;
             }
             else
             {
                 cout << "pas de superposition"<< endl;
+                t=1
             }
         }
     }
+    return t;
 }

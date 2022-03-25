@@ -15,7 +15,7 @@ public:
     Fourmiliere (Carre f, Carre g, unsigned nbC, unsigned nbD, unsigned nbP,unsigned total_food)
     : f(f), g(g), nbD(nbD),nbP(nbP), total_food (total_food),nbC (nbC)
     {}
-    Carre setcarref () const
+    Carre getcarref () const
     {
         return f;
     }

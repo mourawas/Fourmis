@@ -25,3 +25,5 @@ void testCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_m
 void afficheGrille(vector<vector<bool> > & grille);
 
 Carre creeCarre (unsigned int& x,unsigned int& y, unsigned& dim);
+
+void multisuperposition ( vector <Carre> v);
