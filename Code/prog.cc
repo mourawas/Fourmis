@@ -17,8 +17,8 @@ int main(int argc, char * argv[])
     vector<Carre> E_c_f;
     vector<Carre> E_c_i;
     
-    Carre c1 = {{ 5, 5 }, 2};
-    Carre c2 = {{ 7, 7 }, 3};
+    Carre c1 = {5, 5, 2};
+    Carre c2 = {7, 7, 3};
     
     /*E_c_i.push_pack(c1);
     E_c_i.push_pack(c2);

@@ -163,9 +163,3 @@ void decodage_ligne(string line){
 		break;
 	}
 }
-
-
-
-
-
-

@@ -1,13 +1,9 @@
 #include <vector>
 using namespace std;
 
-struct Point {
-    unsigned int x;
-    unsigned int y;
-};
-
 struct Carre {
-	Point p;
+	unsigned int x;
+	unsigned int y;
 	unsigned int dim;
 };
 
@@ -24,5 +20,7 @@ void testCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_m
 void afficheGrille(vector<vector<bool> > & grille);
 
 Carre creeCarre(unsigned int& x, unsigned int& y, unsigned int& dim);
+
+void vectCarre(vector<Carre>& vcarre, Carre c);
 
 bool multisuperposition (vector <Carre>& v, vector<vector<bool> >& grille, const unsigned int& g_max);

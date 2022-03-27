@@ -15,27 +15,27 @@ void initialiseGrille(vector<vector<bool> > & grille, const unsigned int& g_max)
 
 void testCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_max) {
 	    
-    if (c.p.x > (g_max)) {
-        cout << error_squarecell::print_index(c.p.x, g_max-1) << endl;
+    if (c.x > (g_max)) {
+        cout << error_squarecell::print_index(c.x, g_max-1) << endl;
         exit(EXIT_FAILURE);
     }
-    else if (c.p.y > (g_max)) {
-        cout << error_squarecell::print_index(c.p.x, g_max-1) << endl;
+    else if (c.y > (g_max)) {
+        cout << error_squarecell::print_index(c.x, g_max-1) << endl;
         exit(EXIT_FAILURE);
     }
-    else if ((c.p.x + c.dim) > (g_max)) {
-        cout << error_squarecell::print_outside(c.p.x, c.dim, g_max-1) << endl;
+    else if ((c.x + c.dim) > (g_max)) {
+        cout << error_squarecell::print_outside(c.x, c.dim, g_max-1) << endl;
         exit(EXIT_FAILURE);
     }
-    else if ((c.p.y + c.dim) > (g_max)) {
-        cout << error_squarecell::print_outside(c.p.y, c.dim, g_max-1) << endl;
+    else if ((c.y + c.dim) > (g_max)) {
+        cout << error_squarecell::print_outside(c.y, c.dim, g_max-1) << endl;
         exit(EXIT_FAILURE);
     }
 }
 
 void initialiseCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_max) {
-    for (size_t i = c.p.y; i <c.p.y + c.dim; ++i) {
-        for (size_t j = c.p.x; j < c.p.x + c.dim; ++j) {
+    for (size_t i = c.y; i < c.y + c.dim; ++i) {
+        for (size_t j = c.x; j < c.x + c.dim; ++j) {
             grille[g_max-1-i][j] = true;
         }
     }
@@ -43,8 +43,13 @@ void initialiseCarre(vector<vector<bool> > & grille, Carre& c, const unsigned in
 
 Carre creeCarre(unsigned int& x,unsigned int& y, unsigned int& dim)
 {
-	Carre c = {{x,y},dim};
+	Carre c = {x, y, dim};
     return c;
+}
+
+void vectCarre(vector<Carre>& vcarre, Carre c)
+{	
+	vcarre.push_back(c);
 }
 
 bool superposition(vector<vector<bool> > & grille, Carre& c1, Carre& c2, const unsigned int& g_max) {
@@ -63,8 +68,8 @@ bool superposition(vector<vector<bool> > & grille, Carre& c1, Carre& c2, const u
 }
 
 void supprimerCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_max) {
-    for (size_t i = c.p.y; i < c.p.y + c.dim; ++i) {
-        for (size_t j = c.p.x; j < c.p.x + c.dim; ++j) {
+    for (size_t i = c.y; i < c.y + c.dim; ++i) {
+        for (size_t j = c.x; j < c.x + c.dim; ++j) {
             grille[g_max-1-i][j] = false;
         }
     }
@@ -84,7 +89,7 @@ void afficheGrille(vector<vector<bool> > & grille){
 	}
 }
 
-bool multisuperposition ( vector <Carre>& v,vector < vector<bool> >& grid, const unsigned int& g_max)
+/*bool multisuperposition ( vector <Carre>& v,vector < vector<bool> >& grille, const unsigned int& g_max)
 {
     for (size_t i(0); i < v.size(); ++i){
         for (size_t j(i+1);j < v.size(); ++j){
@@ -95,4 +100,14 @@ bool multisuperposition ( vector <Carre>& v,vector < vector<bool> >& grid, const
         }
     }
     return false;
+}*/
+
+//Tester les éléments dans l'ordre qu'ils sont lus (pas à faire ici)
+//Si deux elements se superposent, pas grave pour rendu 1
+
+bool multisuperposition(vector<Carre>& v, vector<vector<bool> > grille, const unsigned int& g_max)
+{
+	
+	
+	
 }
