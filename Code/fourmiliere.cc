@@ -5,7 +5,7 @@
 #include "fourmiliere.h"
 #include "message.h"
 
-vector < Fourmiliaire > pushbackF (unsigned int& x, unsigned int& y, unsigned int& side , unsigned int& x1, unsigned int& y1, unsigned int& total_food, unsigned int& nbC, unsigned int& nbD, unsigned int& nbP)
+vector < Fourmiliere > pushbackF (unsigned int& x, unsigned int& y, unsigned int& side , unsigned int& x1, unsigned int& y1, unsigned int& total_food, unsigned int& nbC, unsigned int& nbD, unsigned int& nbP)
 {
 	
 	unsigned int a = 3;

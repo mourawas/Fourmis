@@ -24,3 +24,7 @@ Carre creeCarre(unsigned int& x, unsigned int& y, unsigned int& dim);
 void vectCarre(vector<Carre>& vcarre, Carre c);
 
 bool multisuperposition (vector <Carre>& v, vector<vector<bool> >& grille, const unsigned int& g_max);
+
+void initialise_Carre_centre ( vector<vector<bool> >& grille, Carre c, unsigned int g_max);
+
+bool Carre_dans_Carre (Carre& c1, Carre& c2, vector< vector< bool> >& grid,unsigned int g_max);
