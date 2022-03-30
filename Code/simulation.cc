@@ -42,6 +42,7 @@ void decodage_ligne(string line){
 	
 	switch(etat)
 	{
+            
 	case nbN:
 		data >> total;
 		count = 0;
@@ -80,11 +81,17 @@ void decodage_ligne(string line){
 			break;
 		}
 		data >> x >> y >> side >> x1 >> y1 >> total_food >> nbC >> nbD >> nbP;
-            
-		//Mettre dans une classe
-		//Une fois que countC = nbC, on passe a Def
-		//Quand Pro est fini, si encore fourmiliere on revient ici
+        creeCarre cF (x,y,side);
+        creeCarre cf (x,y,size_G);
+        Fourmiliere fourmiliere (cF,cf,total_food,nbC,nbD,nbP);
+        if (Fourmiliere.verification(grille,fourmiliere,vectF){
+            vectF.pushback(fourmiliere);
+        };
+		// Mettre dans une classe
+		// Une fois que countC = nbC, on passe a Def
+		// Quand Pro est fini, si encore fourmiliere on revient ici
         //pushbckackF(x,y,side,x1,y1,total_food,nbC,nbD,nbP);
+        
          
             
 		cout << "Fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << x1 << " " << y1 << " " << total_food << " " << nbC << " " << nbD << " " << nbP << endl;
@@ -163,3 +170,26 @@ void decodage_ligne(string line){
 		break;
 	}
 }
+/*vector < Fourmiliere > pushbackF (unsigned int& x, unsigned int& y, unsigned int& side , unsigned int& x1, unsigned int& y1, unsigned int& total_food, unsigned int& nbC, unsigned int& nbD, unsigned int& nbP)
+{
+    
+    unsigned int a = 3;
+    Carre c;
+    Carre g;
+    c = creeCarre(x,y,side);
+    g = creeCarre(x1,y1,a);
+     
+    Fourmiliere fourmiliere (c,g, nbC, nbD, nbP, total_food);
+    
+    vectF.push_back(fourmiliere);
+    return vectF;
+ }
+vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
+{
+    vector < Carre > vectC;
+    for (size_t i(0); i < vectF.size(); ++i)
+    {
+        vectC.push_back(vectF[i].getcarref());
+    }
+    return vectC;
+}*/

@@ -5,7 +5,7 @@
 #include "fourmiliere.h"
 #include "message.h"
 
-vector < Fourmiliere > pushbackF (unsigned int& x, unsigned int& y, unsigned int& side , unsigned int& x1, unsigned int& y1, unsigned int& total_food, unsigned int& nbC, unsigned int& nbD, unsigned int& nbP)
+/*vector < Fourmiliere > pushbackF (unsigned int& x, unsigned int& y, unsigned int& side , unsigned int& x1, unsigned int& y1, unsigned int& total_food, unsigned int& nbC, unsigned int& nbD, unsigned int& nbP)
 {
 	
 	unsigned int a = 3;
@@ -19,8 +19,8 @@ vector < Fourmiliere > pushbackF (unsigned int& x, unsigned int& y, unsigned int
     vectF.push_back(fourmiliere);
     return vectF;
  }
-
-vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
+*/
+/*vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
 {
     vector < Carre > vectC;
     for (size_t i(0); i < vectF.size(); ++i)
@@ -29,3 +29,4 @@ vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
     }
     return vectC;
 }
+*/
