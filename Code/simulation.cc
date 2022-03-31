@@ -174,10 +174,8 @@ void decodage_ligne(string line){
 		break;
 	}
             
-
 }
             
-void kb9 (vector<Fourmiliere>)
 /*vector < Fourmiliere > pushbackF (unsigned int& x, unsigned int& y, unsigned int& side , unsigned int& x1, unsigned int& y1, unsigned int& total_food, unsigned int& nbC, unsigned int& nbD, unsigned int& nbP)
 {
     

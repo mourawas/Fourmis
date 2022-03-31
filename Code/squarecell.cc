@@ -52,7 +52,7 @@ void vectCarre(vector<Carre>& vcarre, Carre c)
 	vcarre.push_back(c);
 }
 
-bool superposition(vector<vector<bool> > & grille, Carre& c1, Carre& c2, const unsigned int& g_max) {
+bool superposition(vector<vector<bool> >& grille, Carre& c1, Carre& c2, const unsigned int& g_max) {
     unsigned int compteur = 0;
     for (size_t i = 0; i < g_max; ++i) {
         for (size_t j = 0; j < g_max; ++j) {
@@ -111,10 +111,11 @@ bool multisuperposition(vector<Carre>& v, vector<vector<bool> > grille, const un
 	
 	
 }
-bool Carre_dans_Carre (Carre& c1, Carre& c2, vector< vector< bool> >& grille,unsigned int g_max){
+
+/*bool Carre_dans_Carre(Carre& c1, Carre& c2, vector< vector< bool> >& grille, const unsigned int& g_max) {
     bool t;
     if (c2.dim > c1.dim){
-        t=true;
+        t = true;
         return t;
     }
     unsigned int compteur = 0;
@@ -129,15 +130,13 @@ bool Carre_dans_Carre (Carre& c1, Carre& c2, vector< vector< bool> >& grille,uns
         t=true;
     }
     return false;
-}
-
-// creer une fonction qui permet d'initialiser un carre avec un systheme de coordonée centré.
+}*/
 
 void initialise_Carre_centre ( vector<vector<bool> >& grille, Carre c, unsigned int g_max)
 {
-    unsigned int t = (c.p.x - c.dim%2);
+    unsigned int t = (c.x - c.dim%2);
     cout << t << endl;
-    unsigned int k = (c.p.y - c.dim%2);
+    unsigned int k = (c.y - c.dim%2);
     cout << k << endl;
     Carre nc = creeCarre ( t,k,c.dim);
     initialiseCarre ( grille,nc, g_max);

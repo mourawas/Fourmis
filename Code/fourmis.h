@@ -19,6 +19,8 @@ public:
         return age;
     }
     
+
+
 };
 
 vector < Fourmis > vectFourmis;

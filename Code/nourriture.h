@@ -1,8 +1,7 @@
 #include "constantes.h"
 using namespace std;
 
-vector<Carre> temp;				//en 1er vérification
-vector<Carre> vnourriture;		//en 2e
+vector<Carre> vnourriture;
 
 class Nourriture{
 	private:
