@@ -9,6 +9,7 @@
 #include <sstream>
 using namespace std;
 
+
 void lecture(char * nom_fichier)
 {
     string line;
@@ -86,11 +87,14 @@ void decodage_ligne(string line){
         Fourmiliere fourmiliere (cF,cf,total_food,nbC,nbD,nbP);
         if (Fourmiliere.verification(grille,fourmiliere,vectF){
             vectF.pushback(fourmiliere);
-        };
+        }else{
+            std::string homes_overlap(h1,h2)
+        }
+        
 		// Mettre dans une classe
 		// Une fois que countC = nbC, on passe a Def
 		// Quand Pro est fini, si encore fourmiliere on revient ici
-        //pushbckackF(x,y,side,x1,y1,total_food,nbC,nbD,nbP);
+        // pushbckackF(x,y,side,x1,y1,total_food,nbC,nbD,nbP);
         
          
             
@@ -169,7 +173,11 @@ void decodage_ligne(string line){
 		cout << "Fini" << endl;
 		break;
 	}
+            
+
 }
+            
+void kb9 (vector<Fourmiliere>)
 /*vector < Fourmiliere > pushbackF (unsigned int& x, unsigned int& y, unsigned int& side , unsigned int& x1, unsigned int& y1, unsigned int& total_food, unsigned int& nbC, unsigned int& nbD, unsigned int& nbP)
 {
     

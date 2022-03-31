@@ -20,7 +20,7 @@
     return vectF;
  }
 */
-/*vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
+vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
 {
     vector < Carre > vectC;
     for (size_t i(0); i < vectF.size(); ++i)
@@ -29,4 +29,4 @@
     }
     return vectC;
 }
-*/
+
