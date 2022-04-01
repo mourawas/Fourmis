@@ -43,7 +43,7 @@ void initialiseCarre(Carre& c) {
 }
 
 void supCoord(Carre c, unsigned& x, unsigned& y) {
-    for (size_t i(g_max - 1 - (c.y-c.side/2); i > g_max - 1 - (c.y - c.side / 2)-c.side; --i) {
+    for (size_t i = (g_max - 1 - (c.y-c.side/2)); i > (g_max - 1 - (c.y - c.side / 2)-c.side); --i) {
         for (size_t j(c.x-c.side/2); j <= c.x+c.side/2; ++j) {
             if (grid[i][j] == true) {
                 x = j;
@@ -79,7 +79,7 @@ unsigned int nbTrue()
 }
 
 bool sup(Carre& c1, Carre& c2) {
-    unsigned int compteur = nbTrue(grid);
+    unsigned int compteur = nbTrue();
     if (compteur != ((c1.side * c1.side) + (c2.side * c2.side))) {
         return true;
     }
@@ -125,7 +125,7 @@ bool Carre_dans_Carre(Carre& c1, Carre& c2) {
     unsigned int compteur = 0;
     for (size_t i = 0; i < g_max; ++i) {
         for (size_t j = 0; j < g_max; ++j) {
-            if(grille[i][j] == true){
+            if(grid[i][j] == true){
                 ++compteur;
             }
         }
@@ -134,7 +134,7 @@ bool Carre_dans_Carre(Carre& c1, Carre& c2) {
         t=false;
     }
     return true;
-}*/
+}
 
 void initialise_Carre_centre(Carre c)
 {
