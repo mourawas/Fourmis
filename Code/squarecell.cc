@@ -1,7 +1,6 @@
-#include "squarecell.h"
-#include "error_squarecell.h"
 #include <vector>
 #include <iostream>
+#include "squarecell.h"
 using namespace std;
 
 void initialiseGrille(vector<vector<bool> > & grille, const unsigned int& g_max) {
@@ -33,7 +32,7 @@ void testCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_m
     }
 }
 
-void initialiseCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_max) {
+void initialiseCarre(vector<vector<bool> >& grille, Carre& c, const unsigned int& g_max) {
     for (size_t i = c.y; i < c.y + c.dim; ++i) {
         for (size_t j = c.x; j < c.x + c.dim; ++j) {
             grille[g_max-1-i][j] = true;

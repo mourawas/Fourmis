@@ -1,4 +1,6 @@
 #include <vector>
+#include "squarecell.h"
+#include "error_squarecell.h"
 using namespace std;
 
 struct Carre {
