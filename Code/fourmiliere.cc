@@ -17,10 +17,14 @@ vector<unique_ptr<Fourmis> > Fourmiliere::get_vfourmis() {
     return vfourmis;
 }
 
-void Fourmiliere::ajouter_foumis(Fourmis* nouveau) {
+void Fourmiliere::ajouterFoumis(Fourmis* nouveau) {
     if (nouveau != nullptr) {
         vfourmis.push_back(unique_ptr<Fourmis>(nouveau))
     }
+}
+
+void Fourmiliere::testFourmis(grille& grille, unsigned int& countF, unsigned int& i) {
+    vfourmis[i]->testAllFourmis(grille, countF, carre)
 }
 
 void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, grille) {
@@ -57,10 +61,11 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
         else if (nbP) {
             etat = Pro;
         }
-        else {
-            ++countF;
-            etat = Fourmiliere;
-        }
+        else if(countF == )
 
     }
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
