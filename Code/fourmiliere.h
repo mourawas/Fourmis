@@ -21,4 +21,4 @@ public:
     { }
 };
 
-void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere);
+void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, grille);

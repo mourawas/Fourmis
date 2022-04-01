@@ -35,7 +35,7 @@ void Simulation::decodage_ligne(string line){
 		break;
 		
 	case NOURRITURE:
-		decodage_ligne_food(line, vnourriture)
+		decodage_ligne_nourriture(line, vnourriture, grille)
 		++count;
 		if(count == total){
 			etat = NBF;
@@ -46,7 +46,12 @@ void Simulation::decodage_ligne(string line){
 		data >> totF;
 		if(totF == 0){
 			message::success();
-		}else etat = FOURMILIERE;
+			exit(EXIT_SUCCESS);
+		}
+		else if(totF > maxF){
+			exit(EXIT_FAILURE);
+		}
+		else etat = FOURMILIERE;
 		break;
 		
 	case FOURMILIERE:
@@ -54,16 +59,10 @@ void Simulation::decodage_ligne(string line){
 			break;
 		}
 		data >> x >> y >> side >> x1 >> y1 >> total_food >> nbC >> nbD >> nbP;
-        if (Fourmiliere.verification(grille,fourmiliere,vectF){
-            vectF.pushback(fourmiliere);
-        }else{
-            std::string homes_overlap(h1,h2)
-        }
         
 		// Mettre dans une classe
 		// Une fois que countC = nbC, on passe a Def
 		// Quand Pro est fini, si encore fourmiliere on revient ici
-        // pushbckackF(x,y,side,x1,y1,total_food,nbC,nbD,nbP);
             
 		//cout << "Fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << x1 << " " << y1 << " " << total_food << " " << nbC << " " << nbD << " " << nbP << endl;
 		

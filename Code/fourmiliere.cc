@@ -1,7 +1,6 @@
 #include "fourmiliere.h"
 
-
-bool Fourmiliere::verification(vector<vector<bool> >& grille, Fourmiliere& f, vector<Fourmiliere>& vectF) {
+bool Fourmiliere::verification(grille& grille, Fourmiliere& f, vector<Fourmiliere>& vectF) {
     for (size_t i(0); i < vectF.size(); ++i)
     {
         if (superposition(grille, vectF[i].getcarref, f.getcarref)) {

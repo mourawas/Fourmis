@@ -72,8 +72,8 @@ bool sup(grille& grille, Carre& c1, Carre& c2, const unsigned int& g_max) {
     return false;
 }
 
-bool sup_unique(grille& grille, Carre& c, const unsigned int& g_max, unsigned int& compteur) {
-    if (compteur == (compteur + c.side)) {
+bool sup_unique(grille& grille, Carre& c, unsigned int& compteur) {
+    if (compteur == (compteur + c.side*c.side)) {
         return true;    //superposition
     }
     return false;       //pas sup
