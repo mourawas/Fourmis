@@ -10,35 +10,33 @@ using namespace std;
 #include "fourmis.h"
 #include "nourriture.h"
 
-void pushbackFourmis(Fourmis* fourmis, vector<unique_ptr<Fourmis> >& V);
-
 class Fourmis {
 protected :
     unsigned int x1;
     unsigned int y1;
 public:
     virtual void BigTest(unsigned int countF, Carre& c);
-    Fourmis (unsigned int x1, unsigned int y1, unsigned int age)
-    : x1(x1),y1(y1),age(age)
+    Fourmis (unsigned int x1, unsigned int y1)
+    : x1(x1),y1(y1)
     {}
-    unsigned int getx1 (){
+    unsigned int getx1(){
         return x1;
     }
     unsigned int gety1(){
         return y1;
     }
-    unsigned int getage(){
-        return age;
-    }
 };
+
+void pushbackFourmis(Fourmis* fourmis, vector<unique_ptr<Fourmis> >& V);
 
 class Generator : public Fourmis {
     private :
     unsigned int side = sizeG;
-    Carre cg = {{x1,y1},sideG};
+    unsigned int total_food;
+    Carre cg = {x1, y1, side};
     public :
-    Generator (unsigned int xg, unsigned int yg, unsigned int total_food)
-    : xg(xg), yg(yg), total_food(total_food)
+    Generator (unsigned int x1, unsigned int y1, unsigned int total_food)
+    : x1(x1), y1(y1), total_food(total_food)
     {}
     void BigTest(unsigned int countF, Carre& c) override;
     void GeneratorInHome(unsigned int countF, Carre& c);
@@ -49,10 +47,10 @@ class Collector : public Fourmis{
 private:
     unsigned int age;
     bool food;
-    unsigned int side = sizeC
+    unsigned int side = sizeC;
     Carre cc = {x1, y1, side};
 public:
-    Collector ( unsigned int x1, unsigned y1, unsigned int age, bool food)
+    Collector(unsigned int x1, unsigned y1, unsigned int age, bool food)
     : x1(x1), y1(y1), age(age), food(food)
     {}
     void C_overlap();
