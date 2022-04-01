@@ -1,5 +1,4 @@
 #include "fourmiliere.h"
-using namespace std;
 
 bool Fourmiliere::verification(grille& grille, Fourmiliere& f, vector<Fourmiliere>& vectF) {
     for (size_t i(0); i < vectF.size(); ++i)
@@ -28,7 +27,7 @@ void Fourmiliere::testFourmis(grille& grille, unsigned int& countF, unsigned int
 }
 
 void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, grille) {
-    
+
     enum Etat = { FOURMILIERE, COL, DEF, PRO };
     static unsigned int etat = FOURMILIERE, countF = 0, countC = 0, countD = 0, countP = 0, j = 0;
 
@@ -39,8 +38,8 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
 
     if (etat == FOURMILIERE) {
         data >> x >> y >> side >> xg >> yg >> total_food >> nbC >> nbD >> nbP;
-
-        Fourmiliere f(x, y, side, nbC, nbD, nbP);
+        Carre c = { x, y, side };
+        Fourmiliere f(c, nbC, nbD, nbP);
 
         f.ajouter_fourmis(new Generator(xg, yg, total_food));
         //tester generator
@@ -59,13 +58,49 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
             etat = Def;
         }
         else if (nbP) {
-            etat = Pro;
+            etat = Pre;
         }
-        else if(countF == )
+        else if (countF == totF) {
+            return;
+        }
+    }
+    Collector Col(0, 0, 0);
+    Defensor Def(0, 0);
+    Protector Pro(0, 0);
 
+    switch (etat) {
+    case COL:
+        decodageLigneFourmis(line, grille, etat, Col, Def, Pre);
+        vfourmiliere[countF - 1].ajouterFourmis(new Collector(Col));
+        vfourmiliere[countF - 1].testFourmis(grille, countF - 1, j);
+        ++j; ++countC;
+
+        if (countC == nbC) {
+            etat = DEF;
+        }
+        break;
+
+    case DEF:
+        decodageLigneFourmis(line, grille, etat, Col, Def, Pre);
+        vfourmiliere[countF - 1].ajouterFourmis(new Defensor(Def));
+        vfourmiliere[countF - 1].testFourmis(grid, countF - 1, j);
+        ++j; ++countD;
+        if (countD == nbD) {
+            etat = PRE;
+        }
+        break;
+
+    case PRE:
+        decodageLigneFourmis(line, grid, etat, Col, Def, Pre);
+        vfourmiliere[countF - 1].ajouterFourmis(new Predator(Pre));
+        vfourmiliere[countF - 1].testFourmis(grille, countF - 1, j);
+        ++j; ++countP;
+
+        if (countP == nbP) {
+            etat = FOURMILIERE;
+            i = 0;
+        }
+        break;
     }
 }
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes

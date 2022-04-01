@@ -65,19 +65,6 @@ void Simulation::decodage_ligne(string line){
             
 		//cout << "Fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << x1 << " " << y1 << " " << total_food << " " << nbC << " " << nbD << " " << nbP << endl;
 		
-		if(nbC) {
-			etat = Col;
-		}else if(nbD) {
-			etat = Def;
-		}else if(nbP) {
-			etat = Pro;
-		}else {
-			++countF;
-			etat = Fourmiliere;
-		}
-			
-		countC = 0, countD = 0, countP = 0;
-		//cout << nbP << endl;
 		break;
 		
 	case Col:
