@@ -9,7 +9,6 @@
 #include <sstream>
 using namespace std;
 
-
 void lecture(char * nom_fichier)
 {
     string line;
@@ -45,9 +44,9 @@ void decodage_ligne(string line){
 	{
             
 	case nbN:
-		data >> total;
+		data >> total_food;
 		count = 0;
-		if(total == 0){
+		if(total_food == 0){
 			etat = nbF;
 		}else {
 			etat = Nourriture;
@@ -122,7 +121,9 @@ void decodage_ligne(string line){
 		}
 		//on arrive pas ici 2e fourmil
 		++countC;
+
 		data >> x1 >> y1 >> age >> foods;
+
 		if(countC == nbC){
 			etat = Def;
 		}
