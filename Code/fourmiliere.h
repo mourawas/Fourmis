@@ -16,11 +16,12 @@ private:
     vector<unique_ptr<Fourmis> > vfourmis;
 
 public:
-    Fourmiliere (unsigned int x, unsigned int y, unsigned int side, unsigned int nbC, unsigned int nbD, unsigned int nbP, unsigned int total_food)
-    : x(x), y(y), side(side), nbC(nbC), nbD(nbD), nbP(nbP), total_food (total_food)
+    Fourmiliere (unsigned int x, unsigned int y, unsigned int side, unsigned int nbC, unsigned int nbD, unsigned int nbP)
+    : x(x), y(y), side(side), nbC(nbC), nbD(nbD), nbP(nbP)
     { }
 
     vector<unique_ptr<Fourmis> > get_vfourmis();
+    void ajouter_foumis(Fourmis* nouveau);
 };
 
 void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, grille);

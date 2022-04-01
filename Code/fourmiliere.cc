@@ -16,29 +16,50 @@ vector<unique_ptr<Fourmis> > Fourmiliere::get_vfourmis() {
     return vfourmis;
 }
 
-vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
-{
-    vector < Carre > vectC;
-    for (size_t i(0); i < vectF.size(); ++i)
-    {
-        vectC.push_back(vectF[i].getcarref());
+void Fourmiliere::ajouter_foumis(Fourmis* nouveau) {
+    if (nouveau != nullptr) {
+        vfourmis.push_back(unique_ptr<Fourmis>(nouveau))
     }
-    return vectC;
 }
 
 void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, grille) {
     
-    enum Etat = {GEN, COL, DEF, }
+    enum Etat = { FOURMILIERE, COL, DEF, PRO };
+    static unsigned int etat = FOURMILIERE, countF = 0, countC = 0, countD = 0, countP = 0, j = 0;
 
-    unsigned int x, y, side, xg, yg, total_food, nbC, nbD, nbP;
+    unsigned int x, y, side, xg, yg, total_food;
+    static unsigned int nbC, nbD, nbP;
 
     isstringstream line(data);
 
-    data >> x >> y >> side >> xg >> yg >> total_food >> nbC >> nbD >> nbP;
+    if (etat == FOURMILIERE) {
+        data >> x >> y >> side >> xg >> yg >> total_food >> nbC >> nbD >> nbP;
 
-    Fourmiliere f(x, y, side, nbC, nbD, nbP, total_food);
+        Fourmiliere f(x, y, side, nbC, nbD, nbP);
 
-    switch()
+        f.ajouter_fourmis(new Generator(xg, yg, total_food));
+        //tester generator
+        decodage_ligne_fourmis(line, Fourmiliere::get_vfourmis());
+        ++j, ++countF;
 
-    decodage_ligne_fourmis(line, Fourmiliere::get_vfourmis());
+        vfourmiliere.push_back(move(f));
+        countC = 0;
+        countD = 0;
+        countP = 0;
+
+        if (nbC) {
+            etat = Col;
+        }
+        else if (nbD) {
+            etat = Def;
+        }
+        else if (nbP) {
+            etat = Pro;
+        }
+        else {
+            ++countF;
+            etat = Fourmiliere;
+        }
+
+    }
 }

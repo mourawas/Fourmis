@@ -58,7 +58,6 @@ void Simulation::decodage_ligne(string line){
 		if(countF == totF){
 			break;
 		}
-		data >> x >> y >> side >> x1 >> y1 >> total_food >> nbC >> nbD >> nbP;
         
 		// Mettre dans une classe
 		// Une fois que countC = nbC, on passe a Def

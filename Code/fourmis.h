@@ -34,8 +34,8 @@ class Generator : public Fourmis {
     private :
     unsigned int side = sizeG;
     public :
-    Generator (unsigned int x1, unsigned int y1, unsigned int age,)
-    : x1(x1),y1(y1),age(age)
+    Generator (unsigned int xg, unsigned int yg, unsigned int total_food)
+    : xg(xg), yg(yg), total_food(total_food)
     {}
 };
 
@@ -43,7 +43,7 @@ class Collector : public Fourmis{
 private:
     bool food;
 public:
-    Collector ( unsigned int x1, unsigned y1, unsigned int age ,bool food)
+    Collector ( unsigned int x1, unsigned y1, unsigned int age, bool food)
     : x1(x1),y1(y1),age(age),food(food)
     {}
 };
