@@ -125,10 +125,10 @@ bool multisup(vector<Carre>& v, vector<vector<bool> > grille, const unsigned int
 	
 }
 
-/*bool Carre_dans_Carre(Carre& c1, Carre& c2, grille& grille, const unsigned int& g_max) {
+bool Carre_dans_Carre(Carre& c1, Carre& c2, grille& grille, const unsigned int& g_max) {
     bool t;
     if (c2.side > c1.side){
-        t = true;
+        t = false;
         return t;
     }
     unsigned int compteur = 0;
@@ -140,9 +140,9 @@ bool multisup(vector<Carre>& v, vector<vector<bool> > grille, const unsigned int
         }
     }
     if (compteur != (c1.side * c1.side)){
-        t=true;
+        t=false;
     }
-    return false;
+    return true;
 }*/
 
 void initialise_Carre_centre ( grille& grille, Carre c, unsigned int g_max)

@@ -1,4 +1,5 @@
 #include "fourmiliere.h"
+using namespace std;
 
 bool Fourmiliere::verification(grille& grille, Fourmiliere& f, vector<Fourmiliere>& vectF) {
     for (size_t i(0); i < vectF.size(); ++i)
