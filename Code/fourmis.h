@@ -1,11 +1,21 @@
 using namespace std;
+#include <iostream>
+#include <vector>
+#include "squarecell.h"
+#include "message.h"
+#include "fourmis.h"
+#include "nourriture.h"
+#include ""
 
+void pushbackfourmis ( Fourmis* fourmis, vector<unique_ptr<Fourmis> >& V);
+void decodage_ligne_fourmis(string line, vector<unique_ptr<Fourmis> >& V);
 class Fourmis {
 protected :
     unsigned int x1;
     unsigned int y1;
     unsigned int age;
 public:
+    
     Fourmis (unsigned int x1, unsigned int y1, unsigned int age)
     : x1(x1),y1(y1),age(age)
     {}
@@ -55,3 +65,5 @@ public:
 };
 
 vector < Fourmis > vectFourmis;
+decodage_ligne_fourmis(string l,  );
+

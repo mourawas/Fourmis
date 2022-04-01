@@ -12,3 +12,17 @@ vector< Fourmis > vectFourmis pushbackfourmis (unsigned int x1, unsigned int y1,
     return vectFourmis;
 }
 
+void decodage_ligne_fourmis(string line, vector<unique_ptr<Fourmis> >& V )
+{
+    unsigned int x1,y1,age;
+    isstringstream (data)
+    data << x1, y1, age ;
+    
+}
+void pushbackfourmis (Fourmis* fourmis, vector<unique_ptr<Fourmis> >& V)
+{
+    if ( fourmis != nullptr){
+        V.push_back( unique_ptr<Fourmis>(fourmis));
+    }
+}
+ 
