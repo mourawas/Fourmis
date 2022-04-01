@@ -1,7 +1,7 @@
 using namespace std;
 
 class Fourmis {
-private :
+protected :
     unsigned int x1;
     unsigned int y1;
     unsigned int age;
