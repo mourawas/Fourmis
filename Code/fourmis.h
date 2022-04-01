@@ -37,10 +37,9 @@ class Generator : public Fourmis {
     Generator (unsigned int xg, unsigned int yg, unsigned int total_food)
     : xg(xg), yg(yg), total_food(total_food)
     {}
-    void Big_Test_G(grille& grille, Carre& c, unsigned int countF,g_max);
-    void
-    void Generator_In_Homme(unsigned int count F, Carre& c);
-    void G_Overlap(Carre& c,grille& grille);
+    void Big_Test_G( unsigned int countF, Carre& c, unsigned int g_max);
+    void Generator_In_Home(unsigned int countF, Carre& c);
+    void G_Overlap(Carre& c);
 };
 
 class Collector : public Fourmis{
@@ -52,6 +51,8 @@ public:
     Collector ( unsigned int x1, unsigned y1, unsigned int age, bool food)
     : x1(x1),y1(y1),age(age),food(food)
     {}
+    void C_overlap(Carre& c);
+    void Big_Test_C(Carre& c, unsigned int g_max)
 };
 
 class Defensor : public Fourmis {
@@ -59,6 +60,9 @@ private:
     unsigned int side = sizeD;
     Carre cd = {{x1,y1},side};
 public:
+    void D_overlap(carre& c);
+    void Defensor_In_Home(unsigned int countF,Carre& c,unsigned int g_max);
+    void Big_Test_D(unsigned int countF,carre& c,unsigned int g_max);
     Defensor (unsigned int x1, unsigned int y1, unsigned age)
     :x1(x1),y1(y1),age(age)
     {}
@@ -69,6 +73,8 @@ private:
     unsigned int side = sizeP;
     Carre cp = {{x1,y1},side}
 public:
+    void P_overlap();
+    void Big_Test_P(Carre& c,unsigned int g_max);
     Predator ( unsigned int x1,unsigned y1, unsigned age)
     :x1(x1),y1(y1),age(age)
     {}
