@@ -143,5 +143,5 @@ void initialise_Carre_centre(Carre c)
     unsigned int k = (c.y - c.side%2);
     cout << k << endl;
     Carre nc = creeCarre (t, k, c.side);
-    initialiseCarre (grille, nc, g_max);
+    initialiseCarre (nc);
 }

@@ -1,3 +1,6 @@
+#ifndef NOURRITURE_H
+#define NOURRITURE_H
+
 #include <vector>
 #include <string>
 #include "constantes.h"
@@ -17,3 +20,5 @@ class Nourriture{
 };
 
 void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture); //peut etre lui donner la grille
+
+#endif

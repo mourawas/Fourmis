@@ -1,3 +1,6 @@
+#ifndef SIMULATION_H
+#define SIMULATION_H
+
 #include "simulation.h"
 #include "squarecell.h"
 #include "nourriture.h"
@@ -25,3 +28,5 @@ class Simulation {
 	vector<Nourriture> vnourriture;
 	vector<Fourmiliere> vfourmiliere;
 };
+
+#endif

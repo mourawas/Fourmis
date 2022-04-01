@@ -1,3 +1,6 @@
+#ifndef FOURMILIERE_H
+#define FOURMILIERE_H
+
 #include <iostream>
 #include <vector>
 #include "squarecell.h"
@@ -27,3 +30,5 @@ public:
 };
 
 void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere);
+
+#endif

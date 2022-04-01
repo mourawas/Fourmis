@@ -1,3 +1,6 @@
+#ifndef SQUARECELL_H
+#define SQUARECELL_H
+
 #include <vector>
 #include "squarecell.h"
 #include "error_squarecell.h"
@@ -40,3 +43,5 @@ void vectCarre(vector<Carre>& vcarre, Carre c);
 void initialise_Carre_centre(Carre c);
 
 bool Carre_dans_Carre(Carre& c1, Carre& c2);
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef FOURMIS_H
+#define FOURMIS_H
+
 using namespace std;
 #include <iostream>
 #include <vector>
@@ -90,3 +93,5 @@ vector < Fourmis > vectFourmis;
 decodage_ligne_fourmis(string line, unsigned int etat,
                        Collector& Col, Defensor& Def,
                        Predator& Pre);
+
+#endif
