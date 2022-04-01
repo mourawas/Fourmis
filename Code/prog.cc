@@ -31,7 +31,7 @@ int main(int argc, char * argv[])
     testCarre(grille, c2, g_max);
     initialiseCarre(grille, c1, g_max);
     initialiseCarre(grille, c2, g_max);
-    bool sup = superposition(grille, c1, c2, g_max);
+    bool sup = sup(grille, c1, c2, g_max);
 
     if (sup) {
         supprimerCarre(grille, c2, g_max);

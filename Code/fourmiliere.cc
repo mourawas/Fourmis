@@ -1,25 +1,6 @@
-#include <iostream>
-#include "squarecell.h"
-#include "fourmis.h"
-#include "nourriture.h"
 #include "fourmiliere.h"
-#include "message.h"
 
-/*vector < Fourmiliere > pushbackF (unsigned int& x, unsigned int& y, unsigned int& side , unsigned int& x1, unsigned int& y1, unsigned int& total_food, unsigned int& nbC, unsigned int& nbD, unsigned int& nbP)
-{
-	
-	unsigned int a = 3;
-	Carre c;
-	Carre g;
-    c = creeCarre(x,y,side);
-    g = creeCarre(x1,y1,a);
-     
-    Fourmiliere fourmiliere (c,g, nbC, nbD, nbP, total_food);
-    
-    vectF.push_back(fourmiliere);
-    return vectF;
- }
-*/
+
 bool Fourmiliere::verification(vector<vector<bool> >& grille, Fourmiliere& f, vector<Fourmiliere>& vectF) {
     for (size_t i(0); i < vectF.size(); ++i)
     {
@@ -42,3 +23,15 @@ vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
     return vectC;
 }
 
+void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere) {
+    
+    unsigned int x, y, side, x1, y1, total_food, nbC, nbD, nbP;
+
+    isstringstream line(data);
+
+    data >> x >> y >> side >> x1 >> y1 >> total_food >> nbC >> nbD >> nbP;
+
+    Fourmiliere f(x, y, side, total_food, nbC, nbD, nbP);
+
+
+}

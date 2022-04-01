@@ -3,30 +3,38 @@
 #include "error_squarecell.h"
 using namespace std;
 
+typedef vector<vector<bool> > grille;
+
+const unsigned int g_max = 20;
+
 struct Carre {
 	unsigned int x;
 	unsigned int y;
-	unsigned int dim;
+	unsigned int side;
 };
 
-void initialiseGrille(vector<vector<bool> > & grille, const unsigned int& g_max);
+void initialiseGrille(grille& grille, const unsigned int& g_max);
  
-void initialiseCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_max);
+void initialiseCarre(grille& grille, Carre& c, const unsigned int& g_max);
 
-void supprimerCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_max);
+void supprimerCarre(grille& grille, Carre& c, const unsigned int& g_max);
 
-bool superposition(vector<vector<bool> > & grille, Carre& c1, Carre& c2, const unsigned int& g_max);
+unsigned int nbTrue(grille& grille);
 
-void testCarre(vector<vector<bool> > & grille, Carre& c, const unsigned int& g_max);
+bool sup(grille& grille, Carre& c1, Carre& c2, const unsigned int& g_max);
 
-void afficheGrille(vector<vector<bool> > & grille);
+bool sup_unique(grille& grille, Carre& c, const unsigned int& g_max, unsigned int& compteur);
+
+void testCarre(grille& grille, Carre& c, const unsigned int& g_max);
+
+void afficheGrille(grille& grille);
 
 Carre creeCarre(unsigned int& x, unsigned int& y, unsigned int& dim);
 
 void vectCarre(vector<Carre>& vcarre, Carre c);
 
-bool multisuperposition (vector <Carre>& v, vector<vector<bool> >& grille, const unsigned int& g_max);
+bool multisup(vector<Carre>& v, grille& grille, const unsigned int& g_max);
 
-void initialise_Carre_centre ( vector<vector<bool> >& grille, Carre c, unsigned int g_max);
+void initialise_Carre_centre(grille& grille, Carre c, unsigned int g_max);
 
-bool Carre_dans_Carre (Carre& c1, Carre& c2, vector< vector< bool> >& grid,unsigned int g_max);
+bool Carre_dans_Carre(Carre& c1, Carre& c2, grille& grille, unsigned int g_max);

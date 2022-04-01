@@ -1,11 +1,10 @@
 #include <vector>
+#include <string>
 #include "constantes.h"
 #include "message.h"
 #include "squarecell.h"
 #include "constantes.h"
 using namespace std;
-
-vector<Carre> vnourriture;
 
 class Nourriture{
 	private:
@@ -15,5 +14,6 @@ class Nourriture{
 	Nourriture(unsigned int x_, unsigned int y_)
 	: x(x_), y(y_) {}
 	
-	void launchNourriture();
 };
+
+void decodage_ligne_food(string line, vector<Nourriture>& vnourriture, grille& grille); //peut etre lui donner la grille

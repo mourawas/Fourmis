@@ -1,15 +1,6 @@
-#include "simulation.h"
-#include "squarecell.h"
-#include "nourriture.h"
-#include "fourmiliere.h"
-#include <cstdlib>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <sstream>
 using namespace std;
 
-void lecture(char * nom_fichier)
+void Simulation::lecture(char * nom_fichier)
 {
     string line;
     ifstream fichier(nom_fichier); 
@@ -28,62 +19,41 @@ void lecture(char * nom_fichier)
 	}	
 }
 
-void decodage_ligne(string line){
-	
-	enum Etat_lecture {nbN, Nourriture, nbF, Fourmiliere, Col, Def, Pro, Fini};
+void Simulation::decodage_ligne(string line){
 	
 	istringstream data(line);
-	
-	static int etat = nbN;
-	static int count = 0, countC = 0, countD = 0, countP = 0, total = 0, countF = 0;
-	int x1, y1, age, x, y, side, total_food, nbC, nbD, nbP, totF;
-	bool foodb;
-	string foods;
-	
+
 	switch(etat)
 	{
-            
-	case nbN:
+	case NBN:
 		data >> total_food;
 		count = 0;
 		if(total_food == 0){
 			etat = nbF;
-		}else {
-			etat = Nourriture;
 		}
-		//Mettre dans une classe
-		cout << "Nombre nourriture : " << total << endl;
+		else etat = Nourriture;
 		break;
 		
-	case Nourriture:
-		data >> x1 >> y1;
+	case NOURRITURE:
+		decodage_ligne_food(line, vnourriture)
 		++count;
 		if(count == total){
-			etat = nbF;
+			etat = NBF;
 		}
-		//Mettre dans une classe
-		cout << "Nourriture " << count << " : " << x1 << " " << y1 << endl;
 		break;
 		
-	case nbF:
+	case NBF:
 		data >> totF;
 		if(totF == 0){
-			etat = Fini;
-		}else{
-			etat = Fourmiliere;
-		}
-		//Mettre dans une classe
+			message::success();
+		}else etat = FOURMILIERE;
 		break;
 		
-	case Fourmiliere:
+	case FOURMILIERE:
 		if(countF == totF){
-			etat = Fini;
 			break;
 		}
 		data >> x >> y >> side >> x1 >> y1 >> total_food >> nbC >> nbD >> nbP;
-        creeCarre cF (x,y,side);
-        creeCarre cf (x,y,size_G);
-        Fourmiliere fourmiliere (cF,cf,total_food,nbC,nbD,nbP);
         if (Fourmiliere.verification(grille,fourmiliere,vectF){
             vectF.pushback(fourmiliere);
         }else{
@@ -94,10 +64,8 @@ void decodage_ligne(string line){
 		// Une fois que countC = nbC, on passe a Def
 		// Quand Pro est fini, si encore fourmiliere on revient ici
         // pushbckackF(x,y,side,x1,y1,total_food,nbC,nbD,nbP);
-        
-         
             
-		cout << "Fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << x1 << " " << y1 << " " << total_food << " " << nbC << " " << nbD << " " << nbP << endl;
+		//cout << "Fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << x1 << " " << y1 << " " << total_food << " " << nbC << " " << nbD << " " << nbP << endl;
 		
 		if(nbC) {
 			etat = Col;
@@ -132,8 +100,6 @@ void decodage_ligne(string line){
 		}else{
 			foodb = 0;
 		}
-		
-		//Mettre dans une classe
 		cout << "Collector " << countC << " : " <<  x1 << " " << y1 << " " << age << " " << foodb << endl;
 		break;
 		
@@ -147,8 +113,7 @@ void decodage_ligne(string line){
 		if(countD == nbD){
 			etat = Pro;
 		}
-		//Mettre dans une classe
-		cout << "Defensor " << countD << " : " <<  x1 << " " << y1 << " " << age << endl;
+		//cout << "Defensor " << countD << " : " <<  x1 << " " << y1 << " " << age << endl;
 		break;
 
 	case Pro:
@@ -163,40 +128,11 @@ void decodage_ligne(string line){
 		if(countP == nbP){
 			etat = Fourmiliere;
 		}
-		//Mettre dans une classe
-		cout << "Protector " << countP << " : " <<  x1 << " " << y1 << " " << age << endl;
+		//cout << "Protector " << countP << " : " <<  x1 << " " << y1 << " " << age << endl;
 		
 		++countF;
 		
 		break;
-	
-	case Fini:
-		cout << "Fini" << endl;
-		break;
 	}
             
 }
-            
-/*vector < Fourmiliere > pushbackF (unsigned int& x, unsigned int& y, unsigned int& side , unsigned int& x1, unsigned int& y1, unsigned int& total_food, unsigned int& nbC, unsigned int& nbD, unsigned int& nbP)
-{
-    
-    unsigned int a = 3;
-    Carre c;
-    Carre g;
-    c = creeCarre(x,y,side);
-    g = creeCarre(x1,y1,a);
-     
-    Fourmiliere fourmiliere (c,g, nbC, nbD, nbP, total_food);
-    
-    vectF.push_back(fourmiliere);
-    return vectF;
- }
-vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
-{
-    vector < Carre > vectC;
-    for (size_t i(0); i < vectF.size(); ++i)
-    {
-        vectC.push_back(vectF[i].getcarref());
-    }
-    return vectC;
-}*/
