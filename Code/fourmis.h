@@ -22,5 +22,8 @@ public:
 
 
 };
-
+class Generator : public Fourmis {
+    private :
+    public :
+}
 vector < Fourmis > vectFourmis;
