@@ -10,11 +10,11 @@ void Fourmiliere::ajouterFoumis(Fourmis* nouveau) {
     }
 }
 
-void Fourmiliere::testFourmis(grille& grille, unsigned int& countF, unsigned int& i) {
-    vfourmis[i]->testAllFourmis(grille, countF, carre)
+void Fourmiliere::testFourmis(unsigned int& countF, unsigned int& i) {
+    vfourmis[i]->BigTest(countF, c)
 }
 
-void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, grille) {
+void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere) {
 
     enum Etat = { FOURMILIERE, COL, DEF, PRO };
     static unsigned int etat = FOURMILIERE, countF = 0, countC = 0, countD = 0, countP = 0, j = 0;
@@ -58,7 +58,7 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
 
     switch (etat) {
     case COL:
-        decodageLigneFourmis(line, grille, etat, Col, Def, Pre);
+        decodage_ligne_fourmis(line, grille, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Collector(Col));
         vfourmiliere[countF - 1].testFourmis(grille, countF - 1, j);
         ++j; ++countC;
@@ -69,7 +69,7 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
         break;
 
     case DEF:
-        decodageLigneFourmis(line, grille, etat, Col, Def, Pre);
+        decodage_ligne_fourmis(line, grille, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Defensor(Def));
         vfourmiliere[countF - 1].testFourmis(grid, countF - 1, j);
         ++j; ++countD;
@@ -79,7 +79,7 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
         break;
 
     case PRE:
-        decodageLigneFourmis(line, grid, etat, Col, Def, Pre);
+        decodage_ligne_fourmis(line, grid, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Predator(Pre));
         vfourmiliere[countF - 1].testFourmis(grille, countF - 1, j);
         ++j; ++countP;

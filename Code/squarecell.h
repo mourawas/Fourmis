@@ -25,6 +25,10 @@ bool sup(grille& grille, Carre& c1, Carre& c2, const unsigned int& g_max);
 
 bool supUnique(grille& grille, Carre& c, unsigned int& compteur);
 
+unsigned int nbTrue();
+
+void supCoord(Carre c, unsigned& x, unsigned& y);
+
 void testCarre(grille& grille, Carre& c, const unsigned int& g_max);
 
 void afficheGrille(grille& grille);

@@ -1,38 +1,83 @@
-#include <iostream>
-#include <vector>
-#include "squarecell.h"
-#include "message.h"
 #include "fourmis.h"
-#include "nourriture.h"
 
-vector< Fourmis > vectFourmis pushbackfourmis (unsigned int x1, unsigned int y1, unsigned int age)
+vector<Fourmis> vectFourmis pushbackfourmis (unsigned int x1, unsigned int y1, unsigned int age)
 {
-    Fourmis fourmis (x1,x2,age);
-    vectFourmis.push_back (fourmis);
+    Fourmis fourmi (x1, x2, age);
+    vectFourmis.push_back(fourmis);
     return vectFourmis;
 }
 
-void decodage_ligne_fourmis(string line, vector<unique_ptr<Fourmis> >& V )
-{
-    unsigned int x1,y1,age;
-    isstringstream (data)
-    data << x1, y1, age ;
-    
+void Collector::iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2) {
+    x1 = x2;
+    y1 = y2;
+    age = age2;
+    food = food2;
 }
-void pushbackfourmis (Fourmis* fourmis, vector<unique_ptr<Fourmis> >& V)
+
+void Defensor::iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2)
 {
-    if ( fourmis != nullptr){
-        V.push_back( unique_ptr<Fourmis>(fourmis));
+    x1 = x2;
+    y1 = y2;
+    age = age2;
+}
+
+void Predator::iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2)
+{
+    x1 = x2;
+    y1 = y2;
+    age = age2;
+}
+
+void decodage_ligne_fourmis(string line, unsigned int etat,
+                            Collector& Col, Defensor& Def,
+                            Predator& Pre)
+{
+    istringstream data(line);
+    unsigned int x, y, age;
+    string foods;
+    bool food;
+
+    if (etat == 1) {
+        data >> x >> y >> age >> foods;
+        if (foods == "true") {
+            food = 1;
+        }
+        else food = 0;
+        Carre c = { x, y, sizeC };
+        //tester le carré
+        Col.iniC(x, y, age, food);
+        return;
+    }
+    if (etat == 2) {
+        data >> x >> y >> age;
+        Carre c = { x, y, sizeD };
+        //tester le carré
+        Def.iniD(x, y, age);
+        return;
+    }
+    if (etat == 3) {
+        data >> x >> y >> age;
+        Carre c = { x, y, sizeP };
+        //tester le carré
+        Pre.iniP(x, y, age);
+        return;
     }
 }
-void Generator::Generator_In_Homme(unsigned int countF, Carre& c){
-    if (Carre_dans_Carre(c, cg, g_max) ==  0 )
+
+void pushbackFourmis(Fourmis* fourmis, vector<unique_ptr<Fourmis> >& V)
+{
+    if (fourmis != nullptr){
+        V.push_back(unique_ptr<Fourmis>(fourmis));
+    }
+}
+void Generator::GeneratorInHome(unsigned int countF, Carre& c){
+    if (CarreDansCarre(c, cg, g_max) ==  0 )
     {
-        cout <<message::generator_not_within_home(x1,y1,countF);
+        cout << message::generator_not_within_home(x1,y1,countF);
         exit (EXIT_FAILURE);
     }
 }
-void Generator :: G_Overlap(){
+void Generator::G_Overlap(){
     unsigned int compteur = nbTrue();
     if (supUnique(cg,compteur))
     {
@@ -42,12 +87,12 @@ void Generator :: G_Overlap(){
         exit(EXIT_FAILURE);
     }
 }
-void Generator::Big_Test_G(unsigned int countF, Carre& c, unsigned int g_max){
-    Generator_In_Homme(countF, c);
+void Generator::BigTest(unsigned int countF, Carre& c, const unsigned int& g_max){
+    GeneratorInHome(countF, c);
     G_Overlap();
     initialise_Carre_Centre(cg, g_max);
 }
-void Collector :: C_overlap(){
+void Collector::C_overlap(){
     unsigned int compteur = nbTrue();
     if (supUnique(cc,compteur))
     {
@@ -58,11 +103,11 @@ void Collector :: C_overlap(){
     }
 }
 }
-void Collector :: Big_Test_C(Carre& c, unsigned int g_max){
+void Collector::BigTest(unsigned int countF, Carre& c, const unsigned int g_max){
     C_overlap(Carre& c);
-    initialise_Carre_Centre (cc,g_max);
+    initialise_Carre_Centre (cc, g_max);
 }
-void Defensor :: D_overlap(){
+void Defensor::D_overlap(){
     unsigned int compteur = nbTrue();
     if (supUnique(cd,compteur))
     {
@@ -72,18 +117,18 @@ void Defensor :: D_overlap(){
         exit(EXIT_FAILURE);
     }
 }
-void Defensor :: Defensor_In_Home(unsigned int countF, Carre& c,unsigned int g_max){
+void Defensor::DefensorInHome(unsigned int countF, Carre& c,unsigned int g_max){
     if (Carre_dans_Carre(c,cd,g_max) == 0){
         cout << message::defensor_not_within_home(x1,y1,countF);
         exit(EXIT_FAILURE);
     }
 }
-void Defensor :: Big_Test_D(unsigned int countF,carre& c,unsigned int g_max){
-    Defensor_In_Home(countF,c,g_max);
+void Defensor::BigTest(unsigned int countF, Carre& c,const unsigned int& g_max){
+    DefensorInHome(countF,c,g_max);
     D_overlap();
     initialise_Carre_Centre(cd,g_max);
 }
-void Predator ::  P_overlap(){
+void Predator::P_overlap(){
     unsigned int compteur = nbTrue();
     if (supUnique(cp,compteur))
     {
@@ -93,7 +138,7 @@ void Predator ::  P_overlap(){
         exit(EXIT_FAILURE);
     }
 }
-void Predator ::Big_Test_P(Carre& c,unsigned int g_max){
-    P_overlap;
+void Predator::BigTest(unsigned int countF, Carre& c, const unsigned int& g_max){
+    P_overlap();
     initialise_Carre_Centre(cp,g_max);
 }
