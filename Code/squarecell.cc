@@ -3,16 +3,18 @@
 #include "squarecell.h"
 using namespace std;
 
-void initialiseGrille(grille& grille, const unsigned int& g_max) {
+static grille grid;
+
+void initialiseGrille(const unsigned int& g_max) {
     for (size_t i = 0; i < g_max; ++i) {
-        grille.push_back(vector<bool>());
+        grid.push_back(vector<bool>());
         for (size_t j = 0; j < g_max; ++j) {
-            grille[i].push_back(false);
+            grid[i].push_back(false);
         }
     }
 }
 
-void testCarre(grille& grille, Carre& c, const unsigned int& g_max) {
+void testCarre(Carre& c, const unsigned int& g_max) {
 	    
     if (c.x > (g_max)) {
         cout << error_squarecell::print_index(c.x, g_max-1) << endl;
@@ -32,12 +34,24 @@ void testCarre(grille& grille, Carre& c, const unsigned int& g_max) {
     }
 }
 
-void initialiseCarre(grille& grille, Carre& c, const unsigned int& g_max) {
+void initialiseCarre(Carre& c, const unsigned int& g_max) {
     for (size_t i = c.y; i < c.y + c.side; ++i) {
         for (size_t j = c.x; j < c.x + c.side; ++j) {
-            grille[g_max-1-i][j] = true;
+            grid[g_max-1-i][j] = true;
         }
     }
+}
+
+void supCoord(Carre c, unsigned& x, unsigned& y) {
+    for (size_t i(g_max - 1 - (c.y-c.side/2); i > g_max - 1 - (c.y - c.side / 2)-c.side; --i) {
+        for (size_t j(c.x-c.side/2); j <= c.x+c.side/2; ++j) {
+            if (grid[i][j] == true) {
+                x = j;
+                y = i;
+            }
+        }
+    }
+
 }
 
 Carre creeCarre(unsigned int& x,unsigned int& y, unsigned int& side)
@@ -51,12 +65,12 @@ void vectCarre(vector<Carre>& vcarre, Carre c)
 	vcarre.push_back(c);
 }
 
-unsigned int nbTrue(grille& grille)
+unsigned int nbTrue()
 {
     unsigned int compteur = 0;
     for (size_t i = 0; i < g_max; ++i) {
         for (size_t j = 0; j < g_max; ++j) {
-            if (grille[i][j]) {
+            if (grid[i][j]) {
                 ++compteur;
             }
         }
@@ -64,15 +78,15 @@ unsigned int nbTrue(grille& grille)
     return compteur;
 }
 
-bool sup(grille& grille, Carre& c1, Carre& c2, const unsigned int& g_max) {
-    unsigned int compteur = nbTrue(grille);
+bool sup(Carre& c1, Carre& c2, const unsigned int& g_max) {
+    unsigned int compteur = nbTrue(grid);
     if (compteur != ((c1.side * c1.side) + (c2.side * c2.side))) {
         return true;
     }
     return false;
 }
 
-bool sup_unique(grille& grille, Carre& c, unsigned int& compteur) {
+bool supUnique(Carre& c, unsigned int& compteur) {
     if (compteur == (compteur + c.side*c.side)) {
         return true;    //superposition
     }
@@ -80,16 +94,16 @@ bool sup_unique(grille& grille, Carre& c, unsigned int& compteur) {
 }
 
 
-void supprimerCarre(grille& grille, Carre& c, const unsigned int& g_max) {
+void supprimerCarre(Carre& c, const unsigned int& g_max) {
     for (size_t i = c.y; i < c.y + c.side; ++i) {
         for (size_t j = c.x; j < c.x + c.side; ++j) {
-            grille[g_max-1-i][j] = false;
+            grid[g_max-1-i][j] = false;
         }
     }
 }
 
-void afficheGrille(grille& grille){
-	for(auto ligne : grille){
+void afficheGrille(grille& grid){
+	for(auto ligne : grid){
 		for(auto kase : ligne){
 			if(!kase){
 				cout << "|___";
@@ -102,7 +116,7 @@ void afficheGrille(grille& grille){
 	}
 }
 
-/*bool multisup(vector <Carre>& v, grille& grille, const unsigned int& g_max)
+/*bool multisup(vector <Carre>& v, const unsigned int& g_max)
 {
     for (size_t i(0); i < v.size(); ++i){
         for (size_t j(i+1);j < v.size(); ++j){
@@ -118,14 +132,7 @@ void afficheGrille(grille& grille){
 //Tester les éléments dans l'ordre qu'ils sont lus (pas à faire ici)
 //Si deux elements se superposent, pas grave pour rendu 1
 
-bool multisup(vector<Carre>& v, vector<vector<bool> > grille, const unsigned int& g_max)
-{
-	
-	
-	
-}
-
-bool Carre_dans_Carre(Carre& c1, Carre& c2, grille& grille, const unsigned int& g_max) {
+bool Carre_dans_Carre(Carre& c1, Carre& c2, const unsigned int& g_max) {
     bool t;
     if (c2.side > c1.side){
         t = false;
@@ -145,12 +152,12 @@ bool Carre_dans_Carre(Carre& c1, Carre& c2, grille& grille, const unsigned int& 
     return true;
 }*/
 
-void initialise_Carre_centre ( grille& grille, Carre c, unsigned int g_max)
+void initialise_Carre_centre (Carre c, unsigned int g_max)
 {
     unsigned int t = (c.x - c.side%2);
     cout << t << endl;
     unsigned int k = (c.y - c.side%2);
     cout << k << endl;
-    Carre nc = creeCarre ( t,k,c.side);
-    initialiseCarre ( grille,nc, g_max);
+    Carre nc = creeCarre (t, k, c.side);
+    initialiseCarre (grille, nc, g_max);
 }

@@ -14,7 +14,7 @@ void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture, gri
 	testCarre(grille, c, g_max);
 	unsigned int compteur = nbTrue(grille);
 	intialiseCarre(grille, c, g_max);
-	bool sup = sup_unique(grille, c, g_max, compteur);
+	bool sup = supUnique(grille, c, g_max, compteur);
 	if (sup) {
 		cout << message::food_overlap(x, y) << endl;
 		exit(EXIT_FAILURE);
