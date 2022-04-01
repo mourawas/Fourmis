@@ -5,38 +5,24 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
-	/*if(argc != 2){
+	if(argc != 2){
 		exit(0);
 	}
 	
-	lecture(argv[1]);*/
-	
-	
-	const unsigned int g_max = 10;
-    vector<vector<bool> > grille;
-    vector<Carre> E_c_f;
-    vector<Carre> E_c_i;
-    
-    Carre c1 = {5, 5, 2};
-    Carre c2 = {7, 7, 3};
-    
-    /*E_c_i.push_pack(c1);
-    E_c_i.push_pack(c2);
-    E_c_i.push_pack(c3);
-    
-    E_c.push_back(c1);*/
+	lecture(argv[1]);
 
-    initialiseGrille(grille, g_max);
-    testCarre(grille, c1, g_max);
-    testCarre(grille, c2, g_max);
-    initialiseCarre(grille, c1, g_max);
-    initialiseCarre(grille, c2, g_max);
-    bool sup = sup(grille, c1, c2, g_max);
+
+    initialiseGrille();
+    testCarre(c1);
+    testCarre(c2);
+    initialiseCarre(c1);
+    initialiseCarre(c2);
+    bool sup = sup(c1, c2);
 
     if (sup) {
-        supprimerCarre(grille, c2, g_max);
-        initialiseCarre(grille, c1, g_max);
+        supprimerCarre(c2);
+        initialiseCarre(c1);
     }
 
-    afficheGrille(grille);
+    afficheGrille();
 }

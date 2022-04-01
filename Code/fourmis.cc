@@ -71,7 +71,7 @@ void pushbackFourmis(Fourmis* fourmis, vector<unique_ptr<Fourmis> >& V)
     }
 }
 void Generator::GeneratorInHome(unsigned int countF, Carre& c){
-    if (CarreDansCarre(c, cg, g_max) ==  0 )
+    if (CarreDansCarre(c, cg) ==  0 )
     {
         cout << message::generator_not_within_home(x1,y1,countF);
         exit (EXIT_FAILURE);
@@ -87,10 +87,10 @@ void Generator::G_Overlap(){
         exit(EXIT_FAILURE);
     }
 }
-void Generator::BigTest(unsigned int countF, Carre& c, const unsigned int& g_max){
+void Generator::BigTest(unsigned int countF, Carre& c){
     GeneratorInHome(countF, c);
     G_Overlap();
-    initialise_Carre_Centre(cg, g_max);
+    initialise_Carre_Centre(cg);
 }
 void Collector::C_overlap(){
     unsigned int compteur = nbTrue();
@@ -103,9 +103,9 @@ void Collector::C_overlap(){
     }
 }
 }
-void Collector::BigTest(unsigned int countF, Carre& c, const unsigned int g_max){
+void Collector::BigTest(unsigned int countF, Carre& c){
     C_overlap(Carre& c);
-    initialise_Carre_Centre (cc, g_max);
+    initialise_Carre_Centre (cc);
 }
 void Defensor::D_overlap(){
     unsigned int compteur = nbTrue();
@@ -117,16 +117,16 @@ void Defensor::D_overlap(){
         exit(EXIT_FAILURE);
     }
 }
-void Defensor::DefensorInHome(unsigned int countF, Carre& c,unsigned int g_max){
-    if (Carre_dans_Carre(c,cd,g_max) == 0){
+void Defensor::DefensorInHome(unsigned int countF, Carre& c){
+    if (Carre_dans_Carre(c,cd) == 0){
         cout << message::defensor_not_within_home(x1,y1,countF);
         exit(EXIT_FAILURE);
     }
 }
-void Defensor::BigTest(unsigned int countF, Carre& c,const unsigned int& g_max){
-    DefensorInHome(countF,c,g_max);
+void Defensor::BigTest(unsigned int countF, Carre& c){
+    DefensorInHome(countF,c);
     D_overlap();
-    initialise_Carre_Centre(cd,g_max);
+    initialise_Carre_Centre(cd);
 }
 void Predator::P_overlap(){
     unsigned int compteur = nbTrue();
@@ -138,7 +138,7 @@ void Predator::P_overlap(){
         exit(EXIT_FAILURE);
     }
 }
-void Predator::BigTest(unsigned int countF, Carre& c, const unsigned int& g_max){
+void Predator::BigTest(unsigned int countF, Carre& c){
     P_overlap();
-    initialise_Carre_Centre(cp,g_max);
+    initialise_Carre_Centre(cp);
 }

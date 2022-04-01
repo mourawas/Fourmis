@@ -1,7 +1,7 @@
 #include <iostream>
 #include "nourriture.h"
 
-void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture, grille& grille){
+void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture){
 	
 	unsigned int x, y;
 
@@ -11,10 +11,10 @@ void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture, gri
 	Nourriture n(x, y);
 	c = creeCarre(x, y, 1);
 
-	testCarre(grille, c, g_max);
-	unsigned int compteur = nbTrue(grille);
-	intialiseCarre(grille, c, g_max);
-	bool sup = supUnique(grille, c, g_max, compteur);
+	testCarre(c);
+	unsigned int compteur = nbTrue();
+	intialiseCarre(c);
+	bool sup = supUnique(c, compteur);
 	if (sup) {
 		cout << message::food_overlap(x, y) << endl;
 		exit(EXIT_FAILURE);

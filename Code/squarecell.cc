@@ -5,7 +5,7 @@ using namespace std;
 
 static grille grid;
 
-void initialiseGrille(const unsigned int& g_max) {
+void initialiseGrille() {
     for (size_t i = 0; i < g_max; ++i) {
         grid.push_back(vector<bool>());
         for (size_t j = 0; j < g_max; ++j) {
@@ -14,7 +14,7 @@ void initialiseGrille(const unsigned int& g_max) {
     }
 }
 
-void testCarre(Carre& c, const unsigned int& g_max) {
+void testCarre(Carre& c) {
 	    
     if (c.x > (g_max)) {
         cout << error_squarecell::print_index(c.x, g_max-1) << endl;
@@ -34,7 +34,7 @@ void testCarre(Carre& c, const unsigned int& g_max) {
     }
 }
 
-void initialiseCarre(Carre& c, const unsigned int& g_max) {
+void initialiseCarre(Carre& c) {
     for (size_t i = c.y; i < c.y + c.side; ++i) {
         for (size_t j = c.x; j < c.x + c.side; ++j) {
             grid[g_max-1-i][j] = true;
@@ -78,7 +78,7 @@ unsigned int nbTrue()
     return compteur;
 }
 
-bool sup(Carre& c1, Carre& c2, const unsigned int& g_max) {
+bool sup(Carre& c1, Carre& c2) {
     unsigned int compteur = nbTrue(grid);
     if (compteur != ((c1.side * c1.side) + (c2.side * c2.side))) {
         return true;
@@ -94,7 +94,7 @@ bool supUnique(Carre& c, unsigned int& compteur) {
 }
 
 
-void supprimerCarre(Carre& c, const unsigned int& g_max) {
+void supprimerCarre(Carre& c) {
     for (size_t i = c.y; i < c.y + c.side; ++i) {
         for (size_t j = c.x; j < c.x + c.side; ++j) {
             grid[g_max-1-i][j] = false;
@@ -102,7 +102,7 @@ void supprimerCarre(Carre& c, const unsigned int& g_max) {
     }
 }
 
-void afficheGrille(grille& grid){
+void afficheGrille(){
 	for(auto ligne : grid){
 		for(auto kase : ligne){
 			if(!kase){
@@ -116,23 +116,7 @@ void afficheGrille(grille& grid){
 	}
 }
 
-/*bool multisup(vector <Carre>& v, const unsigned int& g_max)
-{
-    for (size_t i(0); i < v.size(); ++i){
-        for (size_t j(i+1);j < v.size(); ++j){
-            if(superposition(grid, v[i], v[j], g_max) == 0){
-                cout << "passage"<< endl;
-                return true;
-            }
-        }
-    }
-    return false;
-}*/
-
-//Tester les éléments dans l'ordre qu'ils sont lus (pas à faire ici)
-//Si deux elements se superposent, pas grave pour rendu 1
-
-bool Carre_dans_Carre(Carre& c1, Carre& c2, const unsigned int& g_max) {
+bool Carre_dans_Carre(Carre& c1, Carre& c2) {
     bool t;
     if (c2.side > c1.side){
         t = false;
@@ -152,7 +136,7 @@ bool Carre_dans_Carre(Carre& c1, Carre& c2, const unsigned int& g_max) {
     return true;
 }*/
 
-void initialise_Carre_centre (Carre c, unsigned int g_max)
+void initialise_Carre_centre(Carre c)
 {
     unsigned int t = (c.x - c.side%2);
     cout << t << endl;

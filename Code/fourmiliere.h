@@ -23,7 +23,7 @@ public:
 
     vector<unique_ptr<Fourmis> > get_vfourmis();
     void ajouterFoumis(Fourmis* nouveau);
-    void testFourmis(grille& grille, unsigned int& countF, unsigned int& i);
+    void testFourmis(unsigned int& countF, unsigned int& i);
 };
 
-void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, grille);
+void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere);

@@ -35,7 +35,7 @@ void Simulation::decodage_ligne(string line){
 		break;
 
 	case NOURRITURE:
-		decodage_ligne_nourriture(line, vnourriture, grille);
+		decodage_ligne_nourriture(line, vnourriture);
 		++count;
 		if (count == total) {
 			etat = NBF;

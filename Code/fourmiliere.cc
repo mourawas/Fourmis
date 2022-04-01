@@ -58,9 +58,9 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere) 
 
     switch (etat) {
     case COL:
-        decodage_ligne_fourmis(line, grille, etat, Col, Def, Pre);
+        decodage_ligne_fourmis(line, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Collector(Col));
-        vfourmiliere[countF - 1].testFourmis(grille, countF - 1, j);
+        vfourmiliere[countF - 1].testFourmis(countF - 1, j);
         ++j; ++countC;
 
         if (countC == nbC) {
@@ -69,9 +69,9 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere) 
         break;
 
     case DEF:
-        decodage_ligne_fourmis(line, grille, etat, Col, Def, Pre);
+        decodage_ligne_fourmis(line, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Defensor(Def));
-        vfourmiliere[countF - 1].testFourmis(grid, countF - 1, j);
+        vfourmiliere[countF - 1].testFourmis(countF - 1, j);
         ++j; ++countD;
         if (countD == nbD) {
             etat = PRE;
@@ -79,9 +79,9 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere) 
         break;
 
     case PRE:
-        decodage_ligne_fourmis(line, grid, etat, Col, Def, Pre);
+        decodage_ligne_fourmis(line, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Predator(Pre));
-        vfourmiliere[countF - 1].testFourmis(grille, countF - 1, j);
+        vfourmiliere[countF - 1].testFourmis(countF - 1, j);
         ++j; ++countP;
 
         if (countP == nbP) {

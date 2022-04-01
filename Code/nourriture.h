@@ -16,4 +16,4 @@ class Nourriture{
 	
 };
 
-void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture, grille& grille); //peut etre lui donner la grille
+void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture); //peut etre lui donner la grille

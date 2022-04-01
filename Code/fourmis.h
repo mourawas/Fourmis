@@ -14,7 +14,7 @@ protected :
     unsigned int x1;
     unsigned int y1;
 public:
-    virtual void BigTest(unsigned int countF, Carre& c, const unsigned int& g_max);
+    virtual void BigTest(unsigned int countF, Carre& c);
     Fourmis (unsigned int x1, unsigned int y1, unsigned int age)
     : x1(x1),y1(y1),age(age)
     {}
@@ -37,7 +37,7 @@ class Generator : public Fourmis {
     Generator (unsigned int xg, unsigned int yg, unsigned int total_food)
     : xg(xg), yg(yg), total_food(total_food)
     {}
-    void BigTest(unsigned int countF, Carre& c, const unsigned int& g_max) override;
+    void BigTest(unsigned int countF, Carre& c) override;
     void GeneratorInHome(unsigned int countF, Carre& c);
     void G_Overlap();
 };
@@ -53,7 +53,7 @@ public:
     : x1(x1), y1(y1), age(age), food(food)
     {}
     void C_overlap();
-    void BigTest(unsigned int countF, Carre& c, unsigned int& g_max) override;
+    void BigTest(unsigned int countF, Carre& c) override;
     void iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2);
 };
 
@@ -64,10 +64,10 @@ private:
     Carre cd = {x1, y1, side};
 public:
     void D_overlap();
-    void DefensorInHome(unsigned int countF,Carre& c,unsigned int g_max);
-    void BigTest(unsigned int countF, carre& c, const unsigned int& g_max) override;
+    void DefensorInHome(unsigned int countF, Carre& c);
+    void BigTest(unsigned int countF, Carre& c) override;
     Defensor(unsigned int x1, unsigned int y1, unsigned int age)
-    :x1(x1),y1(y1),age(age)
+    :x1(x1), y1(y1), age(age)
     {}
     void iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2);
 };
@@ -79,7 +79,7 @@ private:
     Carre cp = {x1, y1, side}
 public:
     void P_overlap();
-    void BigTest(unsigned int countF, Carre& c, const unsigned int& g_max) override;
+    void BigTest(unsigned int countF, Carre& c) override;
     Predator(unsigned int x1, unsigned y1, unsigned age)
     :x1(x1),y1(y1),age(age)
     {}
