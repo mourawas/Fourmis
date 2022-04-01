@@ -12,6 +12,10 @@ bool Fourmiliere::verification(grille& grille, Fourmiliere& f, vector<Fourmilier
     }
 }
 
+vector<unique_ptr<Fourmis> > Fourmiliere::get_vfourmis() {
+    return vfourmis;
+}
+
 vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
 {
     vector < Carre > vectC;
@@ -22,15 +26,19 @@ vector< Carre > extraction_vector ( vector <Fourmiliere>& vectF)
     return vectC;
 }
 
-void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere) {
+void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, grille) {
     
-    unsigned int x, y, side, x1, y1, total_food, nbC, nbD, nbP;
+    enum Etat = {GEN, COL, DEF, }
+
+    unsigned int x, y, side, xg, yg, total_food, nbC, nbD, nbP;
 
     isstringstream line(data);
 
-    data >> x >> y >> side >> x1 >> y1 >> total_food >> nbC >> nbD >> nbP;
+    data >> x >> y >> side >> xg >> yg >> total_food >> nbC >> nbD >> nbP;
 
-    Fourmiliere f(x, y, side, total_food, nbC, nbD, nbP);
+    Fourmiliere f(x, y, side, nbC, nbD, nbP, total_food);
 
+    switch()
 
+    decodage_ligne_fourmis(line, Fourmiliere::get_vfourmis());
 }
