@@ -36,7 +36,7 @@ class Generator : public Fourmis {
     Carre cg = {x1, y1, side};
     public :
     Generator (unsigned int x1, unsigned int y1, unsigned int total_food)
-    : x1(x1), y1(y1), total_food(total_food)
+    : Fourmis(x1, y1), total_food(total_food)
     {}
     void BigTest(unsigned int countF, Carre& c) override;
     void GeneratorInHome(unsigned int countF, Carre& c);
@@ -51,7 +51,7 @@ private:
     Carre cc = {x1, y1, side};
 public:
     Collector(unsigned int x1, unsigned y1, unsigned int age, bool food)
-    : x1(x1), y1(y1), age(age), food(food)
+    : Fourmis(x1, y1), age(age), food(food)
     {}
     void C_overlap();
     void BigTest(unsigned int countF, Carre& c) override;
@@ -68,7 +68,7 @@ public:
     void DefensorInHome(unsigned int countF, Carre& c);
     void BigTest(unsigned int countF, Carre& c) override;
     Defensor(unsigned int x1, unsigned int y1, unsigned int age)
-    :x1(x1), y1(y1), age(age)
+    :Fourmis(x1, y1), age(age)
     {}
     void iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2);
 };
@@ -82,7 +82,7 @@ public:
     void P_overlap();
     void BigTest(unsigned int countF, Carre& c) override;
     Predator(unsigned int x1, unsigned y1, unsigned age)
-    :x1(x1),y1(y1),age(age)
+    : Fourmis(x1, y1), age(age)
     {}
     void iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2);
 };

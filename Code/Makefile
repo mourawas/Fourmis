@@ -35,6 +35,6 @@ simulation.o: simulation.cc simulation.h squarecell.h nourriture.h \
  fourmiliere.h
 fourmiliere.o: fourmiliere.cc squarecell.h fourmis.h nourriture.h \
  fourmiliere.h message.h
-fourmis.o: fourmis.cc squarecell.h message.h fourmis.h nourriture.h
-nourriture.o: nourriture.cc message.h squarecell.h nourriture.h
+fourmis.o: fourmis.cc fourmis.h squarecell.h message.h nourriture.h
+nourriture.o: nourriture.cc nourriture.h message.h squarecell.h
 message.o: message.cc message.h
