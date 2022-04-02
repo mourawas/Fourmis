@@ -1,60 +1,55 @@
 #include "fourmiliere.h"
 
-vector<unique_ptr<Fourmis> > Fourmiliere::get_vfourmis() {
-    return vfourmis;
-}
-
-void Fourmiliere::ajouterFoumis(Fourmis* nouveau) {
+void Fourmiliere::ajouterFourmis(Fourmis* nouveau) {
     if (nouveau != nullptr) {
-        vfourmis.push_back(unique_ptr<Fourmis>(nouveau))
+        vfourmis.push_back(unique_ptr<Fourmis>(nouveau));
     }
 }
 
-void Fourmiliere::testFourmis(unsigned int& countF, unsigned int& i) {
-    vfourmis[i]->BigTest(countF, c)
+void Fourmiliere::testFourmis(unsigned int countF, unsigned int j) {
+    vfourmis[j]->BigTest(countF, c);
 }
 
-void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere) {
-
-    enum Etat = { FOURMILIERE, COL, DEF, PRO };
-    static unsigned int etat = FOURMILIERE, countF = 0, countC = 0, countD = 0, countP = 0, j = 0;
+void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, unsigned int totF) {
+	
+	static unsigned int etat (FOURMILIERE);
+    static unsigned int countF = 0, countC = 0, countD = 0, countP = 0, j = 0;
 
     unsigned int x, y, side, xg, yg, total_food;
     static unsigned int nbC, nbD, nbP;
 
-    isstringstream line(data);
+    istringstream data(line);
 
     if (etat == FOURMILIERE) {
         data >> x >> y >> side >> xg >> yg >> total_food >> nbC >> nbD >> nbP;
         Carre c = { x, y, side };
         Fourmiliere f(c, nbC, nbD, nbP);
 
-        f.ajouter_fourmis(new Generator(xg, yg, total_food));
+        f.ajouterFourmis(new Generator(xg, yg, total_food));
         //tester generator
-        decodage_ligne_fourmis(line, Fourmiliere::get_vfourmis());
         ++j, ++countF;
 
-        vfourmiliere.push_back(move(f));
+        vfourmiliere.push_back(std::move(f));
         countC = 0;
         countD = 0;
         countP = 0;
 
         if (nbC) {
-            etat = Col;
+            etat = COL;
         }
         else if (nbD) {
-            etat = Def;
+            etat = DEF;
         }
         else if (nbP) {
-            etat = Pre;
+            etat = PRE;
         }
         else if (countF == totF) {
             return;
         }
     }
-    Collector Col(0, 0, 0);
-    Defensor Def(0, 0);
-    Protector Pro(0, 0);
+    Collector Col(0, 0, 0, 0);
+    Defensor Def(0, 0, 0);
+    Predator Pre(0, 0, 0);
 
     switch (etat) {
     case COL:
@@ -86,7 +81,7 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere) 
 
         if (countP == nbP) {
             etat = FOURMILIERE;
-            i = 0;
+            j = 0;
         }
         break;
     }

@@ -32,7 +32,8 @@ squarecell.o: squarecell.cc squarecell.h error_squarecell.h
 error_squarecell.o: error_squarecell.cc error_squarecell.h
 prog.o: prog.cc simulation.h squarecell.h error_squarecell.h nourriture.h \
  constantes.h message.h fourmiliere.h fourmis.h
-simulation.o: simulation.cc
+simulation.o: simulation.cc simulation.h squarecell.h error_squarecell.h \
+ nourriture.h constantes.h message.h fourmiliere.h fourmis.h
 fourmiliere.o: fourmiliere.cc fourmiliere.h squarecell.h \
  error_squarecell.h fourmis.h message.h nourriture.h constantes.h
 fourmis.o: fourmis.cc fourmis.h squarecell.h error_squarecell.h message.h \

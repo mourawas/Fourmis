@@ -1,5 +1,4 @@
-#include <vector>
-#include <iostream>
+
 #include "squarecell.h"
 using namespace std;
 
@@ -136,7 +135,7 @@ bool Carre_dans_Carre(Carre& c1, Carre& c2) {
     return true;
 }
 
-void initialise_Carre_centre(Carre c)
+void initialise_Carre_Centre(Carre c)
 {
     unsigned int t = (c.x - c.side%2);
     cout << t << endl;

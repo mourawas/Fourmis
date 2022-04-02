@@ -1,6 +1,7 @@
+#include "simulation.h"
 using namespace std;
 
-void Simulation::lecture(char * nom_fichier)
+void lecture(char * nom_fichier, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture)
 {
     string line;
     ifstream fichier(nom_fichier); 
@@ -10,17 +11,18 @@ void Simulation::lecture(char * nom_fichier)
         {
 			if(line[0]=='#')  continue;  
        
-			decodage_ligne(line);
+			decodage_ligne(line, vfourmiliere, vnourriture);
         }
-        cout << "fin de la lecture" << endl;
+        cout << "SUCCES" << endl;
 	}
 	else {
 		exit(0);
 	}	
 }
 
-void Simulation::decodage_ligne(string line){
+void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture){
 	
+	unsigned int totF, total_food;
 	istringstream data(line);
 
 	switch (etat)
@@ -29,15 +31,15 @@ void Simulation::decodage_ligne(string line){
 		data >> total_food;
 		count = 0;
 		if (total_food == 0) {
-			etat = nbF;
+			etat = NBF;
 		}
-		else etat = Nourriture;
+		else etat = NOURRITURE;
 		break;
 
 	case NOURRITURE:
 		decodage_ligne_nourriture(line, vnourriture);
 		++count;
-		if (count == total) {
+		if (count == total_food) {
 			etat = NBF;
 		}
 		break;
@@ -51,15 +53,16 @@ void Simulation::decodage_ligne(string line){
 		else if (totF > maxF) {
 			exit(EXIT_FAILURE);
 		}
-		else etat = FOURMILIERE;
+		else etat = FOURMIL;
 		break;
 
-	case FOURMILIERE:
-		if (countF == totF) {
-			break;
-		}
-		decodage_ligne_fourmiliere(line, vfourmiliere);
+	case FOURMIL:
+		decodage_ligne_fourmiliere(line, vfourmiliere, totF);
 
 		break;
 	}
+}
+
+void Simulation::lancement(char* nom_fichier){
+	lecture(nom_fichier, vfourmiliere, vnourriture);
 }

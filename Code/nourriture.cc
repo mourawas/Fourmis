@@ -1,19 +1,19 @@
-#include <iostream>
 #include "nourriture.h"
 
 void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture){
 	
 	unsigned int x, y;
 
-	isstringstream line(data);
+	istringstream data(line);
 	data >> x >> y;
-
+	
+	unsigned int sizeN = 1;
 	Nourriture n(x, y);
-	c = creeCarre(x, y, 1);
+	Carre c = creeCarre(x, y, sizeN);
 
 	testCarre(c);
 	unsigned int compteur = nbTrue();
-	intialiseCarre(c);
+	initialiseCarre(c);
 	bool sup = supUnique(c, compteur);
 	if (sup) {
 		cout << message::food_overlap(x, y) << endl;

@@ -1,7 +1,6 @@
-#ifndef SIMULATION_H
-#define SIMULATION_H
+#ifndef HEADERS_H
+#define HEADERS_H
 
-#include "simulation.h"
 #include "squarecell.h"
 #include "nourriture.h"
 #include "fourmiliere.h"
@@ -10,23 +9,23 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+using namespace std;
 
 class Simulation {
-	
-	void lecture(char* nom_fichier);
-
-	void decodage_ligne(std::string line);
-
-	enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMILIERE};
-
-	static int etat = nbN;
-	static int count = 0, countC = 0, countD = 0, countP = 0, total = 0, countF = 0;
-	int x1, y1, age, x, y, side, total_food, nbC, nbD, nbP, totF;
-	bool foodb;
-	string foods;
-
-	vector<Nourriture> vnourriture;
+	private:
 	vector<Fourmiliere> vfourmiliere;
+	vector<Nourriture> vnourriture;
+	public:
+	void lancement(char* nom_fichier);
+	
 };
+
+void lecture(char* nom_fichier, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture);
+void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture);
+
+enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMIL};
+
+static unsigned int etat(NBN);
+static unsigned int count(0);
 
 #endif

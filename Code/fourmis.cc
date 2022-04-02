@@ -1,12 +1,5 @@
 #include "fourmis.h"
 
-vector<Fourmis> vectFourmis pushbackfourmis (unsigned int x1, unsigned int y1, unsigned int age)
-{
-    Fourmis fourmi (x1, x2, age);
-    vectFourmis.push_back(fourmis);
-    return vectFourmis;
-}
-
 void Collector::iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2) {
     x1 = x2;
     y1 = y2;
@@ -28,9 +21,7 @@ void Predator::iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2)
     age = age2;
 }
 
-void decodage_ligne_fourmis(string line, unsigned int etat,
-                            Collector& Col, Defensor& Def,
-                            Predator& Pre)
+void decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col, Defensor& Def, Predator& Pre)
 {
     istringstream data(line);
     unsigned int x, y, age;
@@ -64,14 +55,8 @@ void decodage_ligne_fourmis(string line, unsigned int etat,
     }
 }
 
-void pushbackFourmis(Fourmis* fourmis, vector<unique_ptr<Fourmis> >& V)
-{
-    if (fourmis != nullptr){
-        V.push_back(unique_ptr<Fourmis>(fourmis));
-    }
-}
 void Generator::GeneratorInHome(unsigned int countF, Carre& c){
-    if (CarreDansCarre(c, cg) ==  0 )
+    if (Carre_dans_Carre(c, cg) ==  0 )
     {
         cout << message::generator_not_within_home(x1,y1,countF);
         exit (EXIT_FAILURE);
@@ -102,9 +87,9 @@ void Collector::C_overlap(){
         exit(EXIT_FAILURE);
     }
 }
-}
+
 void Collector::BigTest(unsigned int countF, Carre& c){
-    C_overlap(Carre& c);
+    C_overlap();
     initialise_Carre_Centre (cc);
 }
 void Defensor::D_overlap(){

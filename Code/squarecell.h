@@ -1,6 +1,6 @@
-#ifndef SQUARECELL_H
-#define SQUARECELL_H
-
+#ifndef HEADERSQ_H
+#define HEADERSQ_H
+#include <iostream>
 #include <vector>
 #include "squarecell.h"
 #include "error_squarecell.h"
@@ -40,7 +40,7 @@ Carre creeCarre(unsigned int& x, unsigned int& y, unsigned int& dim);
 
 void vectCarre(vector<Carre>& vcarre, Carre c);
 
-void initialise_Carre_centre(Carre c);
+void initialise_Carre_Centre(Carre c);
 
 bool Carre_dans_Carre(Carre& c1, Carre& c2);
 
