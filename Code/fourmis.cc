@@ -56,7 +56,7 @@ void decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col, Defe
 }
 
 void Generator::GeneratorInHome(unsigned int countF, Carre& c){
-    if (Carre_dans_Carre(c, cg) ==  0 )
+    if (Carre_dans_Carre(c, cg))
     {
         cout << message::generator_not_within_home(x1,y1,countF);
         exit (EXIT_FAILURE);
@@ -103,7 +103,7 @@ void Defensor::D_overlap(){
     }
 }
 void Defensor::DefensorInHome(unsigned int countF, Carre& c){
-    if (Carre_dans_Carre(c,cd) == 0){
+    if (Carre_dans_Carre(c,cd)){
         cout << message::defensor_not_within_home(x1,y1,countF);
         exit(EXIT_FAILURE);
     }

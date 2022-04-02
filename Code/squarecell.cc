@@ -41,27 +41,21 @@ void initialiseCarre(Carre& c) {
     }
 }
 
-void supCoord(Carre c, unsigned& x, unsigned& y) {
+void supCoord(Carre c, unsigned int& x, unsigned int& y) {
     for (size_t i = (g_max - 1 - (c.y-c.side/2)); i > (g_max - 1 - (c.y - c.side / 2)-c.side); --i) {
         for (size_t j(c.x-c.side/2); j <= c.x+c.side/2; ++j) {
             if (grid[i][j] == true) {
                 x = j;
-                y = i;
-            }
+                y = i;	//on veut les coordonnées ou les index ??
+            }			//si coord alors y = g_max-i
         }
     }
-
 }
 
 Carre creeCarre(unsigned int& x,unsigned int& y, unsigned int& side)
 {
 	Carre c = {x, y, side};
     return c;
-}
-
-void vectCarre(vector<Carre>& vcarre, Carre c)
-{	
-	vcarre.push_back(c);
 }
 
 unsigned int nbTrue()
@@ -116,30 +110,24 @@ void afficheGrille(){
 }
 
 bool Carre_dans_Carre(Carre& c1, Carre& c2) {
-    bool t;
     if (c2.side > c1.side){
-        t = false;
-        return t;
+        return true;
     }
-    unsigned int compteur = 0;
-    for (size_t i = 0; i < g_max; ++i) {
-        for (size_t j = 0; j < g_max; ++j) {
-            if(grid[i][j] == true){
-                ++compteur;
-            }
-        }
-    }
-    if (compteur != (c1.side * c1.side)){
-        t=false;
-    }
-    return true;
+    if((c2.x > c1.x + c1.side) or (c2.y > c1.y + c1.side)){
+		return true;
+	}
+	if((c2.x + side/2 > c1.x + side) or (c2.y + side/2 > c1.y + side) ){
+		return true;
+	}
+	
+    return false;	//carre pas dans carre
 }
 
-void initialise_Carre_Centre(Carre c)
+void initialise_Carre_Centre(Carre& c)
 {
-    unsigned int t = (c.x - c.side%2);
+    unsigned int t = (c.x - c.side/2);
     cout << t << endl;
-    unsigned int k = (c.y - c.side%2);
+    unsigned int k = (c.y - c.side/2);
     cout << k << endl;
     Carre nc = creeCarre (t, k, c.side);
     initialiseCarre (nc);

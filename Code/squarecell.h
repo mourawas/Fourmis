@@ -38,9 +38,7 @@ void afficheGrille();
 
 Carre creeCarre(unsigned int& x, unsigned int& y, unsigned int& dim);
 
-void vectCarre(vector<Carre>& vcarre, Carre c);
-
-void initialise_Carre_Centre(Carre c);
+void initialise_Carre_Centre(Carre& c);
 
 bool Carre_dans_Carre(Carre& c1, Carre& c2);
 
