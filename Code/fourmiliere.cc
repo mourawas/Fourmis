@@ -10,6 +10,10 @@ void Fourmiliere::testFourmis(unsigned int countF, unsigned int j) {
     vfourmis[j]->BigTest(countF, c);
 }
 
+void supFourmiliere(Fourmiliere& f2, unsigned int& countF, unsigned int& j){
+	
+}
+
 void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, unsigned int totF) {
 	
 	enum Etat_lecture2 { FOURMILIERE, COL, DEF, PRE };
@@ -24,12 +28,14 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
         data >> x >> y >> side >> xg >> yg >> total_food >> nbC >> nbD >> nbP;
         Carre c = { x, y, side };
         Fourmiliere f(c, nbC, nbD, nbP);
-
-        f.ajouterFourmis(new Generator(xg, yg, total_food));
-        //tester generator
+		
+		Carre cg = {xg, yg, sizeG};
+        f.ajouterFourmis(new Generator(xg, yg, total_food, cg));
+        testCarreCentre(cg);
+        
         ++j, ++countF;
-        cout << "fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << nbC << " " << nbD << " " << nbP << endl;
-		cout << "generator " << countF << " : " << xg << " " << yg << " " << total_food << endl;
+        //cout << "fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << nbC << " " << nbD << " " << nbP << endl;
+		//cout << "generator " << countF << " : " << xg << " " << yg << " " << total_food << endl;
         vfourmiliere.push_back(std::move(f));
         countC = 0;
         countD = 0;
@@ -57,7 +63,6 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
 
     switch (etat) {
     case COL:
-		cout << "Etat = " << etat << endl;
         decodage_ligne_fourmis(line, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Collector(Col));
         vfourmiliere[countF - 1].testFourmis(countF - 1, j);
@@ -69,7 +74,6 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
         break;
 
     case DEF:
-		cout << "Etat = " << etat << endl;
         decodage_ligne_fourmis(line, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Defensor(Def));
         vfourmiliere[countF - 1].testFourmis(countF - 1, j);
@@ -80,7 +84,6 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
         break;
 
     case PRE:
-		cout << "Etat = " << etat << endl;
         decodage_ligne_fourmis(line, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Predator(Pre));
         vfourmiliere[countF - 1].testFourmis(countF - 1, j);

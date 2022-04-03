@@ -13,6 +13,7 @@ using namespace std;
 #include "squarecell.h"
 #include "message.h"
 #include "nourriture.h"
+#include "constantes.h"
 
 class Fourmis {
 protected :
@@ -36,11 +37,11 @@ class Generator : public Fourmis {
     private :
     unsigned int side = sizeG;
     unsigned int total_food;
-    Carre cg = {x1, y1, side};
+    Carre cg;
     public :
     ~Generator() {};
-    Generator (unsigned int x1, unsigned int y1, unsigned int total_food)
-    : Fourmis(x1, y1), total_food(total_food)
+    Generator (unsigned int x1, unsigned int y1, unsigned int total_food, Carre cg)
+    : Fourmis(x1, y1), total_food(total_food), cg(cg)
     {}
     void BigTest(unsigned int countF, Carre& c) override;
     void GeneratorInHome(unsigned int countF, Carre& c);
@@ -52,12 +53,13 @@ private:
     unsigned int age;
     bool food;
     unsigned int side = sizeC;
-    Carre cc = {x1, y1, side};
+    Carre cc;
 public:
 	~Collector() {};
     Collector(unsigned int x1, unsigned y1, unsigned int age, bool food)
     : Fourmis(x1, y1), age(age), food(food)
     {}
+    void setcc(unsigned int& x2,unsigned int& y2);
     void C_overlap();
     void BigTest(unsigned int countF, Carre& c) override;
     void iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2);
@@ -67,15 +69,16 @@ class Defensor : public Fourmis {
 private:
     unsigned int age;
     unsigned int side = sizeD;
-    Carre cd = {x1, y1, side};
+    Carre cd;
 public:
+    Defensor(unsigned int x1, unsigned int y1, unsigned int age)
+    :Fourmis(x1, y1), age(age)
+    {}
 	~Defensor() {};
     void D_overlap();
     void DefensorInHome(unsigned int countF, Carre& c);
     void BigTest(unsigned int countF, Carre& c) override;
-    Defensor(unsigned int x1, unsigned int y1, unsigned int age)
-    :Fourmis(x1, y1), age(age)
-    {}
+    void setcd(unsigned int& x2,unsigned int& y2);
     void iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2);
 };
 
@@ -83,14 +86,15 @@ class Predator : public Fourmis {
 private:
     unsigned int age;
     unsigned int side = sizeP;
-    Carre cp = {x1, y1, side};
+    Carre cp;
 public:
+	Predator(unsigned int x1, unsigned y1, unsigned age)
+    : Fourmis(x1, y1), age(age)
+    {}
 	~Predator() {};
     void P_overlap();
     void BigTest(unsigned int countF, Carre& c) override;
-    Predator(unsigned int x1, unsigned y1, unsigned age)
-    : Fourmis(x1, y1), age(age)
-    {}
+    void setcp(unsigned int& x2,unsigned int& y2);
     void iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2);
 };
 

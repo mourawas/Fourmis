@@ -61,15 +61,17 @@ void initialiseCarre(Carre& c) {
     }
 }
 
-void supCoord(Carre c, unsigned int& x, unsigned int& y) {
-    for (size_t i = (g_max - 1 - (c.y-c.side/2)); i > (g_max - 1 - (c.y - c.side / 2)-c.side); --i) {
-        for (size_t j(c.x-c.side/2); j <= c.x+c.side/2; ++j) {
-            if (grid[i][j] == true) {
+bool supCoord(Carre c, unsigned int& x, unsigned int& y) {
+    for (size_t i = c.y - c.side/2; i <= c.y + c.side/2; ++i) {
+        for (size_t j = c.x - c.side/2; j <= c.x + c.side/2; ++j) {
+            if (grid[g_max-i-1][j]) {
                 x = j;
-                y = i;	//on veut les coordonnées ou les index ??
-            }			//si coord alors y = g_max-i
+                y = i;
+                return true;	//on veut les coordonnées ou les index ??
+            }					//si coord alors y = g_max-i
         }
     }
+    return false;
 }
 
 Carre creeCarre(unsigned int& x,unsigned int& y, unsigned int& side)
@@ -146,9 +148,7 @@ bool Carre_dans_Carre(Carre& c1, Carre& c2) {
 void initialise_Carre_Centre(Carre& c)
 {
     unsigned int t = (c.x - c.side/2);
-    //cout << t << endl;
     unsigned int k = (c.y - c.side/2);
-    //cout << k << endl;
     Carre nc = creeCarre (t, k, c.side);
     initialiseCarre (nc);
 }

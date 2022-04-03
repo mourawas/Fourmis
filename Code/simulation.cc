@@ -32,7 +32,7 @@ void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourr
 	case NBN:
 		data >> total_food;
 		
-		cout << "total food : " << total_food << endl; 
+		//cout << "total food : " << total_food << endl; 
 		if (!total_food) {
 			etat = NBF;
 		}
@@ -40,7 +40,7 @@ void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourr
 		break;
 
 	case NOURRITURE:
-		cout << "nourriture " << count << " : ";
+		//cout << "nourriture " << count << " : ";
 		decodage_ligne_nourriture(line, vnourriture);
 		++count;
 		if (count == total_food) {
@@ -51,7 +51,7 @@ void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourr
 	case NBF:
 		data >> totF;
 		count = 0;
-		cout << "totF : " << totF << endl;
+		//cout << "totF : " << totF << endl;
 		if (!totF) {
 			exit(EXIT_FAILURE);
 		}
@@ -59,9 +59,7 @@ void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourr
 		break;
 
 	case FOURMIL:
-		cout << "entree decodage fourmiliere" << endl;
 		decodage_ligne_fourmiliere(line, vfourmiliere, totF);
-		cout << "passage a la prochaine ligne" << endl;
 		break;
 	}
 }

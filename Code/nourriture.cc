@@ -23,6 +23,6 @@ void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture){
 	}
 	vnourriture.push_back(n);
 
-	cout << x << " " << y << endl;
+	//cout << x << " " << y << endl;
 }
 

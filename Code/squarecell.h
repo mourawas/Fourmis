@@ -30,7 +30,7 @@ bool supUnique(Carre& c, unsigned int& compteur);
 
 unsigned int nbTrue();
 
-void supCoord(Carre c, unsigned& x, unsigned& y);
+bool supCoord(Carre c, unsigned& x, unsigned& y);
 
 void testCarre(Carre& c);
 

@@ -2,13 +2,13 @@
 
 CXX     = g++
 CXXFLAGS = -g -Wall -std=c++11
-CXXFILES = squarecell.cc error_squarecell.cc prog.cc simulation.cc fourmiliere.cc fourmis.cc nourriture.cc message.cc
+CXXFILES = squarecell.cc error_squarecell.cc projet.cc simulation.cc fourmiliere.cc fourmis.cc nourriture.cc message.cc
 OFILES = $(CXXFILES:.cc=.o)
 
 # Definition de la premiere regle
 
-prog: $(OFILES)
-	$(CXX) $(OFILES) -o prog
+projet: $(OFILES)
+	$(CXX) $(OFILES) -o projet
 
 # Definitions de cibles particulieres
 
@@ -22,7 +22,7 @@ depend:
 
 clean:
 	@echo " *** EFFACE MODULES OBJET ET EXECUTABLE ***"
-	@/bin/rm -f *.o *.x *.cc~ *.h~ prog
+	@/bin/rm -f *.o *.x *.cc~ *.h~ projet
 
 #
 # -- Regles de dependances generees automatiquement
@@ -30,8 +30,8 @@ clean:
 # DO NOT DELETE THIS LINE
 squarecell.o: squarecell.cc squarecell.h error_squarecell.h
 error_squarecell.o: error_squarecell.cc error_squarecell.h
-prog.o: prog.cc simulation.h squarecell.h error_squarecell.h nourriture.h \
- constantes.h message.h fourmiliere.h fourmis.h
+projet.o: projet.cc simulation.h squarecell.h error_squarecell.h \
+ nourriture.h constantes.h message.h fourmiliere.h fourmis.h
 simulation.o: simulation.cc simulation.h squarecell.h error_squarecell.h \
  nourriture.h constantes.h message.h fourmiliere.h fourmis.h
 fourmiliere.o: fourmiliere.cc fourmiliere.h squarecell.h \
