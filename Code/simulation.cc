@@ -13,7 +13,7 @@ void lecture(char * nom_fichier, vector<Fourmiliere>& vfourmiliere, vector<Nourr
        
 			decodage_ligne(line, vfourmiliere, vnourriture);
         }
-        cout << message::success << endl;
+        cout << message::success();
 	}
 	else {
 		exit(0);

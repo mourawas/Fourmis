@@ -37,12 +37,15 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
 
         if (nbC) {
             etat = COL;
+            return;
         }
         else if (nbD) {
             etat = DEF;
+            return;
         }
         else if (nbP) {
             etat = PRE;
+            return;
         }
         else if (countF == totF) {
             return;
