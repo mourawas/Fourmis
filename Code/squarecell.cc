@@ -83,8 +83,8 @@ bool supCoord(Carre c, unsigned int& x, unsigned int& y) {
             if (grid[g_max-i-1][j]) {
                 x = j;
                 y = i;
-                return true;	//on veut les coordonnées ou les index ??
-            }					//si coord alors y = g_max-i
+                return true;
+            }
         }
     }
     return false;
@@ -113,9 +113,9 @@ bool sup(Carre& c1, Carre& c2) {
 
 bool supUnique(Carre& c, unsigned int& compteur) {
     if (compteur == (compteur + c.side*c.side)) {
-        return true;    //superposition
+        return true;
     }
-    return false;       //pas sup
+    return false;
 }
 
 
@@ -164,3 +164,4 @@ void initialise_Carre_Centre(Carre& c)
     Carre nc = {t, k, c.side};
     initialiseCarre (nc);
 }
+                                                                                      

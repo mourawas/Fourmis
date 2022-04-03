@@ -29,6 +29,7 @@ public:
     void Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int countF);
 };
 
-void decodage_ligne_fourmiliere(string line,vector<Fourmiliere>& vfourmiliere,unsigned int totF);
+void decodage_ligne_fourmiliere(string line,vector<Fourmiliere>& vfourmiliere,
+                                unsigned int totF);
 
 #endif

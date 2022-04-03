@@ -20,33 +20,27 @@ void Fourmiliere::Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int count
 	}
 }
 
-void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, unsigned int totF) {
+void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
+                                unsigned int totF) {
 	
 	enum Etat_lecture2 { FOURMILIERE, COL, DEF, PRE };
 	static unsigned int etat (FOURMILIERE);
     static unsigned int countF = 0, countC = 0, countD = 0, countP = 0, j = 0;
     unsigned int x, y, side, xg, yg, total_food;
     static unsigned int nbC, nbD, nbP;
-
     istringstream data(line);
-
     if (etat == FOURMILIERE) {
         data >> x >> y >> side >> xg >> yg >> total_food >> nbC >> nbD >> nbP;
         Carre c = { x, y, side };
         testCarre(c);
         Fourmiliere f(c, nbC, nbD, nbP);
-		
 		Carre cg = {xg, yg, sizeG};
         f.ajouterFourmis(new Generator(xg, yg, total_food, cg));
         testCarreCentre(cg);
         f.testFourmis(countF, j);
-        
         ++j, ++countF;
-        //cout << "fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << nbC << " " << nbD << " " << nbP << endl;
-		//cout << "generator " << countF << " : " << xg << " " << yg << " " << total_food << endl;
 		f.Foverlap(vfourmiliere, countF);
         vfourmiliere.push_back(std::move(f));
-       
         countC = 0;
         countD = 0;
         countP = 0;

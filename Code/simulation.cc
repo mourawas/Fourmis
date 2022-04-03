@@ -1,7 +1,8 @@
 #include "simulation.h"
 using namespace std;
 
-void lecture(char * nom_fichier, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture)
+void lecture(char * nom_fichier, vector<Fourmiliere>& vfourmiliere,
+             vector<Nourriture>& vnourriture)
 {
     string line;
     ifstream fichier(nom_fichier); 
@@ -20,19 +21,17 @@ void lecture(char * nom_fichier, vector<Fourmiliere>& vfourmiliere, vector<Nourr
 	}	
 }
 
-void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture){
+void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere,
+                    vector<Nourriture>& vnourriture){
 	enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMIL};
 	istringstream data(line);
-	
 	static unsigned int etat(NBN);
 	static unsigned int count(0), total_food(0), totF(0);
-	
 	switch (etat)
 	{
 	case NBN:
 		data >> total_food;
 		
-		//cout << "total food : " << total_food << endl; 
 		if (!total_food) {
 			etat = NBF;
 		}
@@ -40,7 +39,6 @@ void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourr
 		break;
 
 	case NOURRITURE:
-		//cout << "nourriture " << count << " : ";
 		decodage_ligne_nourriture(line, vnourriture);
 		++count;
 		if (count == total_food) {

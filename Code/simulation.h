@@ -21,7 +21,9 @@ class Simulation {
 	
 };
 
-void lecture(char* nom_fichier, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture);
-void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture);
+void lecture(char* nom_fichier, vector<Fourmiliere>& vfourmiliere,
+             vector<Nourriture>& vnourriture);
+void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere,
+                    vector<Nourriture>& vnourriture);
 
 #endif

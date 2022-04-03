@@ -1,6 +1,7 @@
 #include "fourmis.h"
 
-void Collector::iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2) {
+void Collector::iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2,
+                     bool& food2) {
     x1 = x2;
     y1 = y2;
     age = age2;
@@ -36,7 +37,8 @@ void Predator::setcp(unsigned int& x2, unsigned int& y2){
 	cp = {x2, y2, sizeP};
 }
 
-void decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col, Defensor& Def, Predator& Pre)
+void decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col,
+                            Defensor& Def, Predator& Pre)
 {
     istringstream data(line);
     unsigned int x, y, age;

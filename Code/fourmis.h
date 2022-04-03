@@ -98,6 +98,7 @@ public:
     void iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2);
 };
 
-void decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col, Defensor& Def, Predator& Pre);
+void decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col,
+                            Defensor& Def, Predator& Pre);
 
 #endif
