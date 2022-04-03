@@ -33,6 +33,26 @@ void testCarre(Carre& c) {
     }
 }
 
+void testCarreCentre(Carre& c){
+		    
+    if (c.x > (g_max)) {
+        cout << error_squarecell::print_index(c.x, g_max-1) << endl;
+        exit(EXIT_FAILURE);
+    }
+    else if (c.y > (g_max)) {
+        cout << error_squarecell::print_index(c.x, g_max-1) << endl;
+        exit(EXIT_FAILURE);
+    }
+    else if ((c.x + c.side/2) > (g_max)) {
+        cout << error_squarecell::print_outside(c.x, c.side, g_max-1) << endl;
+        exit(EXIT_FAILURE);
+    }
+    else if ((c.y + c.side/2) > (g_max)) {
+        cout << error_squarecell::print_outside(c.y, c.side, g_max-1) << endl;
+        exit(EXIT_FAILURE);
+    }
+}
+
 void initialiseCarre(Carre& c) {
     for (size_t i = c.y; i < c.y + c.side; ++i) {
         for (size_t j = c.x; j < c.x + c.side; ++j) {
@@ -116,7 +136,7 @@ bool Carre_dans_Carre(Carre& c1, Carre& c2) {
     if((c2.x > c1.x + c1.side) or (c2.y > c1.y + c1.side)){
 		return true;
 	}
-	if((c2.x + side/2 > c1.x + side) or (c2.y + side/2 > c1.y + side) ){
+	if((c2.x + c2.side/2 > c1.x + c1.side) or (c2.y + c2.side/2 > c1.y + c1.side) ){
 		return true;
 	}
 	
@@ -126,9 +146,9 @@ bool Carre_dans_Carre(Carre& c1, Carre& c2) {
 void initialise_Carre_Centre(Carre& c)
 {
     unsigned int t = (c.x - c.side/2);
-    cout << t << endl;
+    //cout << t << endl;
     unsigned int k = (c.y - c.side/2);
-    cout << k << endl;
+    //cout << k << endl;
     Carre nc = creeCarre (t, k, c.side);
     initialiseCarre (nc);
 }

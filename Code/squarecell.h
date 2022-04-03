@@ -34,6 +34,8 @@ void supCoord(Carre c, unsigned& x, unsigned& y);
 
 void testCarre(Carre& c);
 
+void testCarreCentre(Carre& c);
+
 void afficheGrille();
 
 Carre creeCarre(unsigned int& x, unsigned int& y, unsigned int& dim);

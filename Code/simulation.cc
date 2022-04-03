@@ -13,7 +13,7 @@ void lecture(char * nom_fichier, vector<Fourmiliere>& vfourmiliere, vector<Nourr
        
 			decodage_ligne(line, vfourmiliere, vnourriture);
         }
-        cout << "SUCCES" << endl;
+        cout << message::success << endl;
 	}
 	else {
 		exit(0);
@@ -21,22 +21,26 @@ void lecture(char * nom_fichier, vector<Fourmiliere>& vfourmiliere, vector<Nourr
 }
 
 void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture){
-	
-	unsigned int totF, total_food;
+	enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMIL};
 	istringstream data(line);
-
+	
+	static unsigned int etat(NBN);
+	static unsigned int count(0), total_food(0), totF(0);
+	
 	switch (etat)
 	{
 	case NBN:
 		data >> total_food;
-		count = 0;
-		if (total_food == 0) {
+		
+		cout << "total food : " << total_food << endl; 
+		if (!total_food) {
 			etat = NBF;
 		}
 		else etat = NOURRITURE;
 		break;
 
 	case NOURRITURE:
+		cout << "nourriture " << count << " : ";
 		decodage_ligne_nourriture(line, vnourriture);
 		++count;
 		if (count == total_food) {
@@ -46,23 +50,23 @@ void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourr
 
 	case NBF:
 		data >> totF;
-		if (totF == 0) {
-			message::success();
-			exit(EXIT_SUCCESS);
-		}
-		else if (totF > maxF) {
+		count = 0;
+		cout << "totF : " << totF << endl;
+		if (!totF) {
 			exit(EXIT_FAILURE);
 		}
 		else etat = FOURMIL;
 		break;
 
 	case FOURMIL:
+		cout << "entree decodage fourmiliere" << endl;
 		decodage_ligne_fourmiliere(line, vfourmiliere, totF);
-
+		cout << "passage a la prochaine ligne" << endl;
 		break;
 	}
 }
 
 void Simulation::lancement(char* nom_fichier){
+	initialiseGrille();
 	lecture(nom_fichier, vfourmiliere, vnourriture);
 }

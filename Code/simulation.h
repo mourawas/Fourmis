@@ -4,6 +4,7 @@
 #include "squarecell.h"
 #include "nourriture.h"
 #include "fourmiliere.h"
+#include "message.h"
 #include <cstdlib>
 #include <string>
 #include <iostream>
@@ -22,10 +23,5 @@ class Simulation {
 
 void lecture(char* nom_fichier, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture);
 void decodage_ligne(string line, vector<Fourmiliere>& vfourmiliere, vector<Nourriture>& vnourriture);
-
-enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMIL};
-
-static unsigned int etat(NBN);
-static unsigned int count(0);
 
 #endif

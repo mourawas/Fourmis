@@ -29,8 +29,6 @@ public:
     void testFourmis(unsigned int countF, unsigned int j);
 };
 
-enum Etat_lecture2 { FOURMILIERE, COL, DEF, PRE };
-
 void decodage_ligne_fourmiliere(string line,vector<Fourmiliere>& vfourmiliere,unsigned int totF);
 
 #endif

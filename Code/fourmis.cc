@@ -32,8 +32,8 @@ void decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col, Defe
         data >> x >> y >> age >> foods;
         if (foods == "true") {
             food = 1;
-        }
-        else food = 0;
+        }else food = 0;
+        cout << "Col : " << x << " " << y << " " << age << " " << food << endl;
         Carre c = { x, y, sizeC };
         //tester le carré
         Col.iniC(x, y, age, food);
@@ -41,6 +41,7 @@ void decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col, Defe
     }
     if (etat == 2) {
         data >> x >> y >> age;
+        cout << "Def : " << x << " " << y << " " << age << endl;
         Carre c = { x, y, sizeD };
         //tester le carré
         Def.iniD(x, y, age);
@@ -48,6 +49,7 @@ void decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col, Defe
     }
     if (etat == 3) {
         data >> x >> y >> age;
+        cout << "Pre : " << x << " " << y << " " << age << endl;
         Carre c = { x, y, sizeP };
         //tester le carré
         Pre.iniP(x, y, age);

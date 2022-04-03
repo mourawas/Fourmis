@@ -12,9 +12,9 @@ void Fourmiliere::testFourmis(unsigned int countF, unsigned int j) {
 
 void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, unsigned int totF) {
 	
+	enum Etat_lecture2 { FOURMILIERE, COL, DEF, PRE };
 	static unsigned int etat (FOURMILIERE);
     static unsigned int countF = 0, countC = 0, countD = 0, countP = 0, j = 0;
-
     unsigned int x, y, side, xg, yg, total_food;
     static unsigned int nbC, nbD, nbP;
 
@@ -28,7 +28,8 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
         f.ajouterFourmis(new Generator(xg, yg, total_food));
         //tester generator
         ++j, ++countF;
-
+        cout << "fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << nbC << " " << nbD << " " << nbP << endl;
+		cout << "generator " << countF << " : " << xg << " " << yg << " " << total_food << endl;
         vfourmiliere.push_back(std::move(f));
         countC = 0;
         countD = 0;
@@ -53,6 +54,7 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
 
     switch (etat) {
     case COL:
+		cout << "Etat = " << etat << endl;
         decodage_ligne_fourmis(line, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Collector(Col));
         vfourmiliere[countF - 1].testFourmis(countF - 1, j);
@@ -64,6 +66,7 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
         break;
 
     case DEF:
+		cout << "Etat = " << etat << endl;
         decodage_ligne_fourmis(line, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Defensor(Def));
         vfourmiliere[countF - 1].testFourmis(countF - 1, j);
@@ -74,6 +77,7 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
         break;
 
     case PRE:
+		cout << "Etat = " << etat << endl;
         decodage_ligne_fourmis(line, etat, Col, Def, Pre);
         vfourmiliere[countF - 1].ajouterFourmis(new Predator(Pre));
         vfourmiliere[countF - 1].testFourmis(countF - 1, j);
