@@ -74,12 +74,6 @@ bool supCoord(Carre c, unsigned int& x, unsigned int& y) {
     return false;
 }
 
-Carre creeCarre(unsigned int& x,unsigned int& y, unsigned int& side)
-{
-	Carre c = {x, y, side};
-    return c;
-}
-
 unsigned int nbTrue()
 {
     unsigned int compteur = 0;
@@ -134,11 +128,13 @@ void afficheGrille(){
 bool Carre_dans_Carre(Carre& c1, Carre& c2) {
     if (c2.side > c1.side){
         return true;
-    }
-    if((c2.x > c1.x + c1.side) or (c2.y > c1.y + c1.side)){
+    }else if(c2.x + c2.side/2 >= c1.x + c1.side-1){
 		return true;
-	}
-	if((c2.x + c2.side/2 > c1.x + c1.side) or (c2.y + c2.side/2 > c1.y + c1.side) ){
+	}else if(c2.y + c2.side/2 >= c1.y + c1.side-1){
+		return true;
+	}else if(c2.x - c2.side/2 <= c1.x){
+		return true;
+	}else if(c2.y - c2.side/2 <= c1.y){
 		return true;
 	}
 	
@@ -149,6 +145,6 @@ void initialise_Carre_Centre(Carre& c)
 {
     unsigned int t = (c.x - c.side/2);
     unsigned int k = (c.y - c.side/2);
-    Carre nc = creeCarre (t, k, c.side);
+    Carre nc = {t, k, c.side};
     initialiseCarre (nc);
 }

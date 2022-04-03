@@ -38,8 +38,6 @@ void testCarreCentre(Carre& c);
 
 void afficheGrille();
 
-Carre creeCarre(unsigned int& x, unsigned int& y, unsigned int& dim);
-
 void initialise_Carre_Centre(Carre& c);
 
 bool Carre_dans_Carre(Carre& c1, Carre& c2);

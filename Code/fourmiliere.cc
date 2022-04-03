@@ -32,6 +32,7 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
 		Carre cg = {xg, yg, sizeG};
         f.ajouterFourmis(new Generator(xg, yg, total_food, cg));
         testCarreCentre(cg);
+        f.testFourmis(countF, j);
         
         ++j, ++countF;
         //cout << "fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << nbC << " " << nbD << " " << nbP << endl;

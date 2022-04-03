@@ -80,12 +80,9 @@ void Generator::GeneratorInHome(unsigned int countF, Carre& c){
     }
 }
 void Generator::G_Overlap(){
-    unsigned int compteur = nbTrue();
-    if (supUnique(cg,compteur))
-    {
-        unsigned int a,b;
-        supCoord (cg,a,b);
-        cout << message::generator_overlap(x1,y1,a,b);
+		unsigned int x, y;
+		if(supCoord(cg, x, y)){
+        cout << message::generator_overlap(x1, y1, x, y);
         exit(EXIT_FAILURE);
     }
 }
@@ -110,13 +107,10 @@ void Collector::BigTest(unsigned int countF, Carre& c){
 }
 
 void Defensor::D_overlap(){
-    unsigned int compteur = nbTrue();
-    if (supUnique(cd,compteur))
-    {
-        unsigned int a,b;
-        supCoord (cd,a,b);
-        cout << message::defensor_overlap(x1,y1,a,b);
-        exit(EXIT_FAILURE);
+		unsigned int x, y;
+		if(supCoord(cd, x, y)){
+			cout << message::defensor_overlap(x1,y1,x,y);
+			exit(EXIT_FAILURE);
     }
 }
 
@@ -128,19 +122,16 @@ void Defensor::DefensorInHome(unsigned int countF, Carre& c){
 }
 
 void Defensor::BigTest(unsigned int countF, Carre& c){
-    DefensorInHome(countF,c);
+    DefensorInHome(countF, c);
     D_overlap();
     initialise_Carre_Centre(cd);
 }
 
 void Predator::P_overlap(){
-    unsigned int compteur = nbTrue();
-    if (supUnique(cp,compteur))
-    {
-        unsigned int a,b;
-        supCoord (cp,a,b);
-        cout << message::predator_overlap(x1,y1);
-        exit(EXIT_FAILURE);
+		unsigned int x, y;
+		if(supCoord(cp, x, y)){
+			cout << message::predator_overlap(x1,y1);
+			exit(EXIT_FAILURE);
     }
 }
 

@@ -8,19 +8,16 @@ void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture){
 	
 	unsigned int sizeN = 1;
 	Nourriture n(x, y);
-	Carre c = creeCarre(x, y, sizeN);
+	Carre c = {x, y, sizeN};
 		
 	testCarreCentre(c);
 		
-	unsigned int compteur = nbTrue();
-	initialiseCarre(c);
-		
-	bool sup = supUnique(c, compteur);
-		
-	if (sup) {
-		cout << message::food_overlap(x, y) << endl;
+	unsigned int x1, y1;
+	if(supCoord(c, x1, y1)){
+		cout << message::food_overlap(x, y);
 		exit(EXIT_FAILURE);
 	}
+	initialiseCarre(c);
 	vnourriture.push_back(n);
 
 	//cout << x << " " << y << endl;
