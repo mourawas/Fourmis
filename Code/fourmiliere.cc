@@ -9,9 +9,15 @@ void Fourmiliere::ajouterFourmis(Fourmis* nouveau) {
 void Fourmiliere::testFourmis(unsigned int countF, unsigned int j) {
     vfourmis[j]->BigTest(countF, c);
 }
-
-void supFourmiliere(Fourmiliere& f2, unsigned int& countF, unsigned int& j){
+void Fourmiliere::Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int countF){
 	
+	for(unsigned int i = 0; i < vfourmiliere.size(); ++i){
+		
+		if(supFourmiliere(c, vfourmiliere[i].c)){
+			cout << message::homes_overlap(i, countF-1);
+			exit(EXIT_FAILURE);
+		}
+	}
 }
 
 void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, unsigned int totF) {
@@ -27,6 +33,7 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
     if (etat == FOURMILIERE) {
         data >> x >> y >> side >> xg >> yg >> total_food >> nbC >> nbD >> nbP;
         Carre c = { x, y, side };
+        testCarre(c);
         Fourmiliere f(c, nbC, nbD, nbP);
 		
 		Carre cg = {xg, yg, sizeG};
@@ -37,7 +44,9 @@ void decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere, 
         ++j, ++countF;
         //cout << "fourmiliere " << countF << " : " << x << " " << y << " " << side << " " << nbC << " " << nbD << " " << nbP << endl;
 		//cout << "generator " << countF << " : " << xg << " " << yg << " " << total_food << endl;
+		f.Foverlap(vfourmiliere, countF);
         vfourmiliere.push_back(std::move(f));
+       
         countC = 0;
         countD = 0;
         countP = 0;

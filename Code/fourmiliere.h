@@ -24,10 +24,9 @@ public:
     Fourmiliere (Carre c, unsigned int nbC, unsigned int nbD, unsigned int nbP)
     : c(c), nbC(nbC), nbD(nbD), nbP(nbP)
     { }
-
     void ajouterFourmis(Fourmis* nouveau);
     void testFourmis(unsigned int countF, unsigned int j);
-    void supFourmiliere(Fourmiliere& f2, unsigned int& countF, unsigned int& j);
+    void Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int countF);
 };
 
 void decodage_ligne_fourmiliere(string line,vector<Fourmiliere>& vfourmiliere,unsigned int totF);

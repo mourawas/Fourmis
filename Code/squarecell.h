@@ -24,6 +24,8 @@ void supprimerCarre(Carre& c);
 
 unsigned int nbTrue();
 
+bool supFourmiliere(Carre& c1, Carre& c2);
+
 bool sup(Carre& c1, Carre& c2);
 
 bool supUnique(Carre& c, unsigned int& compteur);

@@ -88,6 +88,7 @@ void Generator::G_Overlap(){
 }
 
 void Generator::BigTest(unsigned int countF, Carre& c){
+	testCarreCentre(cg);
     GeneratorInHome(countF, c);
     G_Overlap();
     initialise_Carre_Centre(cg);
@@ -102,6 +103,7 @@ void Collector::C_overlap(){
 }
 
 void Collector::BigTest(unsigned int countF, Carre& c){
+	testCarreCentre(cc);
     C_overlap();
     initialise_Carre_Centre (cc);
 }
@@ -122,6 +124,7 @@ void Defensor::DefensorInHome(unsigned int countF, Carre& c){
 }
 
 void Defensor::BigTest(unsigned int countF, Carre& c){
+	testCarreCentre(cd);
     DefensorInHome(countF, c);
     D_overlap();
     initialise_Carre_Centre(cd);
@@ -136,6 +139,7 @@ void Predator::P_overlap(){
 }
 
 void Predator::BigTest(unsigned int countF, Carre& c){
+	testCarre(cp);
     P_overlap();
     initialise_Carre_Centre(cp);
 }

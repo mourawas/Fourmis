@@ -13,22 +13,38 @@ void initialiseGrille() {
     }
 }
 
+bool supFourmiliere(Carre& c1, Carre& c2){
+	unsigned int coin1x = c1.x + c1.side;
+	unsigned int coin1y = c1.y + c1.side;
+	
+	unsigned int coin2x = c2.x + c2.side;
+	unsigned int coin2y = c2.y + c2.side;
+	
+	if((c1.x > coin2x) or (c2.x > coin1x)){
+		return false;
+	}
+	if((c1.y > coin2y) or (c2.y > coin1y)){
+		return false;
+	}
+	return true;
+}
+
 void testCarre(Carre& c) {
 	    
     if (c.x > (g_max)) {
-        cout << error_squarecell::print_index(c.x, g_max-1) << endl;
+        cout << error_squarecell::print_index(c.x, g_max-1);
         exit(EXIT_FAILURE);
     }
     else if (c.y > (g_max)) {
-        cout << error_squarecell::print_index(c.x, g_max-1) << endl;
+        cout << error_squarecell::print_index(c.x, g_max-1);
         exit(EXIT_FAILURE);
     }
     else if ((c.x + c.side) > (g_max)) {
-        cout << error_squarecell::print_outside(c.x, c.side, g_max-1) << endl;
+        cout << error_squarecell::print_outside(c.x, c.side, g_max-1);
         exit(EXIT_FAILURE);
     }
     else if ((c.y + c.side) > (g_max)) {
-        cout << error_squarecell::print_outside(c.y, c.side, g_max-1) << endl;
+        cout << error_squarecell::print_outside(c.y, c.side, g_max-1);
         exit(EXIT_FAILURE);
     }
 }
@@ -36,19 +52,19 @@ void testCarre(Carre& c) {
 void testCarreCentre(Carre& c){
 		    
     if (c.x > (g_max)) {
-        cout << error_squarecell::print_index(c.x, g_max-1) << endl;
+        cout << error_squarecell::print_index(c.x, g_max-1);
         exit(EXIT_FAILURE);
     }
     else if (c.y > (g_max)) {
-        cout << error_squarecell::print_index(c.x, g_max-1) << endl;
+        cout << error_squarecell::print_index(c.x, g_max-1);
         exit(EXIT_FAILURE);
     }
     else if ((c.x + c.side/2) > (g_max)) {
-        cout << error_squarecell::print_outside(c.x, c.side, g_max-1) << endl;
+        cout << error_squarecell::print_outside(c.x, c.side, g_max-1);
         exit(EXIT_FAILURE);
     }
     else if ((c.y + c.side/2) > (g_max)) {
-        cout << error_squarecell::print_outside(c.y, c.side, g_max-1) << endl;
+        cout << error_squarecell::print_outside(c.y, c.side, g_max-1);
         exit(EXIT_FAILURE);
     }
 }
