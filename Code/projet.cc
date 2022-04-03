@@ -1,6 +1,8 @@
+//projet.cc
+//Mouhamad: 50%
+//Louis: 50%
 #include "simulation.h"
-#include <iostream>
-#include <vector>
+
 using namespace std;
 
 int main(int argc, char * argv[])

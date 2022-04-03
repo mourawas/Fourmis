@@ -1,3 +1,6 @@
+//fourmiliere.cc
+//Mouhamad: 50%
+//Louis: 50%
 #include "fourmiliere.h"
 
 void Fourmiliere::ajouterFourmis(Fourmis* nouveau) {

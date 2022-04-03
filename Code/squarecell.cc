@@ -1,4 +1,6 @@
-
+//squarecell.cc
+//Mouhamad: 50%
+//Louis: 50%
 #include "squarecell.h"
 using namespace std;
 

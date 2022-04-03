@@ -1,3 +1,6 @@
+//simulation.cc
+//Mouhamad: 50%
+//Louis: 50%
 #include "simulation.h"
 using namespace std;
 

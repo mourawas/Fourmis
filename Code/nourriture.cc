@@ -1,3 +1,6 @@
+//nourriture.cc
+//Mouhamad: 50%
+//Louis: 50%
 #include "nourriture.h"
 
 void decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture){

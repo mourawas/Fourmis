@@ -1,3 +1,6 @@
+//fourmis.cc
+//Mouhamad: 50%
+//Louis: 50%
 #include "fourmis.h"
 
 void Collector::iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2,

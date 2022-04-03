@@ -2,13 +2,15 @@
 #define HEADERSQ_H
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include "squarecell.h"
 #include "error_squarecell.h"
 using namespace std;
 
 typedef vector<vector<bool> > grille;
 
-const unsigned int g_max = 128;
+constexpr short unsigned g_dim(7);
+constexpr short unsigned g_max(pow(2,g_dim));
 
 struct Carre {
 	unsigned int x;
