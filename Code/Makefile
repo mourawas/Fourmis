@@ -1,43 +1,53 @@
-# Definitions de macros
+OUT = projet
+CXX = g++
+CXXFLAGS = -Wall -std=c++11
+LINKING = `pkg-config --cflags gtkmm-3.0`
+LDLIBS = `pkg-config --libs gtkmm-3.0`
+OFILES = squarecell.o error_squarecell.o projet.o simulation.o fourmiliere.o fourmis.o nourriture.o message.o gui.o graphic.o
 
-CXX     = g++
-CXXFLAGS = -g -Wall -std=c++11
-CXXFILES = squarecell.cc error_squarecell.cc projet.cc simulation.cc fourmiliere.cc fourmis.cc nourriture.cc message.cc
-OFILES = $(CXXFILES:.cc=.o)
+all: $(OUT)
 
-# Definition de la premiere regle
+gui.o: gui.cc gui.h simulation.h graphic.h
+	$(CXX) $(CXXFLAGS) $(LINKING) -c $< -o $@ $(LINKING)
 
-projet: $(OFILES)
-	$(CXX) $(OFILES) -o projet
+graphic.o: graphic.cc graphic.h
+	$(CXX) $(CXXFLAGS) $(LINKING) -c $< -o $@ $(LINKING)
 
-# Definitions de cibles particulieres
+squarecell.o: squarecell.cc squarecell.h error_squarecell.h graphic.h
+	$(CXX) $(CXXFLAGS) $(LINKING) -c $< -o $@ $(LINKING)
 
-depend:
-	@echo " *** MISE A JOUR DES DEPENDANCES ***"
-	@(sed '/^# DO NOT DELETE THIS LINE/q' Makefile && \
-	  $(CXX) -MM $(CXXFLAGS) $(CXXFILES) | \
-	  egrep -v "/usr/include" \
-	 ) >Makefile.new
-	@mv Makefile.new Makefile
+error_squarecell.o: error_squarecell.cc error_squarecell.h
+	$(CXX) $(CXXFLAGS) $(LINKING) -c $< -o $@ $(LINKING)
+
+projet.o: projet.cc simulation.h squarecell.h error_squarecell.h \
+ graphic.h nourriture.h constantes.h message.h fourmiliere.h fourmis.h \
+ gui.h
+	$(CXX) $(CXXFLAGS) $(LINKING) -c $< -o $@ $(LINKING)
+
+simulation.o: simulation.cc simulation.h squarecell.h \
+ error_squarecell.h graphic.h nourriture.h constantes.h message.h \
+ fourmiliere.h fourmis.h
+	$(CXX) $(CXXFLAGS) $(LINKING) -c $< -o $@ $(LINKING)
+
+fourmiliere.o: fourmiliere.cc fourmiliere.h squarecell.h \
+ error_squarecell.h graphic.h fourmis.h message.h nourriture.h \
+ constantes.h
+	$(CXX) $(CXXFLAGS) $(LINKING) -c $< -o $@ $(LINKING)
+
+fourmis.o: fourmis.cc fourmis.h squarecell.h error_squarecell.h \
+ graphic.h message.h nourriture.h constantes.h
+	$(CXX) $(CXXFLAGS) $(LINKING) -c $< -o $@ $(LINKING)
+
+nourriture.o: nourriture.cc nourriture.h constantes.h message.h \
+ squarecell.h error_squarecell.h graphic.h
+	$(CXX) $(CXXFLAGS) $(LINKING) -c $< -o $@ $(LINKING)
+
+message.o: message.cc message.h
+	$(CXX) $(CXXFLAGS) $(LINKING) -c $< -o $@ $(LINKING)
+
+$(OUT): $(OFILES)
+	$(CXX) $(CXXFLAGS) $(LINKING) $(OFILES) -o $@ $(LDLIBS)
 
 clean:
-	@echo " *** EFFACE MODULES OBJET ET EXECUTABLE ***"
-	@/bin/rm -f *.o *.x *.cc~ *.h~ projet
-
-#
-# -- Regles de dependances generees automatiquement
-#
-# DO NOT DELETE THIS LINE
-squarecell.o: squarecell.cc squarecell.h error_squarecell.h
-error_squarecell.o: error_squarecell.cc error_squarecell.h
-projet.o: projet.cc simulation.h squarecell.h error_squarecell.h \
- nourriture.h constantes.h message.h fourmiliere.h fourmis.h
-simulation.o: simulation.cc simulation.h squarecell.h error_squarecell.h \
- nourriture.h constantes.h message.h fourmiliere.h fourmis.h
-fourmiliere.o: fourmiliere.cc fourmiliere.h squarecell.h \
- error_squarecell.h fourmis.h message.h nourriture.h constantes.h
-fourmis.o: fourmis.cc fourmis.h squarecell.h error_squarecell.h message.h \
- nourriture.h constantes.h
-nourriture.o: nourriture.cc nourriture.h constantes.h message.h \
- squarecell.h error_squarecell.h
-message.o: message.cc message.h
+	@echo "Cleaning compilation files"
+	@rm *.o $(OUT) *.cc~ *.h~
