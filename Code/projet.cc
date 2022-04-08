@@ -2,6 +2,7 @@
 //Mouhamad: 50%
 //Louis: 50%
 #include "simulation.h"
+#include "gui.h"
 
 using namespace std;
 

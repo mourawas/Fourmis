@@ -5,6 +5,7 @@
 #include <cmath>
 #include "squarecell.h"
 #include "error_squarecell.h"
+#include "graphic.h"
 using namespace std;
 
 typedef vector<vector<bool> > grille;
