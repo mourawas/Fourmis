@@ -1,6 +1,6 @@
 #include "gui.h"
 #include <cairomm/context.h>
-
+#include <string>
 using namespace std;
 
 static Frame default_frame = {-150., 150., -100., 10., 1.5, 300, 200};
@@ -97,8 +97,7 @@ MyEvent::MyEvent() :
 	m_Button_step("step"),
 	m_Button_previous("previous"),
 	m_Button_next("next")
-	
-	
+		
 {
 	set_title("test");
 	set_border_width(0);
@@ -163,33 +162,29 @@ void MyEvent::on_button_clicked_open()
             Gtk::FILE_CHOOSER_ACTION_OPEN);
     dialog.set_transient_for(*this);
 
-    //Add response buttons the the dialog:
     dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
     dialog.add_button("_Open", Gtk::RESPONSE_OK);
-    //Show the dialog and wait for a user response:
+
     int result = dialog.run();
-    //Handle the response:
     switch(result)
     {
-      case(Gtk::RESPONSE_OK):
-      {
-        std::cout << "Open clicked." << std::endl;
-
-        //Notice that this is a std::string, not a Glib::ustring.
-        std::string filename = dialog.get_filename();
-        std::cout << "File selected: " <<  filename << std::endl;
-        break;
-      }
-      case(Gtk::RESPONSE_CANCEL):
-      {
-        std::cout << "Cancel clicked." << std::endl;
-        break;
-      }
-      default:
-      {
-        std::cout << "Unexpected button clicked." << std::endl;
-        break;
-      }
+		case(Gtk::RESPONSE_OK):
+		{
+			cout << "Open clicked." << endl;
+			string filename = dialog.get_filename();
+			cout << "File selected: " <<  filename << endl;
+			break;
+		}
+		case(Gtk::RESPONSE_CANCEL):
+		{
+			cout << "Cancel clicked." << endl;
+			break;
+		}
+		default:
+		{
+			 cout << "Unexpected button clicked." << endl;
+			break;
+		}
     }
 	cout << "open" << endl;
 }

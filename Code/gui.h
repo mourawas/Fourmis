@@ -20,15 +20,14 @@ class MyArea : public Gtk::DrawingArea
 public:
 	MyArea();
 	virtual ~MyArea();
-
 	void setFrame(Frame x); 
 	void adjustFrame();
+
 protected:
 	bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
   
 private:
 	Frame frame;
-	
 };
 
 class MyEvent : public Gtk::Window
