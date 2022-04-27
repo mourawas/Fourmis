@@ -3,8 +3,8 @@
 
 using namespace std;
 
-static Frame default_frame = {-150., 150., -100., 100., 1.5, 300, 200}; 
-
+static Frame default_frame = {-150., 150., -100., 10., 1.5, 300, 200};
+// 1 pour le ratio
 MyArea::MyArea()
 {
 }
@@ -159,6 +159,38 @@ void MyEvent::on_button_clicked_exit()
 }
 void MyEvent::on_button_clicked_open()
 {
+    Gtk::FileChooserDialog dialog("Please choose a file",
+            Gtk::FILE_CHOOSER_ACTION_OPEN);
+    dialog.set_transient_for(*this);
+
+    //Add response buttons the the dialog:
+    dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
+    dialog.add_button("_Open", Gtk::RESPONSE_OK);
+    //Show the dialog and wait for a user response:
+    int result = dialog.run();
+    //Handle the response:
+    switch(result)
+    {
+      case(Gtk::RESPONSE_OK):
+      {
+        std::cout << "Open clicked." << std::endl;
+
+        //Notice that this is a std::string, not a Glib::ustring.
+        std::string filename = dialog.get_filename();
+        std::cout << "File selected: " <<  filename << std::endl;
+        break;
+      }
+      case(Gtk::RESPONSE_CANCEL):
+      {
+        std::cout << "Cancel clicked." << std::endl;
+        break;
+      }
+      default:
+      {
+        std::cout << "Unexpected button clicked." << std::endl;
+        break;
+      }
+    }
 	cout << "open" << endl;
 }
 void MyEvent::on_button_clicked_save()
