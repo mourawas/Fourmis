@@ -3,8 +3,9 @@
 #include <string>
 using namespace std;
 
-static Frame default_frame = {-150., 150., -100., 10., 1.5, 300, 200};
+static Frame default_frame = {-150., 150., -100., 100., 1.5, 300, 200}; 
 // 1 pour le ratio
+
 MyArea::MyArea()
 {
 }
@@ -96,7 +97,10 @@ MyEvent::MyEvent() :
 	m_Button_start("start"),
 	m_Button_step("step"),
 	m_Button_previous("previous"),
-	m_Button_next("next")
+	m_Button_next("next"),
+	m_Label_General("General"),
+	m_Label_Info("Info"),
+	m_Label_Anthill("Anthill info")
 		
 {
 	set_title("test");
@@ -106,14 +110,24 @@ MyEvent::MyEvent() :
 
 	m_Box.pack_start(m_Box_Left);
 	m_Box.pack_start(m_Box_Right);
- 
+	
+	m_Box_Left.pack_start(m_Label_General);
 	m_Box_Left.pack_start(m_Button_exit,false,false);
 	m_Box_Left.pack_start(m_Button_open,false,false);
 	m_Box_Left.pack_start(m_Button_save,false,false);
 	m_Box_Left.pack_start(m_Button_start,false,false);
 	m_Box_Left.pack_start(m_Button_step,false,false);
+	
+	m_Box_Left.pack_start(m_Separator1);
+	m_Box_Left.pack_start(m_Label_Info);
+	
+	m_Box_Left.pack_start(m_Separator2);
+	m_Box_Left.pack_start(m_Label_Anthill);
 	m_Box_Left.pack_start(m_Button_previous,false,false);
 	m_Box_Left.pack_start(m_Button_next,false,false);
+	
+	m_Separator1.set_vexpand(false);
+	m_Separator2.set_vexpand(false);
 	
 	m_Area.set_size_request(200,200);
 	m_Box_Right.pack_start(m_Area);
@@ -156,6 +170,7 @@ void MyEvent::on_button_clicked_exit()
 {
 	cout << "exit" << endl;
 }
+
 void MyEvent::on_button_clicked_open()
 {
     Gtk::FileChooserDialog dialog("Please choose a file",
@@ -188,22 +203,27 @@ void MyEvent::on_button_clicked_open()
     }
 	cout << "open" << endl;
 }
+
 void MyEvent::on_button_clicked_save()
 {
 	cout << "save" << endl;
 }
+
 void MyEvent::on_button_clicked_start()
 {
 	cout << "start" << endl;
 }
+
 void MyEvent::on_button_clicked_step()
 {
 	cout << "step" << endl;
 }
+
 void MyEvent::on_button_clicked_previous()
 {
 	cout << "previous" << endl;
 }
+
 void MyEvent::on_button_clicked_next()
 {
 	cout << "next" << endl;
