@@ -3,17 +3,25 @@
 //Louis: 50%
 #include "simulation.h"
 #include "gui.h"
+#include <gtkmm/application.h>
+#include <gtkmm/window.h>
 
 using namespace std;
 
 int main(int argc, char * argv[])
 {
-	Simulation s;
+	/*Simulation s;
 	if(argc != 2){
 		exit(0);
 	}
 	
-	s.lancement(argv[1]);
+	s.lancement(argv[1]);*/
 	
-	return 0;
+	auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
+	
+	MyEvent win;
+	win.set_title("Side Drawing");
+	win.set_default_size(300, 200);
+ 
+	return app->run(win);
 }
