@@ -45,8 +45,6 @@ protected:
 	void on_button_clicked_previous();
 	void on_button_clicked_next();
 	
-	bool on_key_press_event(GdkEventKey * key_event);
-	
 	Gtk::Box m_Box, m_Box_Left, m_Box_Right;
 	MyArea m_Area;
 	
@@ -64,6 +62,14 @@ protected:
 	Gtk::Label m_Label_General;
 	Gtk::Label m_Label_Info;
 	Gtk::Label m_Label_Anthill;
+	
+	bool on_timeout();
+	bool timer_added;
+	bool disconnected;
+	const unsigned int timeout;
+	unsigned int val;
+	
+	bool on_key_press_event(GdkEventKey * key_event);
 };
 
 #endif

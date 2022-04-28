@@ -100,7 +100,11 @@ MyEvent::MyEvent() :
 	m_Button_next("next"),
 	m_Label_General("General"),
 	m_Label_Info("Info"),
-	m_Label_Anthill("Anthill info")
+	m_Label_Anthill("Anthill info"),
+	timer_added(false),
+	disconnected(false),
+	timeout(1000),
+	val(1)
 		
 {
 	set_title("test");
@@ -126,9 +130,6 @@ MyEvent::MyEvent() :
 	m_Box_Left.pack_start(m_Button_previous,false,false);
 	m_Box_Left.pack_start(m_Button_next,false,false);
 	
-	m_Separator1.set_vexpand(false);
-	m_Separator2.set_vexpand(false);
-	
 	m_Area.set_size_request(200,200);
 	m_Box_Right.pack_start(m_Area);
 	
@@ -150,28 +151,12 @@ MyEvent::MyEvent() :
 	show_all_children();
 }
 
-bool MyEvent::on_key_press_event(GdkEventKey * key_event)
-{
-	if(key_event->type == GDK_KEY_PRESS)
-	{
-		switch(gdk_keyval_to_unicode(key_event->keyval))
-		{
-			case 'q':
-				cout << "Quit" << endl;
-				exit(0);
-				break;
-		}
-	}
-	
-	return Gtk::Window::on_key_press_event(key_event);
-}
-
 void MyEvent::on_button_clicked_exit()
 {
 	cout << "exit" << endl;
 }
 
-void MyEvent::on_button_clicked_open()
+void MyEvent::on_button_clicked_open() //INCOMPLETE
 {
     Gtk::FileChooserDialog dialog("Please choose a file",
             Gtk::FILE_CHOOSER_ACTION_OPEN);
@@ -206,25 +191,93 @@ void MyEvent::on_button_clicked_open()
 
 void MyEvent::on_button_clicked_save()
 {
+	//A DEFINIR
 	cout << "save" << endl;
 }
 
 void MyEvent::on_button_clicked_start()
 {
-	cout << "start" << endl;
+	cout << "start/stop" << endl;
+	
+	if(!timer_added){
+		m_Button_start.set_label("stop");
+		Glib::signal_timeout().connect(
+		sigc::mem_fun(*this, &MyEvent::on_timeout), timeout);
+		
+		timer_added = true;
+		cout << "Timer added" << endl;
+	}else{
+		m_Button_start.set_label("start");
+		timer_added = false;
+		disconnected = true;
+	}
 }
 
 void MyEvent::on_button_clicked_step()
 {
 	cout << "step" << endl;
+	if(!timer_added){
+		++val;
+		cout << val << endl;
+		
+	}
 }
 
 void MyEvent::on_button_clicked_previous()
 {
 	cout << "previous" << endl;
+	val = 1;
 }
 
 void MyEvent::on_button_clicked_next()
 {
 	cout << "next" << endl;
+	val = 1;
+}
+
+bool MyEvent::on_timeout()
+{
+  if(disconnected)
+  {
+	  disconnected = false;
+	  
+	  return false;
+  }
+  
+  cout << val << endl;
+  ++val;
+
+
+  return true; 
+}
+
+bool MyEvent::on_key_press_event(GdkEventKey * key_event){
+	
+	if(key_event->type == GDK_KEY_PRESS){
+		
+		switch(gdk_keyval_to_unicode(key_event->keyval))
+		{
+			case 's':
+				cout << "s" << endl;
+				on_button_clicked_start();
+				break;
+			case '1':
+				cout << "1" << endl;
+				on_button_clicked_step();
+				break;
+			case 'n':
+				cout << "n" << endl;
+				on_button_clicked_next();
+				break;
+			case 'p':
+				cout << "p" << endl;
+				on_button_clicked_previous();
+				break;
+			case 'q':
+				cout << "q" << endl;
+				on_button_clicked_exit();
+				break;
+		}
+	}
+	return Gtk::Window::on_key_press_event(key_event);
 }
