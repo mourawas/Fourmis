@@ -226,13 +226,11 @@ void MyEvent::on_button_clicked_step()
 void MyEvent::on_button_clicked_previous()
 {
 	cout << "previous" << endl;
-	val = 1;
 }
 
 void MyEvent::on_button_clicked_next()
 {
 	cout << "next" << endl;
-	val = 1;
 }
 
 bool MyEvent::on_timeout()
