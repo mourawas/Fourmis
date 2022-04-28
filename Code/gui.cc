@@ -3,8 +3,8 @@
 #include <string>
 using namespace std;
 
-static Frame default_frame = {-150., 150., -100., 100., 1.5, 300, 200}; 
-// 1 pour le ratio
+static Frame default_frame = {-1, 129, -1, 129, 1, 500, 500};
+// xmin,xmax,ymin,ymax
 
 MyArea::MyArea()
 {
@@ -26,6 +26,7 @@ void MyArea::adjustFrame()
 	const int width = allocation.get_width();
 	const int height = allocation.get_height();
 	
+    
 	frame.width  = width;
 	frame.height = height;
 
@@ -68,18 +69,14 @@ static void orthographic_projection(const Cairo::RefPtr<Cairo::Context>& cr,
 bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
 	
-	adjustFrame();
-	orthographic_projection(cr, frame); 
-	
-	cr->set_line_width(10);
-	cr->set_source_rgb(0.8, 0., 0.0);
-	cr->move_to(-50., -50);
-	cr->line_to(50. , 50);
-	cr->move_to(-50. , 50);
-	cr->line_to(50.  ,-50.);
-	
-	cr->stroke();
-	
+    adjustFrame();
+    orthographic_projection(cr, frame);
+    
+    graphic_set_context(cr);
+    graphic_draw_window();
+    graphic_draw_carre_plein(50,50,5,1,0,0);
+	graphic_draw_carre_vide(15,15,7,0,0,1);
+    graphic_draw_losange(100,100,1,1,1);
 	return true;
 }
 
@@ -90,7 +87,6 @@ MyEvent::~MyEvent()
 MyEvent::MyEvent() :
 	m_Box(Gtk::ORIENTATION_HORIZONTAL,10),
 	m_Box_Left(Gtk::ORIENTATION_VERTICAL, 10),
-	m_Box_Right(Gtk::ORIENTATION_VERTICAL, 10),
 	m_Button_exit("exit"),
 	m_Button_open("open"),
 	m_Button_save("save"),
@@ -112,7 +108,7 @@ MyEvent::MyEvent() :
   
 	add(m_Box);
 
-	m_Box.pack_start(m_Box_Left);
+	m_Box.pack_start(m_Box_Left, false, false);
 	m_Box.pack_start(m_Box_Right);
 	
 	m_Box_Left.pack_start(m_Label_General);
@@ -130,7 +126,7 @@ MyEvent::MyEvent() :
 	m_Box_Left.pack_start(m_Button_previous,false,false);
 	m_Box_Left.pack_start(m_Button_next,false,false);
 	
-	m_Area.set_size_request(200,200);
+	m_Area.set_size_request(500,500);
 	m_Box_Right.pack_start(m_Area);
 	
 	m_Button_exit.signal_clicked().connect(sigc::mem_fun(*this,
@@ -153,7 +149,7 @@ MyEvent::MyEvent() :
 
 void MyEvent::on_button_clicked_exit()
 {
-	cout << "exit" << endl;
+    exit(0);
 }
 
 void MyEvent::on_button_clicked_open() //INCOMPLETE
@@ -197,7 +193,6 @@ void MyEvent::on_button_clicked_save()
 
 void MyEvent::on_button_clicked_start()
 {
-	cout << "start/stop" << endl;
 	
 	if(!timer_added){
 		m_Button_start.set_label("stop");
@@ -215,7 +210,6 @@ void MyEvent::on_button_clicked_start()
 
 void MyEvent::on_button_clicked_step()
 {
-	cout << "step" << endl;
 	if(!timer_added){
 		++val;
 		cout << val << endl;
