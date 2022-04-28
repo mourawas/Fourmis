@@ -211,9 +211,8 @@ void MyEvent::on_button_clicked_start()
 void MyEvent::on_button_clicked_step()
 {
 	if(!timer_added){
-		++val;
 		cout << val << endl;
-		
+		++val;
 	}
 }
 
