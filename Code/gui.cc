@@ -74,14 +74,14 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     
     graphic_set_context(cr);
     graphic_draw_window();
-    /*graphic_draw_carre_plein(50,80,3,1,0.48,0);
+    graphic_draw_carre_plein(50,80,3,1,0.48,0);
     graphic_draw_carre_plein(35,81,3,1,0.48,0);
     graphic_draw_plus(50, 80, 3,1, 0, 0);
 	graphic_draw_carre_vide(46,43,13,1,0,0);
     graphic_draw_losange(50,80,1,1,1);
     graphic_draw_carre_plein(52.5,49.5,5,1,0,0);
     graphic_draw_croix (35,81,1,0,0);
-    */
+    
 	return true;
 }
 
@@ -174,6 +174,9 @@ void MyEvent::on_button_clicked_open() //INCOMPLETE
 			cout << "Open clicked." << endl;
 			string filename = dialog.get_filename();
 			cout << "File selected: " <<  filename << endl;
+            char * argv;
+            argv = &filename[0];
+            s.lancement(argv);
 			break;
 		}
 		case(Gtk::RESPONSE_CANCEL):

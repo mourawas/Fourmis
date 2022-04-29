@@ -10,12 +10,12 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
-	/*Simulation s;
-	if(argc != 2){
-		exit(0);
+	Simulation s;
+	if(argc == 2){
+        s.lancement(argv[1]);
+        argc = 1;
 	}
 	
-	s.lancement(argv[1]);*/
 	
 	auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
 	

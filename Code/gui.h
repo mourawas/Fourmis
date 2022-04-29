@@ -70,6 +70,8 @@ protected:
 	unsigned int val;
 	
 	bool on_key_press_event(GdkEventKey * key_event);
+private:
+    Simulation s;
 };
 
 #endif
