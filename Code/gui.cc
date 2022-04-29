@@ -74,9 +74,9 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     
     graphic_set_context(cr);
     graphic_draw_window();
-    graphic_draw_carre_plein(50,50,5,1,0,0);
-	graphic_draw_carre_vide(15,15,7,0,0,1);
-    graphic_draw_losange(100,100,1,1,1);
+    //graphic_draw_carre_plein(50,50,5,1,0,0);
+	//graphic_draw_carre_vide(15,15,7,0,0,1);
+    //graphic_draw_losange(100,100,1,1,1);
 	return true;
 }
 

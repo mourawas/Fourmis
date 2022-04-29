@@ -89,4 +89,4 @@ void graphic_draw_losange(double x,double y,double r, double g, double b){
     (*ptcr)->line_to(x+0.25, y+0.25);
     (*ptcr)->stroke();
 }
-//void graphic_draw_diagonale(double x,double y,double r, double g, double b)
+void graphic_draw_diagonale(double x,double y,double r, double g, double b)
