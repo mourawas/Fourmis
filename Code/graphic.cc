@@ -105,3 +105,4 @@ void graphic_draw_croix(double x, double y, double r, double g, double b ){
     graphic_draw_carre_plein(x+3/2,y-3/2,1,r,g,b);
     graphic_draw_carre_plein(x,y,1,r,g,b);
 }
+
