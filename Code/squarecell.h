@@ -48,13 +48,13 @@ void initialise_Carre_Centre(Carre& c);
 
 bool Carre_dans_Carre(Carre& c1, Carre& c2);
 
-void dessin_carre_croix(double x,double y,double size, double r,double g, double b);
+void dessin_carre_croix(unsigned int x,unsigned int y,double size, double r,double g, double b);
 
-void dessin_carre_plus(double x, double y, double size, double r, double g, double b);
+void dessin_carre_plus(unsigned int x,unsigned int y, double size, double r, double g, double b);
 
-void dessin_carre_plein(double x,double y,double size, double r, double g, double b);
+void dessin_carre_plein(unsigned int x,unsigned int y,double size, double r, double g, double b);
 
-void dessin_losange(double x, double y, double r, double b, double g);
+void dessin_losange(unsigned int x,unsigned int y, double r, double b, double g);
 
-void dessin_carre_vide( double x, double y, double size, double r, double g, double b);
+void dessin_carre_vide( unsigned int x,unsigned int y, double size, double r, double g, double b);
 #endif

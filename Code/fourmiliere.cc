@@ -62,7 +62,8 @@ void Fourmiliere::d_Antil(double x,double y,unsigned int i){
     g=1;
     b=1;
     }
-    dessin_carre_vide(x,y,c.side,r,g,b);
+    double s = c.side;
+    dessin_carre_vide(x,y,s,r,g,b);
     intern_ant_drawing(r,g,b);
 }
 
