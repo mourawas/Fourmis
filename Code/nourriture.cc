@@ -24,4 +24,6 @@ bool decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture){
 	vnourriture.push_back(n);
 	return false;
 }
-
+void Nourriture::dessin_nourriture(){
+    dessin_losange(x,y,1,0,0);
+}

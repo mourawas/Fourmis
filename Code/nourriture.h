@@ -20,9 +20,11 @@ class Nourriture{
 	Nourriture(unsigned int x_, unsigned int y_)
 	: x(x_), y(y_) {}
 	~Nourriture() {};
+    void dessin_nourriture ();
 	
 };
 
 bool decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture);
+
 
 #endif
