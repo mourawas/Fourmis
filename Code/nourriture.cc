@@ -25,5 +25,5 @@ bool decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture){
 	return false;
 }
 void Nourriture::dessin_nourriture(){
-    dessin_losange(x,y,1,0,0);
+    dessin_losange(x, y, 1., 1., 1.);
 }

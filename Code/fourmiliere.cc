@@ -29,7 +29,7 @@ bool Fourmiliere::Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int count
 	return false;
 }
 
-void Fourmiliere::d_Anthill(unsigned int x, unsigned int y, unsigned int i){
+void Fourmiliere::d_Anthill(unsigned int i){
     double r;
     double g;
     double b;
@@ -64,7 +64,7 @@ void Fourmiliere::d_Anthill(unsigned int x, unsigned int y, unsigned int i){
     b=1;
     }
     double s = c.side;
-    dessin_carre_vide(x, y, s, r, g, b);
+    dessin_carre_vide(c.x, c.y, s, r, g, b);
     intern_ant_drawing(r, g, b);
 }
 

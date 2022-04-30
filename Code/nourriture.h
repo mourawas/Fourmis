@@ -20,7 +20,7 @@ class Nourriture{
 	Nourriture(unsigned int x_, unsigned int y_)
 	: x(x_), y(y_) {}
 	~Nourriture() {};
-    void dessin_nourriture ();
+    void dessin_nourriture();
 	
 };
 

@@ -9,7 +9,7 @@ int Simulation::count = 0;
 int Simulation::total_food = 0;
 int Simulation::totF = 0;
 
-void Simulation::lecture(char * nom_fichier)
+bool Simulation::lecture(char * nom_fichier)
 {
     string line;
     ifstream fichier(nom_fichier); 
@@ -19,17 +19,21 @@ void Simulation::lecture(char * nom_fichier)
         {
 			if(line[0]=='#')  continue;  
        
-			decodage_ligne(line);
+			if(decodage_ligne(line)){
+				return true;
+			}
         }
         
         cout << message::success();
+		return false;
 	}
-	else {
+	else{
 		exit(0);
-	}	
+	}
+	return false;
 }
 
-void Simulation::decodage_ligne(string line){
+bool Simulation::decodage_ligne(string line){
 	enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMIL};
 	istringstream data(line);
 	switch (etat)
@@ -41,35 +45,52 @@ void Simulation::decodage_ligne(string line){
 			etat = NBF;
 		}
 		else etat = NOURRITURE;
+		return false;
 		break;
 
 	case NOURRITURE:
 		if(decodage_ligne_nourriture(line, vnourriture)){
-			tout_supprimer();
+			return true;
 		}
 		++count;
 		if (count == total_food) {
 			etat = NBF;
 		}
+		return false;
 		break;
 
 	case NBF:
 		data >> totF;
 		count = 0;
 		etat = FOURMIL;
+		return false;
 		break;
 
 	case FOURMIL:
 		if(decodage_ligne_fourmiliere(line, vfourmiliere, totF)){
-			tout_supprimer();
+			return true;
 		}
+		return false;
 		break;
 	}
+	return false;
 }
 
 void Simulation::lancement(char* nom_fichier){
 	initialiseGrille();
-	lecture(nom_fichier);
+	if(lecture(nom_fichier)){
+		tout_supprimer();
+		//appeler fonction gui qui laisse juste open
+	}else{
+		for (size_t i = 0; i < vfourmiliere.size(); ++i)
+		{
+			vfourmiliere[i].d_Anthill(i);
+		}
+		for (size_t i = 0; i < vnourriture.size(); ++i)
+		{
+			vnourriture[i].dessin_nourriture();
+		}	
+	}
 }
 
 void Simulation::tout_supprimer(){

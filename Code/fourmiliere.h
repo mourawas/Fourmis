@@ -29,7 +29,7 @@ public:
     void ajouterFourmis(Fourmis* nouveau);
     bool testFourmis(unsigned int countF, unsigned int j);
     bool Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int countF);
-    void d_Anthill(unsigned int x, unsigned int y, unsigned int i);
+    void d_Anthill(unsigned int i);
     void intern_ant_drawing(double r, double g, double b);
 };
 

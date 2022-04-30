@@ -18,8 +18,8 @@ private:
 	vector<Nourriture> vnourriture;
 	public:
 	void lancement(char* nom_fichier);
-	void lecture(char* nom_fichier);
-	void decodage_ligne(string line);
+	bool lecture(char* nom_fichier);
+	bool decodage_ligne(string line);
 
 	void tout_supprimer();
 	
