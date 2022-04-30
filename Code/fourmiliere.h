@@ -24,7 +24,7 @@ public:
     Fourmiliere (Carre c, unsigned int nbC, unsigned int nbD, unsigned int nbP)
     : c(c), nbC(nbC), nbD(nbD), nbP(nbP)
     {}  //^defining it anywhere but here DOESN'T WORK
-    
+    //pas de destructeur sinon erreur
     void ajouterFourmis(Fourmis* nouveau);
     bool testFourmis(unsigned int countF, unsigned int j);
     bool Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int countF);
@@ -33,4 +33,5 @@ public:
 bool decodage_ligne_fourmiliere(string line,vector<Fourmiliere>& vfourmiliere,
                                 unsigned int totF);
 
+void re();
 #endif

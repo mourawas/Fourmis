@@ -78,5 +78,5 @@ void Simulation::tout_supprimer(){
 	etat = NBN, count = 0, total_food = 0, totF = 0;
 }
 //dear assistant if you see this trust me we spent 2h with an assistant debugging
-//this. it's automatically deleted no need to delete vfourmis of every
+//this. it's automatically deleted, no need to delete vfourmis of every
 //fourmiliere because we're using unique_ptr !!
