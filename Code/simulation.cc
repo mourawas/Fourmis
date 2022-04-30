@@ -21,6 +21,15 @@ bool Simulation::lecture(char * nom_fichier)
        
 			if(decodage_ligne(line)){
 				return true;
+			}else{
+				for (size_t i = 0; i < vfourmiliere.size(); ++i)
+				{
+					vfourmiliere[i].d_Anthill(i);
+				}
+				for (size_t i = 0; i < vnourriture.size(); ++i)
+				{
+					vnourriture[i].dessin_nourriture();
+				}
 			}
         }
         
