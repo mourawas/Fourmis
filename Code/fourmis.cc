@@ -16,6 +16,11 @@ void Collector::setcc(unsigned int& x2, unsigned int& y2){
 	cc = {x2, y2, sizeC};
 }
 
+void Collector::D_ant(double x,double y,double r,double g,double b){
+    dessin_carre_plein(x,y,side,r*0.6,g*0.6,b*0.6);
+    dessin_carre_croix(x,y,side,r,g,b);
+}
+
 void Defensor::iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2)
 {
     x1 = x2;
@@ -26,6 +31,10 @@ void Defensor::iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2)
 
 void Defensor::setcd(unsigned int& x2, unsigned int& y2){
 	cd = {x2, y2, sizeD};
+}
+void Defensor::D_ant(double x,double y,double r,double g,double b){
+    dessin_carre_plein(x,y,side,r*0.6,g*0.6,b*0.6);
+    dessin_carre_plus(x,y,side,r,g,b);
 }
 
 void Predator::iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2)
@@ -38,6 +47,10 @@ void Predator::iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2)
 
 void Predator::setcp(unsigned int& x2, unsigned int& y2){
 	cp = {x2, y2, sizeP};
+}
+
+void Predator::D_ant(double x,double y,double r,double g,double b){
+    dessin_carre_plein(x,y,side,r,g,b);
 }
 
 bool decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col,
@@ -93,6 +106,10 @@ bool Generator::G_Overlap(){
 			return true;
     }
     return false;
+}
+
+void Generator::D_ant(double x,double y,double r,double g,double b){
+    dessin_carre_plein(x,y,side,r,g,b);
 }
 
 bool Generator::BigTest(unsigned int countF, Carre& c){
