@@ -81,15 +81,6 @@ void Simulation::lancement(char* nom_fichier){
 	if(lecture(nom_fichier)){
 		tout_supprimer();
 		//appeler fonction gui qui laisse juste open
-	}else{
-		for (size_t i = 0; i < vfourmiliere.size(); ++i)
-		{
-			vfourmiliere[i].d_Anthill(i);
-		}
-		for (size_t i = 0; i < vnourriture.size(); ++i)
-		{
-			vnourriture[i].dessin_nourriture();
-		}	
 	}
 }
 
@@ -102,3 +93,4 @@ void Simulation::tout_supprimer(){
 //dear assistant if you see this trust me we spent 2h with an assistant debugging
 //this. vfourmis is automatically deleted, no need to delete it from every
 //fourmiliere because we're using unique_ptr !!
+

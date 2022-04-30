@@ -73,15 +73,16 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     orthographic_projection(cr, frame);
     
     graphic_set_context(cr);
-    graphic_draw_window();
-    graphic_draw_carre_plein(50, 80, 3., 1., 0.48, 0.);
-    graphic_draw_carre_plein(35, 81, 3., 0.6, 0., 0.);
-    graphic_draw_plus(50, 80, 3., 1., 0., 0);
-	graphic_draw_carre_vide(46, 43, 13., 1., 0., 0.);
-    graphic_draw_losange(50, 80, 1., 1., 1.);
-    graphic_draw_carre_plein(52, 49, 5., 1., 0., 0.);
-    graphic_draw_croix (35, 81 , 1., 0., 0.);
+    graphic_draw_window();`
     
+    for (size_t i = 0; i < vfourmiliere.size(); ++i)
+    {
+        vfourmiliere[i].d_Anthill(i);
+    }
+    for (size_t i = 0; i < vnourriture.size(); ++i)
+    {
+        vnourriture[i].dessin_nourriture();
+    }
 	return true;
 }
 
