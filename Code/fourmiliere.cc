@@ -28,6 +28,49 @@ bool Fourmiliere::Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int count
 	}
 	return false;
 }
+void Fourmiliere::d_Antil(double x,double y,unsigned int i){
+    double r;
+    double g;
+    double b;
+    if (i%6 == 0){       //rouge
+    r=1;
+    g=0;
+    b=0;
+    }
+    else if (i%6 == 1){   //vert
+    r=0;
+    g=1;
+    b=0;
+    }
+    else if (i%6 == 2){     //bleu
+    r=0;
+    g=0;
+    b=1;
+    }
+    else if (i%6 == 3){      //jaune
+    r=1;
+    g=1;
+    b=0;
+    }
+    else if (i%6 == 4){      //magenta
+    r=1;
+    g=0;
+    b=1;
+    }
+    else if (i%6 == 5){      //cyan
+    r=0;
+    g=1;
+    b=1;
+    }
+    dessin_carre_vide(x,y,c.side,r,g,b);
+    intern_ant_drawing(r,g,b);
+}
+
+void Fourmiliere::intern_ant_drawing(double r,double g, double b){
+    for (size_t k(0); k<vfourmis.size(); ++k ){
+        vfourmis[k]->D_ant(r,g,b);
+    }
+}
 
 bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
                                 unsigned int totF) {

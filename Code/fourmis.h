@@ -24,7 +24,7 @@ public:
     Fourmis (unsigned int x1, unsigned int y1)
     : x1(x1),y1(y1)
     {} //^For some obscure reason it can ONLY be defined here
-    virtual void D_ant(double x,double y,double r,double g,double b)=0;
+    virtual void D_ant(double r,double g,double b)=0;
     virtual ~Fourmis() = default;
     unsigned int getx1(){
         return x1;
@@ -47,7 +47,7 @@ class Generator : public Fourmis {
     bool BigTest(unsigned int countF, Carre& c) override;
     bool GeneratorInHome(unsigned int countF, Carre& c);
     bool G_Overlap();
-    void D_ant(double x,double y,double r,double g,double b) override;
+    void D_ant(double r,double g,double b) override;
 };
 
 class Collector : public Fourmis{
@@ -65,7 +65,7 @@ public:
     bool C_overlap();
     bool BigTest(unsigned int countF, Carre& c) override;
     void iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2);
-    void D_ant(double x,double y,double r,double g,double b) override;
+    void D_ant(double r,double g,double b) override;
 };
 
 class Defensor : public Fourmis {
@@ -83,7 +83,7 @@ public:
     bool BigTest(unsigned int countF, Carre& c) override;
     void setcd(unsigned int& x2,unsigned int& y2);
     void iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2);
-    void D_ant(double x,double y,double r,double g,double b) override;
+    void D_ant(double r,double g,double b) override;
 };
 
 class Predator : public Fourmis {
@@ -100,7 +100,7 @@ public:
     bool BigTest(unsigned int countF, Carre& c) override;
     void setcp(unsigned int& x2,unsigned int& y2);
     void iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2);
-    void D_ant(double x,double y,double r,double g,double b) override;
+    void D_ant(double r,double g,double b) override;
 };
 
 bool decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col,
