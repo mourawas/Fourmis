@@ -11,6 +11,7 @@
 #include "fourmis.h"
 #include "nourriture.h"
 #include "message.h"
+#include "constantes.h"
 using namespace std;
 
 class Fourmiliere {
@@ -28,8 +29,8 @@ public:
     void ajouterFourmis(Fourmis* nouveau);
     bool testFourmis(unsigned int countF, unsigned int j);
     bool Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int countF);
-    void d_Antil(double x,double y,unsigned int i);
-    void intern_ant_drawing(double r,double g, double b);
+    void d_Anthill(unsigned int x, unsigned int y, unsigned int i);
+    void intern_ant_drawing(double r, double g, double b);
 };
 
 bool decodage_ligne_fourmiliere(string line,vector<Fourmiliere>& vfourmiliere,

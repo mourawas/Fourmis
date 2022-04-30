@@ -75,8 +75,9 @@ void Simulation::lancement(char* nom_fichier){
 void Simulation::tout_supprimer(){
 	vfourmiliere.clear(); //suppression des vfourmis automatique !!
 	vnourriture.clear();  // ^ faute cheloue ici, p.52 mooc explication
+	re();
 	etat = NBN, count = 0, total_food = 0, totF = 0;
 }
 //dear assistant if you see this trust me we spent 2h with an assistant debugging
-//this. it's automatically deleted, no need to delete vfourmis of every
+//this. vfourmis is automatically deleted, no need to delete it from every
 //fourmiliere because we're using unique_ptr !!

@@ -28,7 +28,8 @@ bool Fourmiliere::Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int count
 	}
 	return false;
 }
-void Fourmiliere::d_Antil(double x,double y,unsigned int i){
+
+void Fourmiliere::d_Anthill(unsigned int x, unsigned int y, unsigned int i){
     double r;
     double g;
     double b;
@@ -63,13 +64,13 @@ void Fourmiliere::d_Antil(double x,double y,unsigned int i){
     b=1;
     }
     double s = c.side;
-    dessin_carre_vide(x,y,s,r,g,b);
-    intern_ant_drawing(r,g,b);
+    dessin_carre_vide(x, y, s, r, g, b);
+    intern_ant_drawing(r, g, b);
 }
 
-void Fourmiliere::intern_ant_drawing(double r,double g, double b){
-    for (size_t k(0); k<vfourmis.size(); ++k ){
-        vfourmis[k]->D_ant(r,g,b);
+void Fourmiliere::intern_ant_drawing(double r, double g, double b){
+    for (size_t k = 0; k < vfourmis.size(); ++k){
+        vfourmis[k]->D_ant(r, g, b);
     }
 }
 
@@ -83,14 +84,14 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
     if (etat == FOURMILIERE) {
         data >> x >> y >> side >> xg >> yg >> total_food >> nbC >> nbD >> nbP;
         Carre c = { x, y, side };
-        if(testCarre(c)){ re(); return true; }
+        if(testCarre(c)) return true;
         Fourmiliere f(c, nbC, nbD, nbP);
 		Carre cg = {xg, yg, sizeG};
         f.ajouterFourmis(new Generator(xg, yg, total_food, cg));
-        if(testCarreCentre(cg)){ re(); return true; }
-        if(f.testFourmis(countF, j)){ re(); return true; }
+        if(testCarreCentre(cg)) return true;
+        if(f.testFourmis(countF, j)) return true;
         ++j, ++countF;
-		if(f.Foverlap(vfourmiliere, countF)){ re(); return true; }
+		if(f.Foverlap(vfourmiliere, countF)) return true; 
         vfourmiliere.push_back(std::move(f));
         countC = 0, countD = 0, countP = 0;
 
@@ -116,9 +117,9 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
 
     switch (etat) {
     case COL:
-        if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)){ re(); return true; }
+        if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)) return true;
         vfourmiliere[countF - 1].ajouterFourmis(new Collector(Col));
-        if(vfourmiliere[countF - 1].testFourmis(countF - 1, j)){ re(); return true; }
+        if(vfourmiliere[countF - 1].testFourmis(countF - 1, j)) return true;
         ++j; ++countC;
 
         if (countC == nbC) {
@@ -127,9 +128,9 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
         break;
 
     case DEF:
-        if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)){ re(); return true; }
+        if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)) return true;
         vfourmiliere[countF - 1].ajouterFourmis(new Defensor(Def));
-        if(vfourmiliere[countF - 1].testFourmis(countF - 1, j)){ re(); return true;}
+        if(vfourmiliere[countF - 1].testFourmis(countF - 1, j)) return true;
         ++j; ++countD;
         if (countD == nbD) {
             etat = PRE;
@@ -137,9 +138,9 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
         break;
 
     case PRE:
-        if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)){ re(); return true; }
+        if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)) return true;
         vfourmiliere[countF - 1].ajouterFourmis(new Predator(Pre));
-        if(vfourmiliere[countF - 1].testFourmis(countF - 1, j)){ re(); return true; }
+        if(vfourmiliere[countF - 1].testFourmis(countF - 1, j)) return true;
         ++j; ++countP;
 
         if (countP == nbP) {
