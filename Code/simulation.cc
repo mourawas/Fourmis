@@ -79,7 +79,6 @@ bool Simulation::decodage_ligne(string line){
 
 void Simulation::lancement(char* nom_fichier){
 	initialise_grille();
-	//cout << "grille créée" << endl;
 	if(lecture(nom_fichier)){
 		cout << "erreur de lecture" << endl;
 		tout_supprimer();

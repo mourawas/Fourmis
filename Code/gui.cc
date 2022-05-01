@@ -18,9 +18,8 @@ void MyArea::refresh()
     auto win = get_window();
     if(win)
     {
-    	Gdk::Rectangle r(0, 0, 0, 0);
-    	get_allocation().get_width();
-    	get_allocation().get_height();
+    	Gdk::Rectangle r(0,0, get_allocation().get_width(), 
+						      get_allocation().get_height());
     	win->invalidate_rect(r,false);
     }
 }
@@ -79,13 +78,14 @@ static void orthographic_projection(const Cairo::RefPtr<Cairo::Context>& cr,
 
 bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
-	
     adjustFrame();
     orthographic_projection(cr, frame);
     
     graphic_set_context(cr);
     graphic_draw_window();
+	//cout << "caca1" << endl;
 	s->sim_affiche();
+	//cout << "caca2" << endl;
 	refresh();
     
 	return true;
@@ -116,7 +116,8 @@ MyEvent::MyEvent() :
 	timer_added(false),
 	disconnected(false),
 	timeout(1000),
-	val(1)
+	val(1),
+	id(-1)
 		
 {
 	set_title("test");
@@ -189,11 +190,10 @@ void MyEvent::on_button_clicked_open() //INCOMPLETE
             char * argv;
             argv = &filename[0];
 			s->tout_supprimer();
-			//cout << "tout supprimé après open" << endl;
-			m_Area.refresh();
-			//cout << "area refreshed" << endl;
             s->lancement(argv);
+			m_Area.refresh();
 			nourriture_info();
+			id = -1;
 			cout << "lancement ok" << endl;
 			break;
 		}
@@ -277,6 +277,7 @@ void MyEvent::on_button_clicked_previous()
 	id = id -1;
 	if(id < -1){
 		id = s->get_taillevf() - 1;
+		cout << "uuu";
 	}
 	fourmiliere_info(id);
 }
