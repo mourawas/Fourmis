@@ -4,7 +4,7 @@
 #include "fourmis.h"
 using namespace std;
 
-void Collector::iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2,
+void Collector::ini_c(unsigned int& x2, unsigned int& y2, unsigned int& age2,
                      bool& food2) {
     x1 = x2;
     y1 = y2;
@@ -17,13 +17,13 @@ void Collector::setcc(unsigned int& x2, unsigned int& y2){
 	cc = {x2, y2, sizeC};
 }
 
-void Collector::D_ant(double r, double g, double b){
+void Collector::d_ant(double r, double g, double b){
     double s = sizeC;
     dessin_carre_croix(x1, y1, s, r, g, b);
 }
  
 
-void Defensor::iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2)
+void Defensor::ini_d(unsigned int& x2, unsigned int& y2, unsigned int& age2)
 {
     x1 = x2;
     y1 = y2;
@@ -34,12 +34,12 @@ void Defensor::iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2)
 void Defensor::setcd(unsigned int& x2, unsigned int& y2){
 	cd = {x2, y2, sizeD};
 }
-void Defensor::D_ant(double r, double g, double b){
+void Defensor::d_ant(double r, double g, double b){
     double s = sizeD;
     dessin_carre_plus(x1, y1, s, r, g, b);
 }
 
-void Predator::iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2)
+void Predator::ini_p(unsigned int& x2, unsigned int& y2, unsigned int& age2)
 {
     x1 = x2;
     y1 = y2;
@@ -51,7 +51,7 @@ void Predator::setcp(unsigned int& x2, unsigned int& y2){
 	cp = {x2, y2, sizeP};
 }
 
-void Predator::D_ant(double r, double g, double b){
+void Predator::d_ant(double r, double g, double b){
     double s = sizeP;
     dessin_carre_plein(x1, y1, s, r, g, b);
 }
@@ -71,56 +71,56 @@ bool decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col,
         }else food = 0;
         
         Carre c = { x, y, sizeC };
-        if(testCarreCentre(c)) return true;
-        Col.iniC(x, y, age, food);
+        if(test_carre_centre(c)) return true;
+        Col.ini_c(x, y, age, food);
         return false;
     }
     if (etat == 2) {
         data >> x >> y >> age;
         
         Carre c = { x, y, sizeD };
-        if(testCarreCentre(c)) return true;
-        Def.iniD(x, y, age);
+        if(test_carre_centre(c)) return true;
+        Def.ini_d(x, y, age);
         return false;
     }
     if (etat == 3) {
         data >> x >> y >> age;
         
         Carre c = { x, y, sizeP };
-        if(testCarreCentre(c)) return true;
-        Pre.iniP(x, y, age);
+        if(test_carre_centre(c)) return true;
+        Pre.ini_p(x, y, age);
         return false;
     }
     return false;
 }
 
-bool Generator::GeneratorInHome(unsigned int countF, Carre& c){
-    if (Carre_dans_Carre(c, cg)) {
+bool Generator::generator_in_home(unsigned int countF, Carre& c){
+    if (carre_dans_carre(c, cg)) {
         cout << message::generator_not_within_home(x1,y1,countF);
         return true;
     }
     return false;
 }
 
-bool Generator::G_Overlap(){
+bool Generator::g_overlap(){
 		unsigned int x, y;
-		if(supCoord(cg, x, y)) {
+		if(sup_coord(cg, x, y)) {
 			cout << message::generator_overlap(x1, y1, x, y);
 			return true;
     }
     return false;
 }
 
-void Generator::D_ant(double r, double g, double b){
+void Generator::d_ant(double r, double g, double b){
     double s = sizeG;
     dessin_carre_plein(x1, y1, s, r, g, b);
 }
 
-bool Generator::BigTest(unsigned int countF, Carre& c){
-	if(testCarreCentre(cg)) return true;
-    if(GeneratorInHome(countF, c)) return true;
-    if(G_Overlap()) return true;
-    initialise_Carre_Centre(cg);
+bool Generator::big_test(unsigned int countF, Carre& c){
+	if(test_carre_centre(cg)) return true;
+    if(generator_in_home(countF, c)) return true;
+    if(g_overlap()) return true;
+    initialise_carre_centre(cg);
     return false;
 }
 
@@ -129,19 +129,19 @@ void Generator::ecrire_fourmis(ofstream& fichier){
             << to_string(total_food) << " ";
 }
 
-bool Collector::C_overlap(){
+bool Collector::c_overlap(){
 	unsigned int x, y;
-	if(supCoord(cc, x, y)){
+	if(sup_coord(cc, x, y)){
 		cout << message::collector_overlap(x1, y1, x, y);
 		return true;
 	}
 	return false;
 }
 
-bool Collector::BigTest(unsigned int countF, Carre& c){
-	if(testCarreCentre(cc)) return true;
-    if(C_overlap()) return true;
-    initialise_Carre_Centre (cc);
+bool Collector::big_test(unsigned int countF, Carre& c){
+	if(test_carre_centre(cc)) return true;
+    if(c_overlap()) return true;
+    initialise_carre_centre (cc);
     return false;
 }
 
@@ -156,28 +156,28 @@ void Collector::ecrire_fourmis(ofstream& fichier){
             << " " << to_string(age) << " " << a << "\n";
 }
 
-bool Defensor::D_overlap(){
+bool Defensor::d_overlap(){
 		unsigned int x, y;
-		if(supCoord(cd, x, y)){
+		if(sup_coord(cd, x, y)){
 			cout << message::defensor_overlap(x1,y1,x,y);
 			return true;
     }
     return false;
 }
 
-bool Defensor::DefensorInHome(unsigned int countF, Carre& c){
-    if (Carre_dans_Carre(c,cd)){
+bool Defensor::defensor_in_home(unsigned int countF, Carre& c){
+    if (carre_dans_carre(c,cd)){
         cout << message::defensor_not_within_home(x1,y1,countF);
         return true;
     }
     return false;
 }
 
-bool Defensor::BigTest(unsigned int countF, Carre& c){
-	if(testCarreCentre(cd)) return true;
-    if(DefensorInHome(countF, c)) return true;
-    if(D_overlap()) return true;
-    initialise_Carre_Centre(cd);
+bool Defensor::big_test(unsigned int countF, Carre& c){
+	if(test_carre_centre(cd)) return true;
+    if(defensor_in_home(countF, c)) return true;
+    if(d_overlap()) return true;
+    initialise_carre_centre(cd);
     return false;
 }
 
@@ -186,19 +186,19 @@ void Defensor::ecrire_fourmis(ofstream& fichier){
             << " " << to_string(age) << "\n";
 }
 
-bool Predator::P_overlap(){
+bool Predator::p_overlap(){
 	unsigned int x, y;
-	if(supCoord(cp, x, y)){
+	if(sup_coord(cp, x, y)){
 		cout << message::predator_overlap(x1,y1);
 		return true;
     }
     return false;
 }
 
-bool Predator::BigTest(unsigned int countF, Carre& c){
-	if(testCarre(cp)) return true;
-    if(P_overlap()) return true;
-    initialise_Carre_Centre(cp);
+bool Predator::big_test(unsigned int countF, Carre& c){
+	if(test_carre(cp)) return true;
+    if(p_overlap()) return true;
+    initialise_carre_centre(cp);
     return false;
 }
 

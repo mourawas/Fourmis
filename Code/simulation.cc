@@ -69,6 +69,7 @@ bool Simulation::decodage_ligne(string line){
 
 	case FOURMIL:
 		if(decodage_ligne_fourmiliere(line, vfourmiliere, totF)){
+			cout << "oui" << endl;
 			return true;
 		}
 		return false;
@@ -90,7 +91,7 @@ void Simulation::lancement(char* nom_fichier){
 void Simulation::sim_affiche(){
 	for (size_t i = 0; i < vfourmiliere.size(); ++i)
 		{
-			vfourmiliere[i].d_Anthill(i);
+			vfourmiliere[i].d_anthill(i);
 		}
 		for (size_t i = 0; i < vnourriture.size(); ++i)
 		{

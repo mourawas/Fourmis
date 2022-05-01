@@ -14,14 +14,14 @@ bool decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture){
 	Nourriture n(x, y);
 	Carre c = {x, y, sizeN};
 		
-	if(testCarreCentre(c)) return true;
+	if(test_carre_centre(c)) return true;
 		
 	unsigned int x1, y1;
-	if(supCoord(c, x1, y1)){
+	if(sup_coord(c, x1, y1)){
 		cout << message::food_overlap(x, y);
 		return true;
 	}
-	initialiseCarre(c);
+	initialise_carre(c);
 	vnourriture.push_back(n);
 	return false;
 }

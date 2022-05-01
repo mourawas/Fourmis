@@ -24,10 +24,10 @@ public:
     : c(c), nbC(nbC), nbD(nbD), nbP(nbP)
     {}  //^defining it anywhere but here DOESN'T WORK
     //pas de destructeur sinon erreur
-    void ajouterFourmis(Fourmis* nouveau);
-    bool testFourmis(unsigned int countF, unsigned int j);
-    bool Foverlap(std::vector<Fourmiliere>& vfourmiliere, unsigned int countF);
-    void d_Anthill(unsigned int i);
+    void ajouter_fourmis(Fourmis* nouveau);
+    bool test_fourmis(unsigned int countF, unsigned int j);
+    bool f_overlap(std::vector<Fourmiliere>& vfourmiliere, unsigned int countF);
+    void d_anthill(unsigned int i);
     void intern_ant_drawing(double r, double g, double b);
     void ecrire_fourmiliere(std::ofstream& fichier);
 };

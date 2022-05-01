@@ -19,11 +19,11 @@ protected :
     unsigned int x1;
     unsigned int y1;
 public:
-    virtual bool BigTest(unsigned int countF, Carre& c) = 0;
+    virtual bool big_test(unsigned int countF, Carre& c) = 0;
     Fourmis (unsigned int x1, unsigned int y1)
     : x1(x1),y1(y1)
     {} //^For some obscure reason it can ONLY be defined here
-    virtual void D_ant(double r, double g, double b) = 0;
+    virtual void d_ant(double r, double g, double b) = 0;
     virtual ~Fourmis() = default;
     virtual void ecrire_fourmis(std::ofstream& fichier) = 0;
 };
@@ -38,10 +38,10 @@ class Generator : public Fourmis {
     Generator (unsigned int x1, unsigned int y1, unsigned int total_food, Carre cg)
     : Fourmis(x1, y1), total_food(total_food), cg(cg)
     {}
-    bool BigTest(unsigned int countF, Carre& c) override;
-    bool GeneratorInHome(unsigned int countF, Carre& c);
-    bool G_Overlap();
-    void D_ant(double r, double g, double b) override;
+    bool big_test(unsigned int countF, Carre& c) override;
+    bool generator_in_home(unsigned int countF, Carre& c);
+    bool g_overlap();
+    void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;
 };
 
@@ -57,10 +57,10 @@ public:
     : Fourmis(x1, y1), age(age), food(food)
     {}
     void setcc(unsigned int& x2,unsigned int& y2);
-    bool C_overlap();
-    bool BigTest(unsigned int countF, Carre& c) override;
-    void iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2);
-    void D_ant(double r, double g, double b) override;
+    bool c_overlap();
+    bool big_test(unsigned int countF, Carre& c) override;
+    void ini_c(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2);
+    void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;
 };
 
@@ -74,12 +74,12 @@ public:
     :Fourmis(x1, y1), age(age)
     {}
 	~Defensor() = default;
-    bool D_overlap();
-    bool DefensorInHome(unsigned int countF, Carre& c);
-    bool BigTest(unsigned int countF, Carre& c) override;
+    bool d_overlap();
+    bool defensor_in_home(unsigned int countF, Carre& c);
+    bool big_test(unsigned int countF, Carre& c) override;
     void setcd(unsigned int& x2,unsigned int& y2);
-    void iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2);
-    void D_ant(double r, double g, double b) override;
+    void ini_d(unsigned int& x2, unsigned int& y2, unsigned int& age2);
+    void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;
 };
 
@@ -93,11 +93,11 @@ public:
     : Fourmis(x1, y1), age(age)
     {}
 	~Predator() = default;
-    bool P_overlap();
-    bool BigTest(unsigned int countF, Carre& c) override;
+    bool p_overlap();
+    bool big_test(unsigned int countF, Carre& c) override;
     void setcp(unsigned int& x2,unsigned int& y2);
-    void iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2);
-    void D_ant(double r, double g, double b) override;
+    void ini_p(unsigned int& x2, unsigned int& y2, unsigned int& age2);
+    void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;
 };
 
