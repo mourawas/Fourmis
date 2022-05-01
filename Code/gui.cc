@@ -84,7 +84,7 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     orthographic_projection(cr, frame);
     
     graphic_set_context(cr);
-    graphic_draw_window();
+	graphic_draw_window();
 	s->sim_affiche();
 	refresh();
     
@@ -171,7 +171,6 @@ void MyEvent::on_button_clicked_open() //INCOMPLETE
 		case(Gtk::RESPONSE_OK):
 		{
 			string filename = dialog.get_filename();
-			cout << "File selected: " <<  filename << endl;
             char * argv;
             argv = &filename[0];
 			s->tout_supprimer();
