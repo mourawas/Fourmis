@@ -2,6 +2,7 @@
 //Mouhamad: 70%
 //Louis: 30%
 #include "gui.h"
+#include "graphic_gui.h"
 using namespace std;
 
 static Frame default_frame = {-1, 129, -1, 129, 1, 500, 500};

@@ -1,8 +1,6 @@
 //projet.cc
 //Mouhamad: 50%
 //Louis: 50%
-#include <gtkmm/application.h>
-#include <gtkmm/window.h>
 #include "simulation.h"
 #include "gui.h"
 using namespace std;

@@ -1,7 +1,7 @@
 //graphic.cc
 //Mouhamad 30%
 //Louis 70%
-#include "graphic.h"
+#include "graphic_gui.h"
 
 static const Cairo::RefPtr<Cairo::Context>* ptcr;
 

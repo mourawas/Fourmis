@@ -2,9 +2,7 @@
 #define GUI_H_INCLUDED
 
 #include <gtkmm.h>
-#include <cairomm/context.h>
 #include <string>
-#include "graphic.h"
 #include "simulation.h"
 
 struct Frame

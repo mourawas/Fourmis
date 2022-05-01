@@ -1,10 +1,5 @@
 #ifndef GRAPHIC_H_INCLUDED
 #define GRAPHIC_H_INCLUDED
-#include <gtkmm.h>
-#include <cairomm/context.h>
-#include <cmath>
-
-void graphic_set_context(const Cairo::RefPtr<Cairo::Context>& cr);
 
 void graphic_draw_window();
 
