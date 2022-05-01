@@ -42,7 +42,6 @@ void graphic_draw_window()
         
         (*ptcr)->stroke();
     }
-    
 }
 
 void graphic_draw_carre_plein(unsigned int x, unsigned int y,
