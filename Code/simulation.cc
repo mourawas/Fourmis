@@ -105,6 +105,17 @@ void Simulation::tout_supprimer(){
 	vide_grille();
 	etat = NBN, count = 0, total_food = 0, totF = 0;
 }
-//dear assistant if you see this trust me we spent 2h with an assistant debugging
+//^dear assistant if you see this trust me we spent 2h with an assistant debugging
 //this. vfourmis is automatically deleted, no need to delete it from every
 //fourmiliere because we're using unique_ptr !!
+
+void Simulation::ecrire_fichier(ofstream& fichier){
+	fichier << to_string(vnourriture.size()) << "\n\n";
+	for (size_t i = 0; i < vnourriture.size(); ++i) {
+		vnourriture[i].ecrire_nourriture(fichier);
+	}
+	fichier << "\n" << to_string(vfourmiliere.size()) << "\n";
+	for (size_t i = 0; i < vfourmiliere.size(); ++i){
+		vfourmiliere[i].ecrire_fourmiliere(fichier);
+	}
+}

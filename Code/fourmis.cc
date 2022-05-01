@@ -2,6 +2,7 @@
 //Mouhamad: 50%
 //Louis: 50%
 #include "fourmis.h"
+using namespace std;
 
 void Collector::iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2,
                      bool& food2) {
@@ -123,6 +124,11 @@ bool Generator::BigTest(unsigned int countF, Carre& c){
     return false;
 }
 
+void Generator::ecrire_fourmis(ofstream& fichier){
+    fichier << " " << to_string(cg.x) << " " << to_string(cg.y) << " "
+            << to_string(total_food) << " ";
+}
+
 bool Collector::C_overlap(){
 	unsigned int x, y;
 	if(supCoord(cc, x, y)){
@@ -137,6 +143,17 @@ bool Collector::BigTest(unsigned int countF, Carre& c){
     if(C_overlap()) return true;
     initialise_Carre_Centre (cc);
     return false;
+}
+
+void Collector::ecrire_fourmis(ofstream& fichier){
+    string a;
+    if(food){
+        a = "true";
+    }else{
+        a = "false";
+    }
+    fichier << "\t" << to_string(age) << " " << to_string(cc.x)
+            << " " << to_string(cc.y) << " " << a << "\n";
 }
 
 bool Defensor::D_overlap(){
@@ -164,6 +181,11 @@ bool Defensor::BigTest(unsigned int countF, Carre& c){
     return false;
 }
 
+void Defensor::ecrire_fourmis(ofstream& fichier){
+    fichier << "\t" << to_string(age) << " " << to_string(cd.x)
+            << " " << to_string(cd.y) << "\n";
+}
+
 bool Predator::P_overlap(){
 	unsigned int x, y;
 	if(supCoord(cp, x, y)){
@@ -178,4 +200,9 @@ bool Predator::BigTest(unsigned int countF, Carre& c){
     if(P_overlap()) return true;
     initialise_Carre_Centre(cp);
     return false;
+}
+
+void Predator::ecrire_fourmis(ofstream& fichier){
+    fichier << "\t" << to_string(age) << " " << to_string(cp.x)
+            << " " << to_string(cp.y) << "\n";
 }

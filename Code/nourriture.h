@@ -11,7 +11,6 @@
 #include <string> 
 #include <fstream>
 #include <sstream>
-using namespace std;
 
 class Nourriture{
 	private:
@@ -22,10 +21,10 @@ class Nourriture{
 	: x(x_), y(y_) {}
 	~Nourriture() {};
     void dessin_nourriture();
-	
+	void ecrire_nourriture(std::ofstream& fichier);
 };
 
-bool decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture);
+bool decodage_ligne_nourriture(std::string line, std::vector<Nourriture>& vnourriture);
 
 
 #endif

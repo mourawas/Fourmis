@@ -217,8 +217,37 @@ void MyEvent::on_button_clicked_open() //INCOMPLETE
 
 void MyEvent::on_button_clicked_save()
 {
-	//A DEFINIR
 	cout << "save" << endl;
+	if(!timer_added){
+		Gtk::FileChooserDialog dialog("Please choose a file",
+        Gtk::FILE_CHOOSER_ACTION_SAVE);
+    	dialog.set_transient_for(*this);
+		dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
+    	dialog.add_button("_Save", Gtk::RESPONSE_OK);
+
+    	int result = dialog.run();
+    	switch(result)
+    	{
+			case(Gtk::RESPONSE_OK):
+			{
+				ofstream fichier(dialog.get_filename());
+				if(!(fichier.fail())){
+					s->ecrire_fichier(fichier);
+			}
+			break;
+			}
+			case(Gtk::RESPONSE_CANCEL):
+			{
+				cout << "Cancel clicked." << endl;
+				break;
+			}
+			default:
+			{
+				cout << "Unexpected button clicked." << endl;
+				break;
+			}
+    	}
+	}
 }
 
 void MyEvent::on_button_clicked_start()

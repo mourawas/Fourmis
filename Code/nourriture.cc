@@ -2,6 +2,7 @@
 //Mouhamad: 50%
 //Louis: 50%
 #include "nourriture.h"
+using namespace std;
 
 bool decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture){
 	unsigned int x, y;
@@ -26,4 +27,8 @@ bool decodage_ligne_nourriture(string line, vector<Nourriture>& vnourriture){
 }
 void Nourriture::dessin_nourriture(){
     dessin_losange(x, y, 1., 1., 1.);
+}
+
+void Nourriture::ecrire_nourriture(ofstream& fichier){
+	fichier << to_string(x) << " " << to_string(y) << "\n";
 }

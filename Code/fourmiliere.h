@@ -12,14 +12,13 @@
 #include "nourriture.h"
 #include "message.h"
 #include "constantes.h"
-using namespace std;
 
 class Fourmiliere {
 private:
     Carre c;
     unsigned int nbC, nbD, nbP;
 
-    vector<unique_ptr<Fourmis> > vfourmis;
+    std::vector<unique_ptr<Fourmis> > vfourmis;
 	
 public:
     Fourmiliere (Carre c, unsigned int nbC, unsigned int nbD, unsigned int nbP)
@@ -28,12 +27,13 @@ public:
     //pas de destructeur sinon erreur
     void ajouterFourmis(Fourmis* nouveau);
     bool testFourmis(unsigned int countF, unsigned int j);
-    bool Foverlap(vector<Fourmiliere>& vfourmiliere, unsigned int countF);
+    bool Foverlap(std::vector<Fourmiliere>& vfourmiliere, unsigned int countF);
     void d_Anthill(unsigned int i);
     void intern_ant_drawing(double r, double g, double b);
+    void ecrire_fourmiliere(std::ofstream& fichier);
 };
 
-bool decodage_ligne_fourmiliere(string line,vector<Fourmiliere>& vfourmiliere,
+bool decodage_ligne_fourmiliere(std::string line, std::vector<Fourmiliere>& vfourmiliere,
                                 unsigned int totF);
 
 void re();

@@ -2,6 +2,7 @@
 //Mouhamad: 50%
 //Louis: 50%
 #include "fourmiliere.h"	
+using namespace std;
 
 static unsigned int etat = 0;
 static unsigned int countF = 0, countC = 0, countD = 0, countP = 0, j = 0;
@@ -156,4 +157,16 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
 void re(){
     etat = 0, countF = 0, countC = 0, countD = 0, countP = 0;
     j = 0;
+}
+
+void Fourmiliere::ecrire_fourmiliere(ofstream& fichier){
+    fichier << "\t" << to_string(c.x) << " " << to_string(c.y)
+            << " " << to_string(c.side);
+    vfourmis[0]->ecrire_fourmis(fichier);
+    fichier << to_string(nbC) << " " << to_string(nbD)
+            << " " << to_string(nbP) << "\n\n";
+    for (size_t i = 1; i < vfourmis.size(); ++i)
+    {
+        vfourmis[i]->ecrire_fourmis(fichier);
+    }
 }

@@ -1,10 +1,6 @@
 #ifndef FOURMIS_H_INCLUDED
 #define FOURMIS_H_INCLUDED
 
-#include "squarecell.h"
-#include "message.h"
-#include "nourriture.h"
-#include "constantes.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -13,7 +9,10 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-using namespace std;
+#include "squarecell.h"
+#include "message.h"
+#include "nourriture.h"
+#include "constantes.h"
 
 class Fourmis {
 protected :
@@ -26,6 +25,7 @@ public:
     {} //^For some obscure reason it can ONLY be defined here
     virtual void D_ant(double r, double g, double b) = 0;
     virtual ~Fourmis() = default;
+    virtual void ecrire_fourmis(std::ofstream& fichier) = 0;
 };
 
 class Generator : public Fourmis {
@@ -42,6 +42,7 @@ class Generator : public Fourmis {
     bool GeneratorInHome(unsigned int countF, Carre& c);
     bool G_Overlap();
     void D_ant(double r, double g, double b) override;
+    void ecrire_fourmis(std::ofstream& fichier) override;
 };
 
 class Collector : public Fourmis{
@@ -60,6 +61,7 @@ public:
     bool BigTest(unsigned int countF, Carre& c) override;
     void iniC(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2);
     void D_ant(double r, double g, double b) override;
+    void ecrire_fourmis(std::ofstream& fichier) override;
 };
 
 class Defensor : public Fourmis {
@@ -78,6 +80,7 @@ public:
     void setcd(unsigned int& x2,unsigned int& y2);
     void iniD(unsigned int& x2, unsigned int& y2, unsigned int& age2);
     void D_ant(double r, double g, double b) override;
+    void ecrire_fourmis(std::ofstream& fichier) override;
 };
 
 class Predator : public Fourmis {
@@ -95,9 +98,10 @@ public:
     void setcp(unsigned int& x2,unsigned int& y2);
     void iniP(unsigned int& x2, unsigned int& y2, unsigned int& age2);
     void D_ant(double r, double g, double b) override;
+    void ecrire_fourmis(std::ofstream& fichier) override;
 };
 
-bool decodage_ligne_fourmis(string line, unsigned int etat, Collector& Col,
+bool decodage_ligne_fourmis(std::string line, unsigned int etat, Collector& Col,
                             Defensor& Def, Predator& Pre);
 
 #endif
