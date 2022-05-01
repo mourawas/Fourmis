@@ -9,8 +9,7 @@
 typedef std::vector<std::vector<bool> > grille;
 
 constexpr short unsigned g_dim(7);
-//constexpr short unsigned g_max(pow(2,g_dim));
-constexpr short unsigned g_max(128);
+constexpr short unsigned g_max(pow(2,g_dim));
 
 struct Carre {
 	unsigned int x;
@@ -26,7 +25,7 @@ void supprimer_carre(Carre& c);
 
 unsigned int nb_true();
 
-bool sup_fourmiliere(Carre& c1, Carre& c2);
+bool sup_carre(Carre& c1, Carre& c2);
 
 bool sup(Carre& c1, Carre& c2);
 

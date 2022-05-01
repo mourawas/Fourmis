@@ -26,7 +26,7 @@ bool Fourmiliere::f_overlap(vector<Fourmiliere>& vfourmiliere, unsigned int coun
 	
 	for(unsigned int i = 0; i < vfourmiliere.size(); ++i){
 		
-		if(sup_fourmiliere(c, vfourmiliere[i].c)){
+		if(sup_carre(c, vfourmiliere[i].c)){
 			cout << message::homes_overlap(i, countF-1);
 			return true;
 		}

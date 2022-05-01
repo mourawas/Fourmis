@@ -19,7 +19,7 @@ void vide_grille(){
     grid.clear();
 }
 
-bool sup_fourmiliere(Carre& c1, Carre& c2){
+bool sup_carre(Carre& c1, Carre& c2){
 	unsigned int coin1x = c1.x + c1.side; //en bas à droite
 	unsigned int coin1y = c1.y + c1.side; //en haut a gauche
 	
