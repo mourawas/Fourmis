@@ -15,14 +15,13 @@
 #include "constantes.h"
 
 class Fourmis {
-protected :
+protected:
     unsigned int x1;
     unsigned int y1;
+
 public:
     virtual bool big_test(unsigned int countF, Carre& c) = 0;
-    Fourmis (unsigned int x1, unsigned int y1)
-    : x1(x1),y1(y1)
-    {} //^For some obscure reason it can ONLY be defined here
+    Fourmis (unsigned int x1, unsigned int y1) : x1(x1),y1(y1) {}
     virtual void d_ant(double r, double g, double b) = 0;
     virtual ~Fourmis() = default;
     virtual void ecrire_fourmis(std::ofstream& fichier) = 0;
@@ -30,15 +29,14 @@ public:
 };
 
 class Generator : public Fourmis {
-    private :
+private:
     unsigned int side = sizeG;
     unsigned int total_food;
     Carre cg;
-    public :
+public:
     ~Generator() = default;
-    Generator (unsigned int x1, unsigned int y1, unsigned int total_food, Carre cg)
-    : Fourmis(x1, y1), total_food(total_food), cg(cg)
-    {}
+    Generator(unsigned int x1, unsigned int y1,
+              unsigned int total_food, Carre cg);
     bool big_test(unsigned int countF, Carre& c) override;
     bool generator_in_home(unsigned int countF, Carre& c);
     bool g_overlap();
@@ -55,9 +53,7 @@ private:
     Carre cc;
 public:
 	~Collector() = default;
-    Collector(unsigned int x1, unsigned y1, unsigned int age, bool food)
-    : Fourmis(x1, y1), age(age), food(food)
-    {}
+    Collector(unsigned int x1, unsigned y1, unsigned int age, bool food);
     void setcc(unsigned int& x2,unsigned int& y2);
     bool c_overlap();
     bool big_test(unsigned int countF, Carre& c) override;
@@ -73,9 +69,7 @@ private:
     unsigned int side = sizeD;
     Carre cd;
 public:
-    Defensor(unsigned int x1, unsigned int y1, unsigned int age)
-    :Fourmis(x1, y1), age(age)
-    {}
+    Defensor(unsigned int x1, unsigned int y1, unsigned int age);
 	~Defensor() = default;
     bool d_overlap();
     bool defensor_in_home(unsigned int countF, Carre& c);
@@ -93,9 +87,7 @@ private:
     unsigned int side = sizeP;
     Carre cp;
 public:
-	Predator(unsigned int x1, unsigned y1, unsigned age)
-    : Fourmis(x1, y1), age(age)
-    {}
+	Predator(unsigned int x1, unsigned y1, unsigned age);
 	~Predator() = default;
     bool p_overlap();
     bool big_test(unsigned int countF, Carre& c) override;

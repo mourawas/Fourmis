@@ -1,12 +1,13 @@
+//gui.cc
+//Mouhamad: 70%
+//Louis: 30%
 #include "gui.h"
 using namespace std;
 
 static Frame default_frame = {-1, 129, -1, 129, 1, 500, 500};
-// xmin,xmax,ymin,ymax
 
 MyArea::MyArea()
 {
-
 }
 
 MyArea::~MyArea()
@@ -83,9 +84,7 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     
     graphic_set_context(cr);
     graphic_draw_window();
-	//cout << "caca1" << endl;
 	s->sim_affiche();
-	//cout << "caca2" << endl;
 	refresh();
     
 	return true;
@@ -102,51 +101,37 @@ MyEvent::~MyEvent()
 MyEvent::MyEvent() :
 	m_Box(Gtk::ORIENTATION_HORIZONTAL,10),
 	m_Box_Left(Gtk::ORIENTATION_VERTICAL, 10),
-	m_Button_exit("exit"),
-	m_Button_open("open"),
-	m_Button_save("save"),
-	m_Button_start("start"),
-	m_Button_step("step"),
-	m_Button_previous("previous"),
-	m_Button_next("next"),
-	m_Label_General("General"),
-	m_Label_Info("Info"),
-	m_Label_Fourmiliere("Fourmiliere"),
-	m_Label_Info_Fourmiliere(""),
-	timer_added(false),
-	disconnected(false),
-	timeout(1000),
-	val(1),
-	id(-1)
-		
+	m_Button_exit("exit"), m_Button_open("open"),
+	m_Button_save("save"), m_Button_start("start"),
+	m_Button_step("step"), m_Button_previous("previous"),
+	m_Button_next("next"), m_Label_General("General"),
+	m_Label_Info("Info"), m_Label_Fourmiliere("Fourmiliere"),
+	m_Label_Info_Fourmiliere(""), timer_added(false),
+	disconnected(false), timeout(1000), val(1), id(-1)	
 {
-	set_title("test");
+	set_title("TCHANZ");
 	set_border_width(0);
-  
+
 	add(m_Box);
 
 	m_Box.pack_start(m_Box_Left, false, false);
 	m_Box.pack_start(m_Box_Right);
-	
 	m_Box_Left.pack_start(m_Label_General);
 	m_Box_Left.pack_start(m_Button_exit,false,false);
 	m_Box_Left.pack_start(m_Button_open,false,false);
 	m_Box_Left.pack_start(m_Button_save,false,false);
 	m_Box_Left.pack_start(m_Button_start,false,false);
 	m_Box_Left.pack_start(m_Button_step,false,false);
-	
 	m_Box_Left.pack_start(m_Separator1);
 	m_Box_Left.pack_start(m_Label_Info);
-	
 	m_Box_Left.pack_start(m_Separator2);
 	m_Box_Left.pack_start(m_Label_Fourmiliere);
 	m_Box_Left.pack_start(m_Button_previous,false,false);
 	m_Box_Left.pack_start(m_Button_next,false,false);
 	m_Box_Left.pack_start(m_Label_Info_Fourmiliere);
-
 	m_Area.set_size_request(500,500);
 	m_Box_Right.pack_start(m_Area);
-	
+
 	m_Button_exit.signal_clicked().connect(sigc::mem_fun(*this,
               &MyEvent::on_button_clicked_exit) );
 	m_Button_open.signal_clicked().connect(sigc::mem_fun(*this,
@@ -161,7 +146,7 @@ MyEvent::MyEvent() :
               &MyEvent::on_button_clicked_previous) );
     m_Button_next.signal_clicked().connect(sigc::mem_fun(*this,
               &MyEvent::on_button_clicked_next) );
-    
+
 	show_all_children();
 }
 
@@ -184,7 +169,6 @@ void MyEvent::on_button_clicked_open() //INCOMPLETE
     {
 		case(Gtk::RESPONSE_OK):
 		{
-			cout << "Open clicked." << endl;
 			string filename = dialog.get_filename();
 			cout << "File selected: " <<  filename << endl;
             char * argv;
@@ -194,12 +178,10 @@ void MyEvent::on_button_clicked_open() //INCOMPLETE
 			m_Area.refresh();
 			nourriture_info();
 			id = -1;
-			cout << "lancement ok" << endl;
 			break;
 		}
 		case(Gtk::RESPONSE_CANCEL):
 		{
-			cout << "Cancel clicked." << endl;
 			break;
 		}
 		default:
@@ -208,12 +190,10 @@ void MyEvent::on_button_clicked_open() //INCOMPLETE
 			break;
 		}
     }
-	cout << "open" << endl;
 }
 
 void MyEvent::on_button_clicked_save()
 {
-	cout << "save" << endl;
 	if(!timer_added){
 		Gtk::FileChooserDialog dialog("Please choose a file",
         Gtk::FILE_CHOOSER_ACTION_SAVE);
@@ -234,7 +214,6 @@ void MyEvent::on_button_clicked_save()
 			}
 			case(Gtk::RESPONSE_CANCEL):
 			{
-				cout << "Cancel clicked." << endl;
 				break;
 			}
 			default:
@@ -255,7 +234,6 @@ void MyEvent::on_button_clicked_start()
 		sigc::mem_fun(*this, &MyEvent::on_timeout), timeout);
 		
 		timer_added = true;
-		cout << "Timer added" << endl;
 	}else{
 		m_Button_start.set_label("start");
 		timer_added = false;
@@ -273,18 +251,15 @@ void MyEvent::on_button_clicked_step()
 
 void MyEvent::on_button_clicked_previous()
 {
-	cout << "previous" << endl;
 	id = id -1;
 	if(id < -1){
 		id = s->get_taillevf() - 1;
-		cout << "uuu";
 	}
 	fourmiliere_info(id);
 }
 
 void MyEvent::on_button_clicked_next()
 {
-	cout << "next" << endl;
 	id = id + 1;
 	if(id > s->get_taillevf() - 1){
 		id = -1;
@@ -315,23 +290,18 @@ bool MyEvent::on_key_press_event(GdkEventKey * key_event){
 		switch(gdk_keyval_to_unicode(key_event->keyval))
 		{
 			case 's':
-				cout << "s" << endl;
 				on_button_clicked_start();
 				break;
 			case '1':
-				cout << "1" << endl;
 				on_button_clicked_step();
 				break;
 			case 'n':
-				cout << "n" << endl;
 				on_button_clicked_next();
 				break;
 			case 'p':
-				cout << "p" << endl;
 				on_button_clicked_previous();
 				break;
 			case 'q':
-				cout << "q" << endl;
 				on_button_clicked_exit();
 				break;
 		}

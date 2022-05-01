@@ -7,6 +7,10 @@ using namespace std;
 static unsigned int etat = 0;
 static unsigned int countF = 0, countC = 0, countD = 0, countP = 0, j = 0;
 
+Fourmiliere::Fourmiliere(Carre c, unsigned int nbC, unsigned int nbD, 
+                         unsigned int nbP)
+    : c(c), nbC(nbC), nbD(nbD), nbP(nbP) {}
+
 void Fourmiliere::ajouter_fourmis(Fourmis* nouveau) {
     if (nouveau != nullptr) {
         vfourmis.push_back(std::unique_ptr<Fourmis>(nouveau));
@@ -86,12 +90,10 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
         data >> x >> y >> side >> xg >> yg >> total_food >> nbC >> nbD >> nbP;
         Carre c = { x, y, side };
         if(test_carre(c)) return true;
-        //cout << x << " " << y << endl;
         Fourmiliere f(c, nbC, nbD, nbP);
 		Carre cg = {xg, yg, sizeG};
         f.ajouter_fourmis(new Generator(xg, yg, total_food, cg));
         if(test_carre_centre(cg)) return true;
-        //cout << "countF " << countF << "\t j   " << j << endl;
         if(f.test_fourmis(countF, j)) return true;
         ++j, ++countF;
 		if(f.f_overlap(vfourmiliere, countF)) return true;
@@ -117,11 +119,11 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
             j = 0, countC = 0, countD = 0, countP = 0;
         }
     }
+
     Collector Col(0, 0, 0, 0);
     Defensor Def(0, 0, 0);
     Predator Pre(0, 0, 0);
-    //cout << "etat fourmis   " << etat << endl;
-    //cout << countF << "\t" << countC << "\t" << countD << "\t" << countP << "\t" << j << endl;
+
     switch (etat) {
     case COL:
         if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)) return true;
@@ -133,7 +135,6 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
             etat = DEF;
         }
         break;
-
     case DEF:
         if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)) return true;
         vfourmiliere[countF - 1].ajouter_fourmis(new Defensor(Def));
@@ -143,7 +144,6 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
             etat = PRE;
         }
         break;
-
     case PRE:
         if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)) return true;
         vfourmiliere[countF - 1].ajouter_fourmis(new Predator(Pre));

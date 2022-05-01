@@ -11,7 +11,6 @@ int Simulation::totF = 0;
 
 bool Simulation::lecture(char * nom_fichier)
 {
-	//cout << "entree lecture" << endl;
     string line;
     ifstream fichier(nom_fichier); 
     if(!fichier.fail()) 
@@ -36,7 +35,6 @@ bool Simulation::lecture(char * nom_fichier)
 bool Simulation::decodage_ligne(string line){
 	enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMIL};
 	istringstream data(line);
-	//cout << "entree decodage sim    etat : " << etat << endl;
 	switch (etat)
 	{
 	case NBN:
@@ -47,8 +45,6 @@ bool Simulation::decodage_ligne(string line){
 		}
 		else etat = NOURRITURE;
 		return false;
-		break;
-
 	case NOURRITURE:
 		if(decodage_ligne_nourriture(line, vnourriture)){
 			return true;
@@ -58,21 +54,16 @@ bool Simulation::decodage_ligne(string line){
 			etat = NBF;
 		}
 		return false;
-		break;
-
 	case NBF:
 		data >> totF;
 		count = 0;
 		etat = FOURMIL;
 		return false;
-		break;
-
 	case FOURMIL:
 		if(decodage_ligne_fourmiliere(line, vfourmiliere, totF)){
 			return true;
 		}
 		return false;
-		break;
 	}
 	return false;
 }
@@ -80,7 +71,6 @@ bool Simulation::decodage_ligne(string line){
 void Simulation::lancement(char* nom_fichier){
 	initialise_grille();
 	if(lecture(nom_fichier)){
-		cout << "erreur de lecture" << endl;
 		tout_supprimer();
 	}
 }
@@ -97,15 +87,12 @@ void Simulation::sim_affiche(){
 }
 
 void Simulation::tout_supprimer(){
-	vfourmiliere.clear(); //suppression des vfourmis automatique !!
-	vnourriture.clear();  // ^ faute cheloue ici, p.52 mooc explication
+	vfourmiliere.clear(); //suppression des vfourmis automatique !
+	vnourriture.clear();
 	re();
 	vide_grille();
 	etat = NBN, count = 0, total_food = 0, totF = 0;
 }
-//^dear assistant if you see this trust me we spent 2h with an assistant debugging
-//this. vfourmis is automatically deleted, no need to delete it from every
-//fourmiliere because we're using unique_ptr !!
 
 void Simulation::ecrire_fichier(ofstream& fichier){
 	fichier << to_string(vnourriture.size()) << "\n\n";

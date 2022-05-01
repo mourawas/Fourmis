@@ -1,5 +1,6 @@
 #ifndef SIMULATION_H_INCLUDED
 #define SIMULATION_H_INCLUDED
+
 #include <cstdlib>
 #include <string>
 #include <iostream>

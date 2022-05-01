@@ -6,7 +6,6 @@
 #include "error_squarecell.h"
 #include "graphic.h"
 
-
 typedef std::vector<std::vector<bool> > grille;
 
 constexpr short unsigned g_dim(7);
@@ -38,8 +37,6 @@ bool sup_coord(Carre c, unsigned& x, unsigned& y);
 bool test_carre(Carre& c);
 
 bool test_carre_centre(Carre& c);
-
-//void afficheGrille();
 
 void initialise_carre_centre(Carre& c);
 

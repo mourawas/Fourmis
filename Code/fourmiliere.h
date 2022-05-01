@@ -1,5 +1,6 @@
 #ifndef FOURMILIERE_H_INCLUDED
 #define FOURMILIERE_H_INCLUDED
+
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -20,10 +21,7 @@ private:
 
     std::vector<std::unique_ptr<Fourmis>> vfourmis;
 public:
-    Fourmiliere (Carre c, unsigned int nbC, unsigned int nbD, unsigned int nbP)
-    : c(c), nbC(nbC), nbD(nbD), nbP(nbP)
-    {}  //^defining it anywhere but here DOESN'T WORK
-    //pas de destructeur sinon erreur
+    Fourmiliere (Carre c, unsigned int nbC, unsigned int nbD, unsigned int nbP);
     void ajouter_fourmis(Fourmis* nouveau);
     bool test_fourmis(unsigned int countF, unsigned int j);
     bool f_overlap(std::vector<Fourmiliere>& vfourmiliere, unsigned int countF);
@@ -41,4 +39,5 @@ bool decodage_ligne_fourmiliere(std::string line,
                                 unsigned int totF);
 
 void re();
+
 #endif

@@ -4,6 +4,19 @@
 #include "fourmis.h"
 using namespace std;
 
+Generator::Generator(unsigned int x1, unsigned int y1,
+                     unsigned int total_food, Carre cg)
+    : Fourmis(x1, y1), total_food(total_food), cg(cg) {}
+
+Collector::Collector(unsigned int x1, unsigned y1, unsigned int age, bool food)
+: Fourmis(x1, y1), age(age), food(food) {}
+
+Defensor::Defensor(unsigned int x1, unsigned int y1, unsigned int age)
+    : Fourmis(x1, y1), age(age) {}
+
+Predator::Predator(unsigned int x1, unsigned y1, unsigned age)
+    : Fourmis(x1, y1), age(age) {}
+
 void Collector::ini_c(unsigned int& x2, unsigned int& y2, unsigned int& age2,
                      bool& food2) {
     x1 = x2;
