@@ -24,12 +24,14 @@ public:
 	virtual ~MyArea();
 	void setFrame(Frame x); 
 	void adjustFrame();
-
+	void set_simulation(Simulation* sim);
+	void refresh();
 protected:
 	bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
   
 private:
 	Frame frame;
+	Simulation* s;
 };
 
 class MyEvent : public Gtk::Window

@@ -114,7 +114,8 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
     Collector Col(0, 0, 0, 0);
     Defensor Def(0, 0, 0);
     Predator Pre(0, 0, 0);
-
+    //cout << "etat fourmis   " << etat << endl;
+    //cout << countF << "\t" << countC << "\t" << countD << "\t" << countP << "\t" << j << endl;
     switch (etat) {
     case COL:
         if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)) return true;
@@ -153,6 +154,6 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
 }
 
 void re(){
-    etat = 0, countC = 0, countD = 0, countP = 0;
+    etat = 0, countF = 0, countC = 0, countD = 0, countP = 0;
     j = 0;
 }

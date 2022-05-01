@@ -6,10 +6,23 @@ static Frame default_frame = {-1, 129, -1, 129, 1, 500, 500};
 
 MyArea::MyArea()
 {
+
 }
 
 MyArea::~MyArea()
 {
+}
+
+void MyArea::refresh()
+{
+    auto win = get_window();
+    if(win)
+    {
+    	Gdk::Rectangle r(0, 0, 0, 0);
+    	get_allocation().get_width();
+    	get_allocation().get_height();
+    	win->invalidate_rect(r,false);
+    }
 }
 
 void MyArea::setFrame(Frame f)
@@ -72,6 +85,8 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     
     graphic_set_context(cr);
     graphic_draw_window();
+
+	s->sim_affiche();
     /*graphic_draw_carre_plein(50, 80, 3., 1., 0.48, 0.);
     graphic_draw_carre_plein(35, 81, 3., 0.6, 0., 0.);
     graphic_draw_plus(50, 80, 3., 1., 0., 0);
@@ -81,6 +96,10 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     graphic_draw_croix (35, 81 , 1., 0., 0.);*/
     
 	return true;
+}
+
+void MyArea::set_simulation(Simulation* sim){
+	s = sim;
 }
 
 MyEvent::~MyEvent()
@@ -175,7 +194,11 @@ void MyEvent::on_button_clicked_open() //INCOMPLETE
             char * argv;
             argv = &filename[0];
 			s->tout_supprimer();
+			//cout << "tout supprimé après open" << endl;
+			m_Area.refresh();
+			//cout << "area refreshed" << endl;
             s->lancement(argv);
+			cout << "lancement ok" << endl;
 			break;
 		}
 		case(Gtk::RESPONSE_CANCEL):
@@ -282,4 +305,5 @@ bool MyEvent::on_key_press_event(GdkEventKey * key_event){
 
 void MyEvent::set_simulation(Simulation* sim){
 	s = sim;
+	m_Area.set_simulation(sim);
 }

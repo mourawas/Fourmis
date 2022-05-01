@@ -57,4 +57,6 @@ void dessin_losange(unsigned int x, unsigned int y, double r, double b, double g
 
 void dessin_carre_vide(unsigned int x, unsigned int y, double size, double r, double g, double b);
 
+void vide_grille();
+
 #endif

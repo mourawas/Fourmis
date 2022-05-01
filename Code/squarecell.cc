@@ -15,6 +15,10 @@ void initialiseGrille() {
     }
 }
 
+void vide_grille(){
+    grid.clear();
+}
+
 bool supFourmiliere(Carre& c1, Carre& c2){
 	unsigned int coin1x = c1.x + c1.side;
 	unsigned int coin1y = c1.y + c1.side;

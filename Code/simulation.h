@@ -21,8 +21,8 @@ private:
 	void lancement(char* nom_fichier);
 	bool lecture(char* nom_fichier);
 	bool decodage_ligne(string line);
-
 	void tout_supprimer();
+	void sim_affiche();
 	
 	enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMIL};
 	static int etat, count, total_food, totF;

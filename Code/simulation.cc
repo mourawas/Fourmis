@@ -11,6 +11,7 @@ int Simulation::totF = 0;
 
 bool Simulation::lecture(char * nom_fichier)
 {
+	//cout << "entree lecture" << endl;
     string line;
     ifstream fichier(nom_fichier); 
     if(!fichier.fail()) 
@@ -21,18 +22,8 @@ bool Simulation::lecture(char * nom_fichier)
        
 			if(decodage_ligne(line)){
 				return true;
-			}else{
-				for (size_t i = 0; i < vfourmiliere.size(); ++i)
-				{
-					vfourmiliere[i].d_Anthill(i);
-				}
-				for (size_t i = 0; i < vnourriture.size(); ++i)
-				{
-					vnourriture[i].dessin_nourriture();
-				}
 			}
         }
-        
         cout << message::success();
 		return false;
 	}
@@ -45,6 +36,7 @@ bool Simulation::lecture(char * nom_fichier)
 bool Simulation::decodage_ligne(string line){
 	enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMIL};
 	istringstream data(line);
+	//cout << "entree decodage sim    etat : " << etat << endl;
 	switch (etat)
 	{
 	case NBN:
@@ -87,11 +79,16 @@ bool Simulation::decodage_ligne(string line){
 
 void Simulation::lancement(char* nom_fichier){
 	initialiseGrille();
+	//cout << "grille créée" << endl;
 	if(lecture(nom_fichier)){
+		cout << "erreur de lecture" << endl;
 		tout_supprimer();
 		//appeler fonction gui qui laisse juste open
-	}else{
-		for (size_t i = 0; i < vfourmiliere.size(); ++i)
+	}
+}
+
+void Simulation::sim_affiche(){
+	for (size_t i = 0; i < vfourmiliere.size(); ++i)
 		{
 			vfourmiliere[i].d_Anthill(i);
 		}
@@ -99,13 +96,13 @@ void Simulation::lancement(char* nom_fichier){
 		{
 			vnourriture[i].dessin_nourriture();
 		}	
-	}
 }
 
 void Simulation::tout_supprimer(){
 	vfourmiliere.clear(); //suppression des vfourmis automatique !!
 	vnourriture.clear();  // ^ faute cheloue ici, p.52 mooc explication
 	re();
+	vide_grille();
 	etat = NBN, count = 0, total_food = 0, totF = 0;
 }
 //dear assistant if you see this trust me we spent 2h with an assistant debugging
