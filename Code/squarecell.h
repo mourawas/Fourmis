@@ -5,9 +5,9 @@
 #include <cmath>
 #include "error_squarecell.h"
 #include "graphic.h"
-using namespace std;
 
-typedef vector<vector<bool> > grille;
+
+typedef std::vector<std::vector<bool> > grille;
 
 constexpr short unsigned g_dim(7);
 //constexpr short unsigned g_max(pow(2,g_dim));
@@ -19,33 +19,31 @@ struct Carre {
 	unsigned int side;
 };
 
-void initialiseGrille();
+void initialise_grille();
  
-void initialiseCarre(Carre& c);
+void initialise_carre(Carre& c);
 
-void supprimerCarre(Carre& c);
+void supprimer_carre(Carre& c);
 
-unsigned int nbTrue();
+unsigned int nb_true();
 
-bool supFourmiliere(Carre& c1, Carre& c2);
+bool sup_fourmiliere(Carre& c1, Carre& c2);
 
 bool sup(Carre& c1, Carre& c2);
 
-bool supUnique(Carre& c, unsigned int& compteur);
+bool sup_unique(Carre& c, unsigned int& compteur);
 
-unsigned int nbTrue();
+bool sup_coord(Carre c, unsigned& x, unsigned& y);
 
-bool supCoord(Carre c, unsigned& x, unsigned& y);
+bool test_carre(Carre& c);
 
-bool testCarre(Carre& c);
-
-bool testCarreCentre(Carre& c);
+bool test_carre_centre(Carre& c);
 
 //void afficheGrille();
 
-void initialise_Carre_Centre(Carre& c);
+void initialise_carre_centre(Carre& c);
 
-bool Carre_dans_Carre(Carre& c1, Carre& c2);
+bool carre_dans_carre(Carre& c1, Carre& c2);
 
 void dessin_carre_croix(unsigned int x,unsigned int y, double size, double r, double g, double b);
 
