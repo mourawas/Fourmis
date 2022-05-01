@@ -18,7 +18,6 @@ void Collector::setcc(unsigned int& x2, unsigned int& y2){
 
 void Collector::D_ant(double r, double g, double b){
     double s = sizeC;
-    dessin_carre_plein(x1, y1, s, r*0.6, g*0.6, b*0.6);
     dessin_carre_croix(x1, y1, s, r, g, b);
 }
  
@@ -36,7 +35,6 @@ void Defensor::setcd(unsigned int& x2, unsigned int& y2){
 }
 void Defensor::D_ant(double r, double g, double b){
     double s = sizeD;
-    dessin_carre_plein(x1, y1, s, r*0.6, g*0.6, b*0.6);
     dessin_carre_plus(x1, y1, s, r, g, b);
 }
 

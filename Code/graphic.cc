@@ -13,29 +13,29 @@ void graphic_draw_window()
     (*ptcr)->paint();
     
     (*ptcr)->set_line_width(1);
-    (*ptcr)->set_source_rgb(206, 207, 208);
+    (*ptcr)->set_source_rgb(1, 1, 1);
     (*ptcr)->move_to(-1, -1);
-    (*ptcr)->line_to(-1, 128.5);
-    (*ptcr)->move_to(-1, 128.5);
-    (*ptcr)->line_to(129, 128.5);
-    (*ptcr)->move_to(129, 128.5);
+    (*ptcr)->line_to(-1, 129);
+    (*ptcr)->move_to(-1, 129);
+    (*ptcr)->line_to(129, 129);
+    (*ptcr)->move_to(129, 129);
     (*ptcr)->line_to(129, -1);
     (*ptcr)->move_to(129, -1);
     (*ptcr)->line_to(-1 ,-1);
     (*ptcr)->stroke();
-    for (size_t i(0); i<128; ++i){
+    for (size_t i(0); i<129; ++i){
         (*ptcr)->set_line_width(0.1);
         (*ptcr)->set_source_rgb(0.4, 0.4, 0.4);
-        (*ptcr)->move_to(i+0.5, 0);
-        (*ptcr)->line_to(i+0.5, 128);
+        (*ptcr)->move_to(i-0.5, -1);
+        (*ptcr)->line_to(i-0.5, 129);
         
         (*ptcr)->stroke();
     }
     for (size_t i(0); i<128; ++i){
         (*ptcr)->set_line_width(0.1);
         (*ptcr)->set_source_rgb(0.4, 0.4, 0.4);
-        (*ptcr)->move_to(0, i+0.5);
-        (*ptcr)->line_to(128,i+0.5);
+        (*ptcr)->move_to(-1, i-0.5);
+        (*ptcr)->line_to(129,i-0.5);
         
         (*ptcr)->stroke();
     }
@@ -73,14 +73,14 @@ void graphic_draw_carre_vide(unsigned int x, unsigned int y, double size, double
                              double g, double b){
     (*ptcr)->set_line_width(0.5);
     (*ptcr)->set_source_rgb(r, g, b);
-    (*ptcr)->move_to(x, y-0.5);
-    (*ptcr)->line_to(x, y+0.5+size);
-    (*ptcr)->move_to(x, y+0.5+size);
-    (*ptcr)->line_to(x+size, y+0.5+size);
-    (*ptcr)->move_to(x+size, y+0.5+size);
-    (*ptcr)->line_to(x+size, y-0.5);
-    (*ptcr)->move_to(x+size, y-0.5);
-    (*ptcr)->line_to(x, y-0.5);
+    (*ptcr)->move_to(x, y);
+    (*ptcr)->line_to(x, y+size);
+    (*ptcr)->move_to(x, y+size);
+    (*ptcr)->line_to(x+size, y+size);
+    (*ptcr)->move_to(x+size, y+size);
+    (*ptcr)->line_to(x+size, y);
+    (*ptcr)->move_to(x+size, y);
+    (*ptcr)->line_to(x, y);
     (*ptcr)->stroke();
     }
 void graphic_draw_losange(unsigned int x, unsigned int y, double r, double g, double b){
