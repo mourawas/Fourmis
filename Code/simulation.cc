@@ -69,7 +69,6 @@ bool Simulation::decodage_ligne(string line){
 
 	case FOURMIL:
 		if(decodage_ligne_fourmiliere(line, vfourmiliere, totF)){
-			cout << "oui" << endl;
 			return true;
 		}
 		return false;
@@ -84,7 +83,6 @@ void Simulation::lancement(char* nom_fichier){
 	if(lecture(nom_fichier)){
 		cout << "erreur de lecture" << endl;
 		tout_supprimer();
-		//appeler fonction gui qui laisse juste open
 	}
 }
 
@@ -119,4 +117,28 @@ void Simulation::ecrire_fichier(ofstream& fichier){
 	for (size_t i = 0; i < vfourmiliere.size(); ++i){
 		vfourmiliere[i].ecrire_fourmiliere(fichier);
 	}
+}
+
+int Simulation::get_taillevf(){
+	return vfourmiliere.size();
+}
+
+unsigned int Simulation::get_taillevn(){
+	return vnourriture.size();
+}
+
+unsigned int Simulation::get_total_food(int& id){
+	return vfourmiliere[id].get_total_food();
+}
+
+unsigned int Simulation::get_nbC(int& id){
+	return vfourmiliere[id].get_nbC();
+}
+
+unsigned int Simulation::get_nbD(int& id){
+	return vfourmiliere[id].get_nbD();
+}
+
+unsigned int Simulation::get_nbP(int& id){
+	return vfourmiliere[id].get_nbP();
 }

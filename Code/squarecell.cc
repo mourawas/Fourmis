@@ -20,16 +20,16 @@ void vide_grille(){
 }
 
 bool sup_fourmiliere(Carre& c1, Carre& c2){
-	unsigned int coin1x = c1.x + c1.side;
-	unsigned int coin1y = c1.y + c1.side;
+	unsigned int coin1x = c1.x + c1.side; //en bas à droite
+	unsigned int coin1y = c1.y + c1.side; //en haut a gauche
 	
-	unsigned int coin2x = c2.x + c2.side;
-	unsigned int coin2y = c2.y + c2.side;
+	unsigned int coin2x = c2.x + c2.side; //en bas à droite
+	unsigned int coin2y = c2.y + c2.side; //en haut à gauche
 	
-	if((c1.x > coin2x) or (c2.x > coin1x)){
+	if((c1.x >= coin2x) or (c2.x >= coin1x)){
 		return false;
 	}
-	if((c1.y > coin2y) or (c2.y > coin1y)){
+	if((c1.y >= coin2y) or (c2.y >= coin1y)){
 		return false;
 	}
 	return true;

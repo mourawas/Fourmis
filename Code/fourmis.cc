@@ -129,6 +129,10 @@ void Generator::ecrire_fourmis(ofstream& fichier){
             << to_string(total_food) << " ";
 }
 
+unsigned int Generator::get(){
+    return total_food;
+}
+
 bool Collector::c_overlap(){
 	unsigned int x, y;
 	if(sup_coord(cc, x, y)){
@@ -154,6 +158,10 @@ void Collector::ecrire_fourmis(ofstream& fichier){
     }
     fichier << "\t" << to_string(cc.x) << " " << to_string(cc.y)
             << " " << to_string(age) << " " << a << "\n";
+}
+
+unsigned int Collector::get(){
+    return age;
 }
 
 bool Defensor::d_overlap(){
@@ -186,6 +194,10 @@ void Defensor::ecrire_fourmis(ofstream& fichier){
             << " " << to_string(age) << "\n";
 }
 
+unsigned int Defensor::get(){
+    return age;
+}
+
 bool Predator::p_overlap(){
 	unsigned int x, y;
 	if(sup_coord(cp, x, y)){
@@ -205,4 +217,8 @@ bool Predator::big_test(unsigned int countF, Carre& c){
 void Predator::ecrire_fourmis(ofstream& fichier){
     fichier << "\t" << to_string(cp.x) << " " << to_string(cp.y)
             << " " << to_string(age) << "\n";
+}
+
+unsigned int Predator::get(){
+    return age;
 }

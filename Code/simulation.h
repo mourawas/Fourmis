@@ -1,16 +1,15 @@
 #ifndef SIMULATION_H_INCLUDED
 #define SIMULATION_H_INCLUDED
-
-#include "squarecell.h"
-#include "nourriture.h"
-#include "fourmiliere.h"
-#include "message.h"
 #include <cstdlib>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "squarecell.h"
+#include "nourriture.h"
+#include "fourmiliere.h"
+#include "message.h"
 
 class Simulation {
 private:
@@ -23,8 +22,14 @@ public:
 	void tout_supprimer();
 	void sim_affiche();
 	void ecrire_fichier(std::ofstream& fichier);
+	int get_taillevf();
+	unsigned int get_taillevn();
+	unsigned int get_total_food(int& id);
 	enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMIL};
 	static int etat, count, total_food, totF;
+	unsigned int get_nbC(int& id);
+	unsigned int get_nbD(int& id);
+	unsigned int get_nbP(int& id);
 };
 
 #endif

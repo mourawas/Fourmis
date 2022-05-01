@@ -1,10 +1,10 @@
 #ifndef GUI_H_INCLUDED
 #define GUI_H_INCLUDED
-#include "graphic.h"
-#include "simulation.h"
 #include <gtkmm.h>
 #include <cairomm/context.h>
 #include <string>
+#include "graphic.h"
+#include "simulation.h"
 
 struct Frame
 {
@@ -41,6 +41,8 @@ public:
 	virtual ~MyEvent();
 	
 	void set_simulation(Simulation* sim);
+	void fourmiliere_info(int& id);
+	void nourriture_info();
 protected:
 	void on_button_clicked_exit();
 	void on_button_clicked_open();
@@ -66,13 +68,15 @@ protected:
 	
 	Gtk::Label m_Label_General;
 	Gtk::Label m_Label_Info;
-	Gtk::Label m_Label_Anthill;
+	Gtk::Label m_Label_Fourmiliere;
+	Gtk::Label m_Label_Info_Fourmiliere;
 	
 	bool on_timeout();
 	bool timer_added;
 	bool disconnected;
 	const unsigned int timeout;
 	unsigned int val;
+	int id;
 	
 	bool on_key_press_event(GdkEventKey * key_event);
 private:

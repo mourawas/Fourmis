@@ -30,6 +30,10 @@ public:
     void d_anthill(unsigned int i);
     void intern_ant_drawing(double r, double g, double b);
     void ecrire_fourmiliere(std::ofstream& fichier);
+    unsigned int get_nbC();
+    unsigned int get_nbD();
+    unsigned int get_nbP();
+    unsigned int get_total_food();
 };
 
 bool decodage_ligne_fourmiliere(std::string line, std::vector<Fourmiliere>& vfourmiliere,

@@ -85,15 +85,8 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     
     graphic_set_context(cr);
     graphic_draw_window();
-
 	s->sim_affiche();
-    /*graphic_draw_carre_plein(50, 80, 3., 1., 0.48, 0.);
-    graphic_draw_carre_plein(35, 81, 3., 0.6, 0., 0.);
-    graphic_draw_plus(50, 80, 3., 1., 0., 0);
-	graphic_draw_carre_vide(46, 43, 13., 1., 0., 0.);
-    graphic_draw_losange(50, 80, 1., 1., 1.);
-    graphic_draw_carre_plein(52, 49, 5., 1., 0., 0.);
-    graphic_draw_croix (35, 81 , 1., 0., 0.);*/
+	refresh();
     
 	return true;
 }
@@ -118,7 +111,8 @@ MyEvent::MyEvent() :
 	m_Button_next("next"),
 	m_Label_General("General"),
 	m_Label_Info("Info"),
-	m_Label_Anthill("Anthill info"),
+	m_Label_Fourmiliere("Fourmiliere"),
+	m_Label_Info_Fourmiliere(""),
 	timer_added(false),
 	disconnected(false),
 	timeout(1000),
@@ -144,10 +138,11 @@ MyEvent::MyEvent() :
 	m_Box_Left.pack_start(m_Label_Info);
 	
 	m_Box_Left.pack_start(m_Separator2);
-	m_Box_Left.pack_start(m_Label_Anthill);
+	m_Box_Left.pack_start(m_Label_Fourmiliere);
 	m_Box_Left.pack_start(m_Button_previous,false,false);
 	m_Box_Left.pack_start(m_Button_next,false,false);
-	
+	m_Box_Left.pack_start(m_Label_Info_Fourmiliere);
+
 	m_Area.set_size_request(500,500);
 	m_Box_Right.pack_start(m_Area);
 	
@@ -198,6 +193,7 @@ void MyEvent::on_button_clicked_open() //INCOMPLETE
 			m_Area.refresh();
 			//cout << "area refreshed" << endl;
             s->lancement(argv);
+			nourriture_info();
 			cout << "lancement ok" << endl;
 			break;
 		}
@@ -278,11 +274,21 @@ void MyEvent::on_button_clicked_step()
 void MyEvent::on_button_clicked_previous()
 {
 	cout << "previous" << endl;
+	id = id -1;
+	if(id < -1){
+		id = s->get_taillevf() - 1;
+	}
+	fourmiliere_info(id);
 }
 
 void MyEvent::on_button_clicked_next()
 {
 	cout << "next" << endl;
+	id = id + 1;
+	if(id > s->get_taillevf() - 1){
+		id = -1;
+	}
+	fourmiliere_info(id);
 }
 
 bool MyEvent::on_timeout()
@@ -335,4 +341,38 @@ bool MyEvent::on_key_press_event(GdkEventKey * key_event){
 void MyEvent::set_simulation(Simulation* sim){
 	s = sim;
 	m_Area.set_simulation(sim);
+}
+
+void MyEvent::fourmiliere_info(int& id){
+	if(id == -1){
+		m_Label_Info_Fourmiliere.set_text("None selected");
+	}else{
+		string info = "id: ";
+		info += to_string(id);
+		info += "\n";
+		info += "Total food: ";
+		unsigned int food = s->get_total_food(id);
+		info += to_string(food);
+		unsigned int nbC = s->get_nbC(id);
+		unsigned int nbD = s->get_nbD(id);
+		unsigned int nbP = s->get_nbP(id);
+		info += "\n\n nbC: ";
+		info += to_string(nbC);
+		info += "\n nbD: ";
+		info += to_string(nbD);
+		info += "\n nbP: ";
+		info += to_string(nbP);
+		info+= "\n";
+		m_Label_Info_Fourmiliere.set_text(info);
+	}
+}
+
+void MyEvent::nourriture_info(){
+	string info = "Info";
+	int food = s->get_taillevn();
+	info += "\n";
+	info += "Nb food :";
+	info += to_string(food);
+	info += "\n";
+	m_Label_Info.set_text(info);
 }

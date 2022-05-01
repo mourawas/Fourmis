@@ -91,7 +91,7 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
 		Carre cg = {xg, yg, sizeG};
         f.ajouter_fourmis(new Generator(xg, yg, total_food, cg));
         if(test_carre_centre(cg)) return true;
-        //cout << " test"<< endl;
+        //cout << "countF " << countF << "\t j   " << j << endl;
         if(f.test_fourmis(countF, j)) return true;
         ++j, ++countF;
 		if(f.f_overlap(vfourmiliere, countF)) return true;
@@ -112,6 +112,9 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
         }
         else if (countF == totF) {
             return false;
+        }
+        if(j == (nbC + nbD + nbP + 1)){
+            j = 0, countC = 0, countD = 0, countP = 0;
         }
     }
     Collector Col(0, 0, 0, 0);
@@ -171,4 +174,20 @@ void Fourmiliere::ecrire_fourmiliere(ofstream& fichier){
     {
         vfourmis[i]->ecrire_fourmis(fichier);
     }
+}
+
+unsigned int Fourmiliere::get_nbC(){
+    return nbC;
+}
+
+unsigned int Fourmiliere::get_nbD(){
+    return nbD;
+}
+
+unsigned int Fourmiliere::get_nbP(){
+    return nbP;
+}
+
+unsigned int Fourmiliere::get_total_food(){
+    return vfourmis[0]->get();
 }

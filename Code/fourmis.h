@@ -26,6 +26,7 @@ public:
     virtual void d_ant(double r, double g, double b) = 0;
     virtual ~Fourmis() = default;
     virtual void ecrire_fourmis(std::ofstream& fichier) = 0;
+    virtual unsigned int get() = 0;
 };
 
 class Generator : public Fourmis {
@@ -43,6 +44,7 @@ class Generator : public Fourmis {
     bool g_overlap();
     void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;
+    unsigned int get() override;
 };
 
 class Collector : public Fourmis{
@@ -62,6 +64,7 @@ public:
     void ini_c(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2);
     void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;
+    unsigned int get() override;
 };
 
 class Defensor : public Fourmis {
@@ -81,6 +84,7 @@ public:
     void ini_d(unsigned int& x2, unsigned int& y2, unsigned int& age2);
     void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;
+    unsigned int get() override;
 };
 
 class Predator : public Fourmis {
@@ -99,6 +103,7 @@ public:
     void ini_p(unsigned int& x2, unsigned int& y2, unsigned int& age2);
     void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;
+    unsigned int get() override;
 };
 
 bool decodage_ligne_fourmis(std::string line, unsigned int etat, Collector& Col,
