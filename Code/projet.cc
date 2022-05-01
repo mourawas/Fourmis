@@ -17,7 +17,7 @@ int main(int argc, char * argv[])
 	
 	MyEvent win;
 	win.set_simulation(&s);
-	win.set_title("Side Drawing");
+	win.set_title("TCHANZ");
 	win.set_default_size(300, 200);
 	
 	return app->run(win);
