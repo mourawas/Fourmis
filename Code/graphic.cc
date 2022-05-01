@@ -83,7 +83,7 @@ void graphic_draw_carre_vide(unsigned int x, unsigned int y, double size, double
     (*ptcr)->line_to(x, y);
     (*ptcr)->stroke();
     }
-void graphic_draw_losange(unsigned int x, unsigned int y, double r, double g, double b){
+void graphic_draw_losange(unsigned int x,unsigned int y,double r,double g,double b){
     (*ptcr)->set_line_width(1./sqrt(2));
     (*ptcr)->set_source_rgb(r, g, b);
     (*ptcr)->move_to(x-0.25, y-0.25);

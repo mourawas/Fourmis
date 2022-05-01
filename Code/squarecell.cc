@@ -172,17 +172,20 @@ void initialise_carre_centre(Carre& c)
     Carre nc = {t, k, c.side};
     initialise_carre (nc);
 }
-void dessin_carre_croix(unsigned int x, unsigned int y, double size, double r, double g, double b)
+void dessin_carre_croix(unsigned int x, unsigned int y, double size, double r,
+                        double g, double b)
 {
     graphic_draw_carre_plein(x,y,size,r*0.6,g*0.6,b*0.6);
     graphic_draw_croix(x,y,r,g,b);
 }
-void dessin_carre_plus(unsigned int x, unsigned int y, double size, double r, double g, double b)
+void dessin_carre_plus(unsigned int x, unsigned int y, double size, double r, double g,
+                       double b)
 {
     graphic_draw_carre_plein(x,y,size,r*0.6,g*0.6,b*0.6);
     graphic_draw_plus(x,y,size,r,g,b);
 }
-void dessin_carre_plein(unsigned int x, unsigned int y, double size, double r, double g, double b)
+void dessin_carre_plein(unsigned int x, unsigned int y, double size, double r,
+                        double g, double b)
 {
     graphic_draw_carre_plein(x,y,size,r,g,b);
 }
@@ -190,7 +193,8 @@ void dessin_losange(unsigned int x, unsigned int y, double r, double b, double g
 {
     graphic_draw_losange(x,y,r,g,b);
 }
-void dessin_carre_vide(unsigned int x, unsigned int y, double size, double r, double g, double b)
+void dessin_carre_vide(unsigned int x, unsigned int y, double size, double r, double g,
+                       double b)
 {
     graphic_draw_carre_vide(x,y,size,r,g,b);
 }

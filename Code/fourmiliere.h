@@ -36,7 +36,8 @@ public:
     unsigned int get_total_food();
 };
 
-bool decodage_ligne_fourmiliere(std::string line, std::vector<Fourmiliere>& vfourmiliere,
+bool decodage_ligne_fourmiliere(std::string line,
+                                std::vector<Fourmiliere>& vfourmiliere,
                                 unsigned int totF);
 
 void re();
