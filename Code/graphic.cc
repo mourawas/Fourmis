@@ -14,28 +14,28 @@ void graphic_draw_window()
     
     (*ptcr)->set_line_width(1);
     (*ptcr)->set_source_rgb(1, 1, 1);
-    (*ptcr)->move_to(-1, -1);
-    (*ptcr)->line_to(-1, 129);
-    (*ptcr)->move_to(-1, 129);
-    (*ptcr)->line_to(129, 129);
-    (*ptcr)->move_to(129, 129);
-    (*ptcr)->line_to(129, -1);
-    (*ptcr)->move_to(129, -1);
-    (*ptcr)->line_to(-1 ,-1);
+    (*ptcr)->move_to(0, 0);
+    (*ptcr)->line_to(0, 128.5);
+    (*ptcr)->move_to(0, 128);
+    (*ptcr)->line_to(128.5, 128);
+    (*ptcr)->move_to(128, 128);
+    (*ptcr)->line_to(128, -0.5);
+    (*ptcr)->move_to(128, 0);
+    (*ptcr)->line_to(-0.5 ,0);
     (*ptcr)->stroke();
     for (size_t i(0); i<129; ++i){
         (*ptcr)->set_line_width(0.1);
         (*ptcr)->set_source_rgb(0.4, 0.4, 0.4);
-        (*ptcr)->move_to(i-0.5, -1);
-        (*ptcr)->line_to(i-0.5, 129);
+        (*ptcr)->move_to(i+0.5, 0);
+        (*ptcr)->line_to(i+0.5, 128);
         
         (*ptcr)->stroke();
     }
     for (size_t i(0); i<128; ++i){
         (*ptcr)->set_line_width(0.1);
         (*ptcr)->set_source_rgb(0.4, 0.4, 0.4);
-        (*ptcr)->move_to(-1, i-0.5);
-        (*ptcr)->line_to(129,i-0.5);
+        (*ptcr)->move_to(0, i+0.5);
+        (*ptcr)->line_to(128,i+0.5);
         
         (*ptcr)->stroke();
     }
