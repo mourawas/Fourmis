@@ -18,8 +18,7 @@ private:
     Carre c;
     unsigned int nbC, nbD, nbP;
 
-    std::vector<unique_ptr<Fourmis> > vfourmis;
-	
+    std::vector<std::unique_ptr<Fourmis>> vfourmis;
 public:
     Fourmiliere (Carre c, unsigned int nbC, unsigned int nbD, unsigned int nbP)
     : c(c), nbC(nbC), nbD(nbD), nbP(nbP)

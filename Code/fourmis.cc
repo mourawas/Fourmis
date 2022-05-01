@@ -152,8 +152,8 @@ void Collector::ecrire_fourmis(ofstream& fichier){
     }else{
         a = "false";
     }
-    fichier << "\t" << to_string(age) << " " << to_string(cc.x)
-            << " " << to_string(cc.y) << " " << a << "\n";
+    fichier << "\t" << to_string(cc.x) << " " << to_string(cc.y)
+            << " " << to_string(age) << " " << a << "\n";
 }
 
 bool Defensor::D_overlap(){
@@ -182,8 +182,8 @@ bool Defensor::BigTest(unsigned int countF, Carre& c){
 }
 
 void Defensor::ecrire_fourmis(ofstream& fichier){
-    fichier << "\t" << to_string(age) << " " << to_string(cd.x)
-            << " " << to_string(cd.y) << "\n";
+    fichier << "\t" << to_string(cd.x) << " " << to_string(cd.y)
+            << " " << to_string(age) << "\n";
 }
 
 bool Predator::P_overlap(){
@@ -203,6 +203,6 @@ bool Predator::BigTest(unsigned int countF, Carre& c){
 }
 
 void Predator::ecrire_fourmis(ofstream& fichier){
-    fichier << "\t" << to_string(age) << " " << to_string(cp.x)
-            << " " << to_string(cp.y) << "\n";
+    fichier << "\t" << to_string(cp.x) << " " << to_string(cp.y)
+            << " " << to_string(age) << "\n";
 }

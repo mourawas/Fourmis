@@ -6,7 +6,7 @@ using namespace std;
 
 static grille grid;
 
-void initialiseGrille() {
+void initialise_grille() {
     for (size_t i = 0; i < g_max; ++i) {
         grid.push_back(vector<bool>());
         for (size_t j = 0; j < g_max; ++j) {
@@ -19,7 +19,7 @@ void vide_grille(){
     grid.clear();
 }
 
-bool supFourmiliere(Carre& c1, Carre& c2){
+bool sup_fourmiliere(Carre& c1, Carre& c2){
 	unsigned int coin1x = c1.x + c1.side;
 	unsigned int coin1y = c1.y + c1.side;
 	
@@ -35,7 +35,7 @@ bool supFourmiliere(Carre& c1, Carre& c2){
 	return true;
 }
 
-bool testCarre(Carre& c) {
+bool test_carre(Carre& c) {
 	    
     if (c.x > (g_max)) {
         cout << error_squarecell::print_index(c.x, g_max-1);
@@ -56,7 +56,7 @@ bool testCarre(Carre& c) {
     return false;
 }
 
-bool testCarreCentre(Carre& c){
+bool test_carre_centre(Carre& c){
 		    
     if (c.x > (g_max)) {
         cout << error_squarecell::print_index(c.x, g_max-1);
@@ -77,7 +77,7 @@ bool testCarreCentre(Carre& c){
     return false;
 }
 
-void initialiseCarre(Carre& c) {
+void initialise_carre(Carre& c) {
     for (size_t i = c.y; i < c.y + c.side; ++i) {
         for (size_t j = c.x; j < c.x + c.side; ++j) {
             grid[g_max-1-i][j] = true;
@@ -85,7 +85,7 @@ void initialiseCarre(Carre& c) {
     }
 }
 
-bool supCoord(Carre c, unsigned int& x, unsigned int& y) {
+bool sup_coord(Carre c, unsigned int& x, unsigned int& y) {
     for (size_t i = c.y - c.side/2; i <= c.y + c.side/2; ++i) {
         for (size_t j = c.x - c.side/2; j <= c.x + c.side/2; ++j) {
             if (grid[g_max-i-1][j]) {
@@ -98,7 +98,7 @@ bool supCoord(Carre c, unsigned int& x, unsigned int& y) {
     return false;
 }
 
-unsigned int nbTrue()
+unsigned int nb_true()
 {
     unsigned int compteur = 0;
     for (size_t i = 0; i < g_max; ++i) {
@@ -112,14 +112,14 @@ unsigned int nbTrue()
 }
 
 bool sup(Carre& c1, Carre& c2) {
-    unsigned int compteur = nbTrue();
+    unsigned int compteur = nb_true();
     if (compteur != ((c1.side * c1.side) + (c2.side * c2.side))) {
         return true;
     }
     return false;
 }
 
-bool supUnique(Carre& c, unsigned int& compteur) {
+bool sup_unique(Carre& c, unsigned int& compteur) {
     if (compteur == (compteur + c.side*c.side)) {
         return true;
     }
@@ -127,7 +127,7 @@ bool supUnique(Carre& c, unsigned int& compteur) {
 }
 
 
-void supprimerCarre(Carre& c) {
+void supprimer_carre(Carre& c) {
     for (size_t i = c.y; i < c.y + c.side; ++i) {
         for (size_t j = c.x; j < c.x + c.side; ++j) {
             grid[g_max-1-i][j] = false;
@@ -149,7 +149,7 @@ void afficheGrille(){
 	}
 }
 */
-bool Carre_dans_Carre(Carre& c1, Carre& c2) {
+bool carre_dans_carre(Carre& c1, Carre& c2) {
     if (c2.side > c1.side){
         return true;
     }else if(c2.x + c2.side/2 >= c1.x + c1.side-1){
@@ -165,12 +165,12 @@ bool Carre_dans_Carre(Carre& c1, Carre& c2) {
     return false;	//carre pas dans carre
 }
 
-void initialise_Carre_Centre(Carre& c)
+void initialise_carre_centre(Carre& c)
 {
     unsigned int t = (c.x - c.side/2);
     unsigned int k = (c.y - c.side/2);
     Carre nc = {t, k, c.side};
-    initialiseCarre (nc);
+    initialise_carre (nc);
 }
 void dessin_carre_croix(unsigned int x, unsigned int y, double size, double r, double g, double b)
 {
