@@ -108,7 +108,7 @@ MyEvent::MyEvent() :
 	m_Button_next("next"), m_Label_General("General"),
 	m_Label_Info("Info"), m_Label_Fourmiliere("Fourmiliere"),
 	m_Label_Info_Fourmiliere(""), timer_added(false),
-	disconnected(false), timeout(1000), val(1), id(-1)	
+	disconnected(false), timeout(300), val(1), id(-1)	
 {
 	set_title("TCHANZ");
 	set_border_width(0);
@@ -156,7 +156,7 @@ void MyEvent::on_button_clicked_exit()
     exit(0);
 }
 
-void MyEvent::on_button_clicked_open() //INCOMPLETE
+void MyEvent::on_button_clicked_open()
 {
     Gtk::FileChooserDialog dialog("Please choose a file",
             Gtk::FILE_CHOOSER_ACTION_OPEN);
@@ -246,6 +246,7 @@ void MyEvent::on_button_clicked_step()
 	if(!timer_added){
 		cout << val << endl;
 		++val;
+		etape_simulation();
 	}
 }
 
@@ -269,18 +270,18 @@ void MyEvent::on_button_clicked_next()
 
 bool MyEvent::on_timeout()
 {
-  if(disconnected)
-  {
-	  disconnected = false;
+  	if(disconnected)
+  	{
+	 	disconnected = false;
 	  
-	  return false;
-  }
+	  	return false;
+ 	}
   
-  cout << val << endl;
-  ++val;
+ 	cout << val << endl;
+ 	++val;
+	etape_simulation();
 
-
-  return true; 
+ 	return true; 
 }
 
 bool MyEvent::on_key_press_event(GdkEventKey * key_event){
@@ -346,4 +347,8 @@ void MyEvent::nourriture_info(){
 	info += to_string(food);
 	info += "\n";
 	m_Label_Info.set_text(info);
+}
+
+void MyEvent::etape_simulation(){
+	s->creer_nourriture();
 }

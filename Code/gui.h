@@ -42,6 +42,7 @@ public:
 	void set_simulation(Simulation* sim);
 	void fourmiliere_info(int& id);
 	void nourriture_info();
+	void etape_simulation();
 protected:
 	void on_button_clicked_exit();
 	void on_button_clicked_open();

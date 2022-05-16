@@ -4,6 +4,8 @@
 #include "simulation.h"
 using namespace std;
 
+default_random_engine e;
+
 int Simulation::etat = 0;
 int Simulation::count = 0;
 int Simulation::total_food = 0;
@@ -70,8 +72,10 @@ bool Simulation::decodage_ligne(string line){
 
 void Simulation::lancement(char* nom_fichier){
 	initialise_grille();
-	if(lecture(nom_fichier)){
+	if(lecture(nom_fichier)){		//erreur
 		tout_supprimer();
+	}else{							//good
+		
 	}
 }
 
@@ -127,4 +131,12 @@ unsigned int Simulation::get_nbD(int& id){
 
 unsigned int Simulation::get_nbP(int& id){
 	return vfourmiliere[id].get_nbP();
+}
+
+void Simulation::creer_nourriture(){
+	
+	uniform_int_distribution<unsigned> u(1, g_max-2);
+	unsigned int x = u(e), y = u(e);
+	Nourriture n(x, y);
+	vnourriture.push_back(n);
 }

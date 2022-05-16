@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <random>
 #include "squarecell.h"
 #include "nourriture.h"
 #include "fourmiliere.h"
@@ -31,6 +32,7 @@ public:
 	unsigned int get_nbC(int& id);
 	unsigned int get_nbD(int& id);
 	unsigned int get_nbP(int& id);
+	void creer_nourriture();
 };
 
 #endif
