@@ -26,6 +26,8 @@ public:
     virtual ~Fourmis() = default;
     virtual void ecrire_fourmis(std::ofstream& fichier) = 0;
     virtual unsigned int get() = 0;
+    unsigned int get_x();
+    unsigned int get_y();
 };
 
 class Generator : public Fourmis {

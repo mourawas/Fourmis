@@ -235,3 +235,9 @@ void Predator::ecrire_fourmis(ofstream& fichier){
 unsigned int Predator::get(){
     return age;
 }
+unsigned int Fourmis::get_x(){
+    return x1;
+}
+unsigned int Fourmis::get_y(){
+    return y1;
+}

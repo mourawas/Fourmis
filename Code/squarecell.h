@@ -9,7 +9,8 @@
 typedef std::vector<std::vector<bool> > grille;
 
 constexpr short unsigned g_dim(7);
-constexpr short unsigned g_max(pow(2,g_dim));
+//constexpr short unsigned g_max(pow(2,g_dim));
+constexpr short unsigned g_max(128);
 
 struct Carre {
 	unsigned int x;

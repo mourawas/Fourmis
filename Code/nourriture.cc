@@ -32,3 +32,9 @@ void Nourriture::dessin_nourriture(){
 void Nourriture::ecrire_nourriture(ofstream& fichier){
 	fichier << to_string(x) << " " << to_string(y) << "\n";
 }
+unsigned int Nourriture::get_x(){
+    return x;
+}
+unsigned int Nourriture::get_y(){
+    return y;
+}

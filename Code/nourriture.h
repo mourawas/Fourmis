@@ -18,6 +18,8 @@ class Nourriture{
 	public:
 	Nourriture(unsigned int x_, unsigned int y_) : x(x_), y(y_) {}
 	~Nourriture() {};
+    unsigned int get_x();
+    unsigned int get_y();
     void dessin_nourriture();
 	void ecrire_nourriture(std::ofstream& fichier);
 };
