@@ -98,34 +98,12 @@ bool sup_coord(Carre c, unsigned int& x, unsigned int& y) {
     return false;
 }
 
-unsigned int nb_true()
-{
-    unsigned int compteur = 0;
-    for (size_t i = 0; i < g_max; ++i) {
-        for (size_t j = 0; j < g_max; ++j) {
-            if (grid[i][j]) {
-                ++compteur;
-            }
-        }
-    }
-    return compteur;
-}
-
-bool sup(Carre& c1, Carre& c2) {
-    unsigned int compteur = nb_true();
-    if (compteur != ((c1.side * c1.side) + (c2.side * c2.side))) {
+bool sup(unsigned int& x, unsigned int& y){
+    if(grid[g_max-y-1][x]){
         return true;
     }
     return false;
 }
-
-bool sup_unique(Carre& c, unsigned int& compteur) {
-    if (compteur == (compteur + c.side*c.side)) {
-        return true;
-    }
-    return false;
-}
-
 
 void supprimer_carre(Carre& c) {
     for (size_t i = c.y; i < c.y + c.side; ++i) {
@@ -157,6 +135,22 @@ void initialise_carre_centre(Carre& c)
     unsigned int k = (c.y - c.side/2);
     Carre nc = {t, k, c.side};
     initialise_carre (nc);
+}
+
+bool point_dans_carre(unsigned int& x, unsigned int& y, Carre& c){
+    if(x < c.x){
+        return false;
+    }
+    if(y < c.y){
+        return false;
+    }
+    if(x > (c.x + c.side)){
+        return false;
+    }
+    if(y > (c.y + c.side)){
+        return false;
+    }
+    return true;
 }
 
 void dessin_carre_croix(unsigned int x, unsigned int y, double size, double r,

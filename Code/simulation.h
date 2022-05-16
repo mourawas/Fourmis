@@ -33,6 +33,7 @@ public:
 	unsigned int get_nbD(int& id);
 	unsigned int get_nbP(int& id);
 	void creer_nourriture();
+	bool test_point_fourmiliere(unsigned int& x, unsigned int& y);
 };
 
 #endif

@@ -191,3 +191,7 @@ unsigned int Fourmiliere::get_nbP(){
 unsigned int Fourmiliere::get_total_food(){
     return vfourmis[0]->get();
 }
+
+Carre Fourmiliere::get_carre(){
+    return c;
+}

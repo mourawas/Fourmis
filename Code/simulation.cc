@@ -71,7 +71,7 @@ bool Simulation::decodage_ligne(string line){
 }
 
 void Simulation::lancement(char* nom_fichier){
-	initialise_grille();
+	//initialise_grille();
 	if(lecture(nom_fichier)){		//erreur
 		tout_supprimer();
 	}else{							//good
@@ -95,6 +95,7 @@ void Simulation::tout_supprimer(){
 	vnourriture.clear();
 	re();
 	vide_grille();
+	initialise_grille();
 	etat = NBN, count = 0, total_food = 0, totF = 0;
 }
 
@@ -134,9 +135,27 @@ unsigned int Simulation::get_nbP(int& id){
 }
 
 void Simulation::creer_nourriture(){
-	
-	uniform_int_distribution<unsigned> u(1, g_max-2);
-	unsigned int x = u(e), y = u(e);
+	unsigned int x, y, compteur;
+	do{
+		uniform_int_distribution<unsigned> u(1, g_max-2);
+		x = u(e), y = u(e);
+		++compteur;
+	}while(sup(x, y) or (compteur == max_food_trial)
+		   or test_point_fourmiliere(x, y));
+	unsigned int taille_food = 1;
 	Nourriture n(x, y);
 	vnourriture.push_back(n);
+	Carre cfood = {x, y, taille_food};
+	initialise_carre(cfood);
+}
+
+bool Simulation::test_point_fourmiliere(unsigned int& x, unsigned int& y){
+	Carre carre_fourmiliere;
+	for (size_t i = 0; i < vfourmiliere.size(); ++i) {
+		carre_fourmiliere = vfourmiliere[i].get_carre();
+		if(point_dans_carre(x, y, carre_fourmiliere)){
+			return true;
+		}
+	}
+	return false;
 }

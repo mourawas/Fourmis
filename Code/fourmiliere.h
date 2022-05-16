@@ -32,6 +32,7 @@ public:
     unsigned int get_nbD();
     unsigned int get_nbP();
     unsigned int get_total_food();
+    Carre get_carre();
 };
 
 bool decodage_ligne_fourmiliere(std::string line,

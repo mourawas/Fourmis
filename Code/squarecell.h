@@ -23,13 +23,9 @@ void initialise_carre(Carre& c);
 
 void supprimer_carre(Carre& c);
 
-unsigned int nb_true();
-
 bool sup_carre(Carre& c1, Carre& c2);
 
-bool sup(Carre& c1, Carre& c2);
-
-bool sup_unique(Carre& c, unsigned int& compteur);
+bool sup(unsigned int& x, unsigned int& y);
 
 bool sup_coord(Carre c, unsigned& x, unsigned& y);
 
@@ -40,6 +36,8 @@ bool test_carre_centre(Carre& c);
 void initialise_carre_centre(Carre& c);
 
 bool carre_dans_carre(Carre& c1, Carre& c2);
+
+bool point_dans_carre(unsigned int& x, unsigned int& y, Carre& c);
 
 void dessin_carre_croix(unsigned int x,unsigned int y, double size, double r, double g, double b);
 

@@ -149,6 +149,8 @@ MyEvent::MyEvent() :
               &MyEvent::on_button_clicked_next) );
 
 	show_all_children();
+
+	initialise_grille();
 }
 
 void MyEvent::on_button_clicked_exit()
@@ -169,7 +171,7 @@ void MyEvent::on_button_clicked_open()
     switch(result)
     {
 		case(Gtk::RESPONSE_OK):
-		{
+		{	
 			string filename = dialog.get_filename();
             char * argv;
             argv = &filename[0];
@@ -178,6 +180,7 @@ void MyEvent::on_button_clicked_open()
 			m_Area.refresh();
 			nourriture_info();
 			id = -1;
+			val = 0;
 			break;
 		}
 		case(Gtk::RESPONSE_CANCEL):
