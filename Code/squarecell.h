@@ -52,4 +52,8 @@ void dessin_carre_vide(unsigned int x, unsigned int y, double size, double r, do
 
 void vide_grille();
 
+bool carre_libre_dans_carre(Carre& c);
+
+void point_libre_dans_carre(Carre& c, unsigned int& x, unsigned int& y);
+
 #endif

@@ -13,7 +13,13 @@ Fourmiliere::Fourmiliere(Carre c, unsigned int nbC, unsigned int nbD,
 
 void Fourmiliere::ajouter_fourmis(Fourmis* nouveau) {
     if (nouveau != nullptr) {
-        vfourmis.push_back(std::unique_ptr<Fourmis>(nouveau));
+        vfourmis.push_back(unique_ptr<Fourmis>(nouveau));
+    }
+}
+
+void Fourmiliere::ajouter_fourmis_pos(Fourmis* nouveau, unsigned int& pos){
+    if(nouveau != nullptr){
+        vfourmis.insert(pos, nouveau);
     }
 }
 
@@ -194,4 +200,42 @@ unsigned int Fourmiliere::get_total_food(){
 
 Carre Fourmiliere::get_carre(){
     return c;
+}
+
+void Fourmiliere::naissance_fourmis(){
+    unsigned int nbFourmis = vfourmis.size();
+    if(mode = 0){
+        if(nbC/nbFourmis < prop_free_collector){
+            naissance_col();
+        }else if(nbD/nbFourmis < prop_free_defensor){
+            naissance_def();
+        }else{
+            naissance_pre();
+        }
+    }else if(mode = 1){
+        if(nbC/nbFourmis < prop_constrained_collector){
+            naissance_col();
+        }else if(nbD/nbFourmis < prop_constrained_defensor){
+            naissance_def();
+        }else{
+            naissance_pre();
+        }
+    }
+}
+
+void Fourmiliere::naissance_col(){
+    unsigned int x, y;
+    for (size_t i = 1; i < c.side - 1; ++i){
+        for(size_t j = 1; j < c.side - 1; ++j){
+            Carre cCol = {j, i, 1};
+            if(carre_libre_dans_carre(cCol)){
+                continue;
+            }else{
+                ajouter_fourmis_pos(new Collector(j, i, 0, 0), nbC);
+                ++nbC;
+                initialise_carre_centre(cCol);
+                return;
+            }
+        }
+    }
 }

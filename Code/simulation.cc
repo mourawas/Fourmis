@@ -174,3 +174,11 @@ bool Simulation::reachability_test(Nourriture& n, Fourmis& f){
     }
     return  false;
 }
+
+void Simulation::etape_simulation(){
+	creer_nourriture();
+	for (size_t i = 0; i < vfourmiliere.size(); ++i)
+	{
+		vfourmiliere[i].naissance_fourmis();
+	}
+}

@@ -249,7 +249,7 @@ void MyEvent::on_button_clicked_step()
 	if(!timer_added){
 		cout << val << endl;
 		++val;
-		etape_simulation();
+		etape();
 	}
 }
 
@@ -282,7 +282,7 @@ bool MyEvent::on_timeout()
   
  	cout << val << endl;
  	++val;
-	etape_simulation();
+	etape();
 
  	return true; 
 }
@@ -352,6 +352,6 @@ void MyEvent::nourriture_info(){
 	m_Label_Info.set_text(info);
 }
 
-void MyEvent::etape_simulation(){
-	s->creer_nourriture();
+void MyEvent::etape(){
+	s->etape_simulation();
 }

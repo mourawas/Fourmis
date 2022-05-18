@@ -18,11 +18,12 @@ class Fourmiliere {
 private:
     Carre c;
     unsigned int nbC, nbD, nbP;
-
+    bool mode;  //0 free, 1 constrained
     std::vector<std::unique_ptr<Fourmis>> vfourmis;
 public:
     Fourmiliere (Carre c, unsigned int nbC, unsigned int nbD, unsigned int nbP);
     void ajouter_fourmis(Fourmis* nouveau);
+    void ajouter_fourmis_pos(Fourmis* nouveau, unsigned int& pos);
     bool test_fourmis(unsigned int countF, unsigned int j);
     bool f_overlap(std::vector<Fourmiliere>& vfourmiliere, unsigned int countF);
     void d_anthill(unsigned int i);
@@ -33,6 +34,10 @@ public:
     unsigned int get_nbP();
     unsigned int get_total_food();
     Carre get_carre();
+    void naissance_fourmis();
+    void naissance_col();
+    void naissance_def();
+    void naissance_pre();
 };
 
 bool decodage_ligne_fourmiliere(std::string line,

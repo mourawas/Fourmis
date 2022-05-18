@@ -35,6 +35,8 @@ public:
 	void creer_nourriture();
 	bool test_point_fourmiliere(unsigned int& x, unsigned int& y);
     bool reachability_test(Nourriture&, Fourmis&);
+	void etape_simulation();
+	void creer_coord(unsigned int& x, unsigned int& y);
 };
 
 #endif
