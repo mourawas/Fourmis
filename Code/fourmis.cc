@@ -260,7 +260,7 @@ unsigned int Fourmis::get_x(){
 unsigned int Fourmis::get_y(){
     return y1;
 }
-unsigned int Collector::return_the_one(std::vector<Nourriture> n){
+unsigned int Fourmis::return_the_one(std::vector<Nourriture> n){
     int T = 0;
     int K = 0;
     unsigned int A = 0;
@@ -281,6 +281,6 @@ unsigned int Collector::return_the_one(std::vector<Nourriture> n){
     }
     return A;
 }
-vector<Nourriture> get_n_atteignable(){
+/*vector<Nourriture> get_n_atteignable(){
     return n_atteignable;
-}
+}/*

@@ -39,7 +39,7 @@ public:
     void naissance_def();
     void naissance_pre();
     void ajouter_collector (Fourmis* nouveau);
-    std::vector<std::unique_ptr<Fourmis>> get_v_collector();
+    std::vector<std::unique_ptr<Fourmis>> get_vfourmis();
 };
 
 bool decodage_ligne_fourmiliere(std::string line,

@@ -275,6 +275,6 @@ void Fourmiliere::naissance_pre(){
         }
     }
 }
-vector<unique_ptr<Fourmis>> Fourmiliere::get_v_collector(){
-    return v_collector;
+vector<unique_ptr<Fourmis>> Fourmiliere::get_vfourmis(){
+    return vfourmis;
 }

@@ -183,14 +183,18 @@ void Simulation::etape_simulation(){
 	}
 }
 void Simulation::detect_food(){
-    for (unsigned int i(0);i < vfourmiliere.size();++i){
-		for (unsigned int j(0); j<vfourmiliere[i].get_v_collector().size();++j){
-			for (unsigned int h(0); h<vnourriture.size();++h){
-				if (atteindre_test(vnourriture[h], vfourmiliere[i].get_v_collector()[j])){
-					vfourmiliere[i].get_v_collector()[j]->get_n_atteignable().push_back(vnourriture[h]);
+	vector <Nourriture> n_atteignable;
+    for(unsigned int i(0);i < vfourmiliere.size();++i){
+		for(unsigned int j(0);j<vfourmiliere[i].get_vfourmis().size(); ++j){
+			unsigned int o;
+			if(vfourmiliere[i].get_vfourmis()[j]->get_type()){
+				for (unsigned int h(0);h<vnourriture.size();++h){
+					if(atteindre_test(vnourriture[h],vfourmiliere[i].get_vfourmis()[j])){
+						n_atteignable.push_back(vnourriture[h]);
+					}
 				}
-
-			}
+				o=vfourmiliere[i].get_vfourmis()[j]->return_the_one(n_atteignable);
+			}  
 		}
-	}  
+	}
 }
