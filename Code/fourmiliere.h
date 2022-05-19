@@ -20,6 +20,7 @@ private:
     unsigned int nbC, nbD, nbP;
     bool mode = 0;  //0 free, 1 constrained
     std::vector<std::unique_ptr<Fourmis>> vfourmis;
+    std::vector<std::unique_ptr<Fourmis>> v_collector;
 public:
     Fourmiliere (Carre c, unsigned int nbC, unsigned int nbD, unsigned int nbP);
     void ajouter_fourmis(Fourmis* nouveau);
@@ -37,6 +38,8 @@ public:
     void naissance_col();
     void naissance_def();
     void naissance_pre();
+    void ajouter_collector (Fourmis* nouveau);
+    std::vector<std::unique_ptr<Fourmis>> get_v_collector();
 };
 
 bool decodage_ligne_fourmiliere(std::string line,

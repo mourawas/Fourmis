@@ -16,6 +16,11 @@ void Fourmiliere::ajouter_fourmis(Fourmis* nouveau) {
         vfourmis.push_back(unique_ptr<Fourmis>(nouveau));
     }
 }
+void Fourmiliere::ajouter_collector (Fourmis* nouveau) {
+    if (nouveau != nullptr) {
+        v_collector.push_back(unique_ptr<Fourmis>(nouveau));
+    }
+}
 
 bool Fourmiliere::test_fourmis(unsigned int countF, unsigned int j) {
     if(vfourmis[j]->big_test(countF, c)) return true;
@@ -128,6 +133,7 @@ bool decodage_ligne_fourmiliere(string line, vector<Fourmiliere>& vfourmiliere,
     case COL:
         if(decodage_ligne_fourmis(line, etat, Col, Def, Pre)) return true;
         vfourmiliere[countF - 1].ajouter_fourmis(new Collector(Col));
+        vfourmiliere[countF - 1].ajouter_collector(new Collector(Col));
         if(vfourmiliere[countF - 1].test_fourmis(countF - 1, j)) return true;
         ++j; ++countC;
 
@@ -268,4 +274,7 @@ void Fourmiliere::naissance_pre(){
             }
         }
     }
+}
+vector<unique_ptr<Fourmis>> Fourmiliere::get_v_collector(){
+    return v_collector;
 }

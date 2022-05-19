@@ -37,6 +37,7 @@ public:
     bool atteindre_test(Nourriture&, Fourmis&);
 	void etape_simulation();
 	void creer_coord(unsigned int& x, unsigned int& y);
+    void detect_food();
 };
 
 #endif

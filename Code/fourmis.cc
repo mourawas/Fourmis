@@ -2,6 +2,7 @@
 //Mouhamad: 50%
 //Louis: 50%
 #include "fourmis.h"
+#include <cmath>
 using namespace std;
 
 Generator::Generator(unsigned int x1, unsigned int y1,
@@ -258,4 +259,28 @@ unsigned int Fourmis::get_x(){
 
 unsigned int Fourmis::get_y(){
     return y1;
+}
+unsigned int Collector::return_the_one(std::vector<Nourriture> n){
+    int T = 0;
+    int K = 0;
+    unsigned int A = 0;
+    for(size_t i(0); i < n.size(); ++i){
+        if (std::fabs(n[i].get_x()-x1)>= std::fabs(n[i].get_y()-y1)){
+            T= std::fabs(n[i].get_x()-x1);
+            if (T < K){
+                K=T;
+                A=i;
+            }
+        }else {
+            T=std::fabs(n[i].get_y()-y1);
+            if (T < K){
+                K=T;
+                A=i;
+            }
+        }
+    }
+    return A;
+}
+vector<Nourriture> get_n_atteignable(){
+    return n_atteignable;
 }

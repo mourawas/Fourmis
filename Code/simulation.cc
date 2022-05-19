@@ -182,3 +182,15 @@ void Simulation::etape_simulation(){
 		vfourmiliere[i].naissance_fourmis();
 	}
 }
+void Simulation::detect_food(){
+    for (unsigned int i(0);i < vfourmiliere.size();++i){
+		for (unsigned int j(0); j<vfourmiliere[i].get_v_collector().size();++j){
+			for (unsigned int h(0); h<vnourriture.size();++h){
+				if (atteindre_test(vnourriture[h], vfourmiliere[i].get_v_collector()[j])){
+					vfourmiliere[i].get_v_collector()[j]->get_n_atteignable().push_back(vnourriture[h]);
+				}
+
+			}
+		}
+	}  
+}

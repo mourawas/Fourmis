@@ -55,6 +55,7 @@ private:
     bool food;
     unsigned int side = sizeC;
     Carre cc;
+    std::vector<Nourriture> n_atteignable;
 public:
 	~Collector() = default;
     Collector(unsigned int x1, unsigned y1, unsigned int age, bool food);
@@ -65,7 +66,9 @@ public:
     void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;
     unsigned int get() override;
+    unsigned int return_the_one(std::vector<Nourriture> n);
     unsigned int get_type() override;
+    std::vector<Nourriture> get_n_atteignable();
 };
 
 class Defensor : public Fourmis {
