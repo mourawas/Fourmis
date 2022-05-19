@@ -17,12 +17,6 @@ void Fourmiliere::ajouter_fourmis(Fourmis* nouveau) {
     }
 }
 
-void Fourmiliere::ajouter_fourmis_pos(Fourmis* nouveau, unsigned int& pos){
-    if(nouveau != nullptr){
-        vfourmis.insert(pos, nouveau);
-    }
-}
-
 bool Fourmiliere::test_fourmis(unsigned int countF, unsigned int j) {
     if(vfourmis[j]->big_test(countF, c)) return true;
     return false;
@@ -203,8 +197,10 @@ Carre Fourmiliere::get_carre(){
 }
 
 void Fourmiliere::naissance_fourmis(){
-    unsigned int nbFourmis = vfourmis.size();
-    if(mode = 0){
+    double nbFourmis = vfourmis.size();
+    cout << "nbC : " << nbC << "   nbFourmis : " << nbFourmis << endl;
+    cout << "nbC/nbFourmis : " << nbC/nbFourmis << endl;
+    if(mode == 0){
         if(nbC/nbFourmis < prop_free_collector){
             naissance_col();
         }else if(nbD/nbFourmis < prop_free_defensor){
@@ -212,7 +208,7 @@ void Fourmiliere::naissance_fourmis(){
         }else{
             naissance_pre();
         }
-    }else if(mode = 1){
+    }else if(mode == 1){
         if(nbC/nbFourmis < prop_constrained_collector){
             naissance_col();
         }else if(nbD/nbFourmis < prop_constrained_defensor){
@@ -224,16 +220,50 @@ void Fourmiliere::naissance_fourmis(){
 }
 
 void Fourmiliere::naissance_col(){
-    unsigned int x, y;
-    for (size_t i = 1; i < c.side - 1; ++i){
-        for(size_t j = 1; j < c.side - 1; ++j){
-            Carre cCol = {j, i, 1};
+    cout << "naissance col" << endl;
+    for (unsigned int i = c.x + 2; i < c.x + c.side - 1; ++i){
+        for(unsigned int j = c.y + 2; j < c.y + c.side - 1; ++j){
+            Carre cCol = {j, i, 3};
             if(carre_libre_dans_carre(cCol)){
                 continue;
             }else{
-                ajouter_fourmis_pos(new Collector(j, i, 0, 0), nbC);
+                ajouter_fourmis(new Collector(j, i, 0, 0));
                 ++nbC;
                 initialise_carre_centre(cCol);
+                return;
+            }
+        }
+    }
+}
+
+void Fourmiliere::naissance_def(){
+    cout << "naissance def" << endl;
+    for (unsigned int i = c.x + 2; i < c.x + c.side - 1; ++i){
+        for(unsigned int j = c.y + 2; j < c.y + c.side - 1; ++j){
+            Carre cDef = {j, i, 3};
+            if(carre_libre_dans_carre(cDef)){
+                continue;
+            }else{
+                ajouter_fourmis(new Defensor(j, i, 0));
+                ++nbD;
+                initialise_carre_centre(cDef);
+                return;
+            }
+        }
+    }
+}
+
+void Fourmiliere::naissance_pre(){
+    cout << "naissance pre" << endl;
+    for (unsigned int i = c.x + 2; i < c.x + c.side - 1; ++i){
+        for(unsigned int j = c.y + 2; j < c.y + c.side - 1; ++j){
+            Carre cPre = {j, i, 1};
+            if(carre_libre_dans_carre(cPre)){
+                continue;
+            }else{
+                ajouter_fourmis(new Predator(j, i, 0));
+                ++nbC;
+                initialise_carre_centre(cPre);
                 return;
             }
         }

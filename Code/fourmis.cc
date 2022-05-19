@@ -146,6 +146,10 @@ unsigned int Generator::get(){
     return total_food;
 }
 
+unsigned int Generator::get_type(){
+    return 0;
+}
+
 bool Collector::c_overlap(){
 	unsigned int x, y;
 	if(sup_coord(cc, x, y)){
@@ -175,6 +179,10 @@ void Collector::ecrire_fourmis(ofstream& fichier){
 
 unsigned int Collector::get(){
     return age;
+}
+
+unsigned int Collector::get_type(){
+    return 1;
 }
 
 bool Defensor::d_overlap(){
@@ -211,6 +219,10 @@ unsigned int Defensor::get(){
     return age;
 }
 
+unsigned int Defensor::get_type(){
+    return 2;
+}
+
 bool Predator::p_overlap(){
 	unsigned int x, y;
 	if(sup_coord(cp, x, y)){
@@ -235,9 +247,15 @@ void Predator::ecrire_fourmis(ofstream& fichier){
 unsigned int Predator::get(){
     return age;
 }
+
+unsigned int Predator::get_type(){
+    return 3;
+}
+
 unsigned int Fourmis::get_x(){
     return x1;
 }
+
 unsigned int Fourmis::get_y(){
     return y1;
 }

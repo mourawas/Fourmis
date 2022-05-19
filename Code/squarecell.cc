@@ -154,7 +154,6 @@ bool point_dans_carre(unsigned int& x, unsigned int& y, Carre& c){
 }
 
 bool carre_libre_dans_carre(Carre& c){
-
     for (size_t i = c.y - c.side/2; i <= c.y + c.side/2; ++i) {
         for (size_t j = c.x - c.side/2; j <= c.x + c.side/2; ++j) {
             if (grid[g_max-i-1][j]) {
@@ -164,9 +163,6 @@ bool carre_libre_dans_carre(Carre& c){
     }
     return false;       //bien
 }
-
-void point_libre_dans_carre(Carre& c, unsigned int& x, unsigned int& y);
-
 
 void dessin_carre_croix(unsigned int x, unsigned int y, double size, double r,
                         double g, double b)

@@ -159,7 +159,7 @@ bool Simulation::test_point_fourmiliere(unsigned int& x, unsigned int& y){
 	}
 	return false;
 }
-bool Simulation::reachability_test(Nourriture& n, Fourmis& f){
+bool Simulation::atteindre_test(Nourriture& n, Fourmis& f){
     if (((f.get_x() % 2 == 0) and (f.get_y() % 2 == 0)) or ((f.get_x() % 2 != 0) and (f.get_y() % 2 != 0))) {
         if (((n.get_x() % 2 == 0) and (n.get_y() % 2 == 0)) or ((n.get_x() % 2 != 0) and (n.get_y() % 2 != 0))){
             return true;
