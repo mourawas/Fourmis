@@ -159,14 +159,14 @@ bool Simulation::test_point_fourmiliere(unsigned int& x, unsigned int& y){
 	}
 	return false;
 }
-bool Simulation::atteindre_test(Nourriture& n, Fourmis& f){
-    if (((f.get_x() % 2 == 0) and (f.get_y() % 2 == 0)) or ((f.get_x() % 2 != 0) and (f.get_y() % 2 != 0))) {
+bool Simulation::atteindre_test(Nourriture& n, unique_ptr<Fourmis> f){
+    if (((f->get_x() % 2 == 0) and (f->get_y() % 2 == 0)) or ((f->get_x() % 2 != 0) and (f->get_y() % 2 != 0))) {
         if (((n.get_x() % 2 == 0) and (n.get_y() % 2 == 0)) or ((n.get_x() % 2 != 0) and (n.get_y() % 2 != 0))){
             return true;
         }
         else return false;
     }
-    else if (((f.get_x() % 2 == 0) and (f.get_y() % 2 != 0)) or ((f.get_x() % 2 != 0) and (f.get_y() % 2 == 0))){
+    else if (((f->get_x() % 2 == 0) and (f->get_y() % 2 != 0)) or ((f->get_x() % 2 != 0) and (f->get_y() % 2 == 0))){
         if (((n.get_x() % 2 == 0) and (n.get_y() % 2 != 0)) or ((n.get_x() % 2 != 0) and (n.get_y() % 2 == 0))){
             return true;
         }
@@ -182,18 +182,19 @@ void Simulation::etape_simulation(){
 		vfourmiliere[i].naissance_fourmis();
 	}
 }
+
 void Simulation::detect_food(){
 	vector <Nourriture> n_atteignable;
-    for(unsigned int i(0);i < vfourmiliere.size();++i){
-		for(unsigned int j(0);j<vfourmiliere[i].get_vfourmis().size(); ++j){
+    for(unsigned int i = 0; i < vfourmiliere.size(); ++i){
+		for(unsigned int j = 0; j < vfourmiliere[i].get_vfourmis().size(); ++j){
 			unsigned int o;
-			if(vfourmiliere[i].get_vfourmis()[j]->get_type()){
-				for (unsigned int h(0);h<vnourriture.size();++h){
-					if(atteindre_test(vnourriture[h],vfourmiliere[i].get_vfourmis()[j])){
+			if(vfourmiliere[i].get_vfourmis()[j]->get_type() == 1){
+				for (unsigned int h = 0; h < vnourriture.size(); ++h){
+					if(atteindre_test(vnourriture[h], vfourmiliere[i].get_vfourmis()[j])){
 						n_atteignable.push_back(vnourriture[h]);
 					}
 				}
-				o=vfourmiliere[i].get_vfourmis()[j]->return_the_one(n_atteignable);
+				o = vfourmiliere[i].get_vfourmis()[j]->return_the_one(n_atteignable);
 			}  
 		}
 	}
