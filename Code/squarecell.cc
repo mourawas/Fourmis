@@ -154,6 +154,7 @@ bool point_dans_carre(unsigned int& x, unsigned int& y, Carre& c){
 }
 
 bool carre_libre_dans_carre(Carre& c){
+    cout<<"oui"<<endl;
     for (size_t i = c.y - c.side/2; i <= c.y + c.side/2; ++i) {
         for (size_t j = c.x - c.side/2; j <= c.x + c.side/2; ++j) {
             if (grid[g_max-i-1][j]) {

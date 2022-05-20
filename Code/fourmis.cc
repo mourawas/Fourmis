@@ -358,7 +358,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
         deplace_carre_digaonale(bebou, 2);
         return choix_chemin1(n, bebou);
     }
-    if((k>=0.9 and k<=1.1) or (k <= -0.9 and k>= -1.1)){
+    if((k == 1) or (k == -1)){
         if((xn < x1) and (yn > y1)){
             cout << "k13"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
@@ -368,9 +368,13 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
         }
         if((xn > x1) and (yn > y1)){
             cout << "k15"<< endl;
+            cout << "f: "<< xn<<yn<<" b:"<< bebou.x << bebou.y<<endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
+            cout<< k<<endl;
             cout << "k16"<< endl;
             deplace_carre_digaonale(bebou, 0);
+            bebou.x++;
+            bebou.y++;
             return choix_chemin1(n, bebou);
         }
         if((xn < x1) and (yn < y1)){
