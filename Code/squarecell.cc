@@ -106,8 +106,8 @@ bool sup(unsigned int& x, unsigned int& y){
 }
 
 void supprimer_carre(Carre& c) {
-    for (size_t i = c.y; i < c.y + c.side; ++i) {
-        for (size_t j = c.x; j < c.x + c.side; ++j) {
+    for (size_t i = c.y - c.side/2; i < c.y + c.side/2; ++i) {
+        for (size_t j = c.x - c.side/2; j < c.x + c.side/2; ++j) {
             grid[g_max-1-i][j] = false;
         }
     }
@@ -162,6 +162,19 @@ bool carre_libre_dans_carre(Carre& c){
         }
     }
     return false;       //bien
+}
+
+void deplace_carre_digaonale(Carre& c, unsigned int dir){
+    switch(dir){
+        case 0:         //en haut a droite
+        ++c.x, ++c.y;
+        case 1:         //en bas a droite
+        ++c.x, --c.y;
+        case 2:         //en bas a gauche
+        --c.x, --c.y;
+        case 3:         //en haut a gauche
+        --c.x, ++c.y;
+    }
 }
 
 void dessin_carre_croix(unsigned int x, unsigned int y, double size, double r,

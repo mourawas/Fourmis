@@ -275,6 +275,38 @@ void Fourmiliere::naissance_pre(){
         }
     }
 }
-vector<unique_ptr<Fourmis>> Fourmiliere::get_vfourmis(){
-    return vfourmis;
+
+void Fourmiliere::detecte_food(vector<Nourriture>& vnourriture){
+    for(unsigned int i = 0; i < vfourmis.size(); ++i){
+		unsigned int o;
+		vector<Nourriture> n_atteignable;
+
+		if(vfourmis[i]->get_type() == 1){
+			for (unsigned int j = 0; j < vnourriture.size(); ++j){
+				if(atteindre_test(vnourriture[j], i)){
+					n_atteignable.push_back(vnourriture[j]);
+				}
+			}
+			o = vfourmis[i]->return_the_one(n_atteignable);
+            vfourmis[i]->move(n_atteignable[o]); 
+		}
+    }
+}
+
+bool Fourmiliere::atteindre_test(Nourriture& n, unsigned int& i){
+    if (((vfourmis[i]->get_x() % 2 == 0) and (vfourmis[i]->get_y() % 2 == 0))
+          or ((vfourmis[i]->get_x() % 2 != 0) and (vfourmis[i]->get_y() % 2 != 0))) {
+        if (((n.get_x() % 2 == 0) and (n.get_y() % 2 == 0)) or ((n.get_x() % 2 != 0) and (n.get_y() % 2 != 0))){
+            return true;
+        }
+        else return false;
+    }
+    else if (((vfourmis[i]->get_x() % 2 == 0) and (vfourmis[i]->get_y() % 2 != 0))
+               or ((vfourmis[i]->get_x() % 2 != 0) and (vfourmis[i]->get_y() % 2 == 0))){
+        if (((n.get_x() % 2 == 0) and (n.get_y() % 2 != 0)) or ((n.get_x() % 2 != 0) and (n.get_y() % 2 == 0))){
+            return true;
+        }
+        else return false;
+    }
+    return  false;
 }

@@ -39,7 +39,8 @@ public:
     void naissance_def();
     void naissance_pre();
     void ajouter_collector (Fourmis* nouveau);
-    std::vector<std::unique_ptr<Fourmis>> get_vfourmis();
+    void detecte_food(std::vector<Nourriture>& vnourriture);
+    bool atteindre_test(Nourriture& n, unsigned int& i);
 };
 
 bool decodage_ligne_fourmiliere(std::string line,

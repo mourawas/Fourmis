@@ -2,8 +2,10 @@
 //Mouhamad: 50%
 //Louis: 50%
 #include "fourmis.h"
-#include <cmath>
 using namespace std;
+
+int Fourmis::compteur1 = 0;
+int Fourmis::compteur2 = 0;
 
 Generator::Generator(unsigned int x1, unsigned int y1,
                      unsigned int total_food, Carre cg)
@@ -260,19 +262,20 @@ unsigned int Fourmis::get_x(){
 unsigned int Fourmis::get_y(){
     return y1;
 }
-unsigned int Fourmis::return_the_one(std::vector<Nourriture> n){
+
+unsigned int Fourmis::return_the_one(vector<Nourriture>& n){
     int T = 0;
     int K = 0;
     unsigned int A = 0;
-    for(size_t i(0); i < n.size(); ++i){
-        if (std::fabs(n[i].get_x()-x1)>= std::fabs(n[i].get_y()-y1)){
-            T= std::fabs(n[i].get_x()-x1);
+    for(size_t i = 0; i < n.size(); ++i){
+        if (fabs(n[i].get_x()-x1) >= fabs(n[i].get_y()-y1)){
+            T = fabs(n[i].get_x()-x1);
             if (T < K){
                 K=T;
                 A=i;
             }
-        }else {
-            T=std::fabs(n[i].get_y()-y1);
+        }else{
+            T = fabs(n[i].get_y()-y1);
             if (T < K){
                 K=T;
                 A=i;
@@ -281,6 +284,304 @@ unsigned int Fourmis::return_the_one(std::vector<Nourriture> n){
     }
     return A;
 }
-/*vector<Nourriture> get_n_atteignable(){
-    return n_atteignable;
-}/*
+
+void Collector::move(Nourriture& n){
+    Carre bebou = cc;
+    cout << "chemin 1"<< endl;
+    choix_chemin1(n, bebou);
+    bebou = cc;
+    cout << "chemin2"<< endl;
+    choix_chemin2(n, bebou);
+
+    if(compteur1 > compteur2){
+        move2(n);
+    }
+    if(compteur1 < compteur2){
+        move1(n);
+    }
+    if(compteur1 == compteur2){
+        move_direct(n);
+    }
+    compteur1 = 0, compteur2 = 0;
+}
+
+void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
+    if((bebou.x == n.get_x()) and (bebou.y == n.get_y())){
+        return;
+    }
+    double xn = n.get_x(), yn = n.get_y();
+    double xc = x1, yc = y1;
+    double k = (yn - yc)/(xn - xc);
+    if((xn - x1) != 0){
+        if((xn > x1) and (k > -1) and (k < 1)){
+            cout << "k1"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur1;
+            cout << "k2"<< endl;
+            deplace_carre_digaonale(bebou, 1);
+            return choix_chemin1(n, bebou);
+        }
+        if((xn < x1) and (k > -1) and (k < 1)){
+            cout << "k3"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur1;
+            cout << "k4"<< endl;
+            deplace_carre_digaonale(bebou, 3);
+            return choix_chemin1(n, bebou);
+        }
+    }
+    if((yn - y1) != 0){
+        if((yn > y1) and ((k > 1) or (k < -1))){
+            cout << "k5"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur1;
+            cout << "k6"<< endl;
+            deplace_carre_digaonale(bebou, 0);
+            return choix_chemin1(n, bebou);
+        }
+        if((yn < y1) and ((k > 1) or (k < -1))){
+            cout << "k7"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur1;
+            cout << "k8"<< endl;
+            deplace_carre_digaonale(bebou, 2);
+            return choix_chemin1(n, bebou);
+        }
+    }
+    if((xn == x1) and (yn > y1)){
+        cout << "k9"<< endl;
+        if(carre_libre_dans_carre(bebou)) ++compteur1;
+        cout << "k10"<< endl;
+        deplace_carre_digaonale(bebou, 0);
+        return choix_chemin1(n, bebou);
+    }
+    if((xn == x1) and (yn < y1)){
+        cout << "k11"<< endl;
+        if(carre_libre_dans_carre(bebou)) ++compteur1;
+        cout << "k12"<< endl;
+        deplace_carre_digaonale(bebou, 2);
+        return choix_chemin1(n, bebou);
+    }
+    if((k>=0.9 and k<=1.1) or (k <= -0.9 and k>= -1.1)){
+        if((xn < x1) and (yn > y1)){
+            cout << "k13"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur1;
+            cout << "k14"<< endl;
+            deplace_carre_digaonale(bebou, 3);
+            return choix_chemin1(n, bebou);
+        }
+        if((xn > x1) and (yn > y1)){
+            cout << "k15"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur1;
+            cout << "k16"<< endl;
+            deplace_carre_digaonale(bebou, 0);
+            return choix_chemin1(n, bebou);
+        }
+        if((xn < x1) and (yn < y1)){
+            cout << "k17"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur1;
+            cout << "k18"<< endl;
+            deplace_carre_digaonale(bebou, 2);
+            return choix_chemin1(n, bebou);
+        }
+        if((xn > x1) and (yn < y1)){
+            cout << "k19"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur1;
+            cout << "k20"<< endl;
+            deplace_carre_digaonale(bebou, 1);
+            return choix_chemin1(n, bebou);
+        }
+    }
+}
+
+void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
+    double xn = n.get_x(), yn = n.get_y();
+    double xc = x1, yc = y1;
+    double k = (yn - yc)/(xn - xc);
+    if((xn - x1) != 0){
+        if((xn > x1) and (k > -1) and (k < 1)){
+            cout << "c1"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            cout<<"c2"<< endl;
+            deplace_carre_digaonale(bebou, 0);
+            return choix_chemin1(n, bebou);
+        }
+        if((xn < x1) and (k > -1) and (k < 1)){
+            cout << "c3"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            cout << "c4"<< endl;
+            deplace_carre_digaonale(bebou, 2);
+            return choix_chemin1(n, bebou);
+        }
+    }
+    if((yn - y1) != 0){
+        if((yn > y1) and ((k > 1) or (k < -1))){
+            cout << "c5"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            cout << "c6"<< endl;
+            deplace_carre_digaonale(bebou, 3);
+            return choix_chemin1(n, bebou);
+        }
+        if((yn < y1) and ((k > 1) or (k < -1))){
+            cout << "c7"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            cout << "c8"<< endl;
+            deplace_carre_digaonale(bebou, 1);
+            return choix_chemin1(n, bebou);
+        }
+    }
+    if((xn == x1) and (yn > y1)){
+        cout << "c9"<< endl;
+        if(carre_libre_dans_carre(bebou)) ++compteur2;
+        cout << "c10"<< endl;
+        deplace_carre_digaonale(bebou, 3);
+        return choix_chemin1(n, bebou);
+    }
+    if((xn == x1) and (yn < y1)){
+        cout << "c11"<< endl;
+        if(carre_libre_dans_carre(bebou)) ++compteur2;
+        cout << "c12"<< endl;
+        deplace_carre_digaonale(bebou, 1);
+        return choix_chemin1(n, bebou);
+    }
+    if((k == 1) or (k == -1)){
+        if((xn < x1) and (yn > y1)){
+            cout << "c13"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            cout << "c14"<< endl;
+            deplace_carre_digaonale(bebou, 3);
+            return choix_chemin1(n, bebou);
+        }
+        if((xn > x1) and (yn > y1)){
+            cout << "c15"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            cout << "c16"<< endl;
+            deplace_carre_digaonale(bebou, 0);
+            return choix_chemin1(n, bebou);
+        }
+        if((xn < x1) and (yn < y1)){
+            cout << "c17"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            cout << "c18"<< endl;
+            deplace_carre_digaonale(bebou, 2);
+            return choix_chemin1(n, bebou);
+        }
+        if((xn > x1) and (yn < y1)){
+            cout << "c19"<< endl;
+            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            cout << "c20"<< endl;
+            deplace_carre_digaonale(bebou, 1);
+            return choix_chemin1(n, bebou);
+        }
+    }
+}
+
+void Collector::move1(Nourriture& n){
+    double xn = n.get_x(), yn = n.get_y();
+    double xc = x1, yc = y1;
+    double k = (yn - yc)/(xn - xc);
+    if((xn - x1) != 0){
+        if((xn > x1) and (k > -1) and (k < 1)){
+            ++x1, --y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }   
+        if((xn < x1) and (k > -1) and (k < 1)){
+            --x1, ++y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }
+    }
+    if((yn - y1) != 0){
+        if((yn > y1) and ((k > 1) or (k < -1))){
+            ++x1, ++y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }
+        if((yn < y1) and ((k > 1) or (k < -1))){
+            --x1, --y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }
+    }
+}
+
+void Collector::move2(Nourriture& n){
+    double xn = n.get_x(), yn = n.get_y();
+    double xc = x1, yc = y1;
+    double k = (yn - yc)/(xn - xc);
+    if((xn - x1) != 0){
+        if((xn > x1) and (k > -1) and (k < 1)){
+            ++x1, ++y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }   
+        if((xn < x1) and (k > -1) and (k < 1)){
+            --x1, ++y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }
+    }
+    if((yn - y1) != 0){
+        if((yn > y1) and ((k > 1) or (k < -1))){
+            --x1, ++y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }
+        if((yn < y1) and ((k > 1) or (k < -1))){
+            ++x1, --y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }
+    }
+}
+
+void Collector::move_direct(Nourriture& n){
+    double xn = n.get_x(), yn = n.get_y();
+    double xc = x1, yc = y1;
+    double k = (yn - yc)/(xn - xc);
+    if(k == 1){
+        if(xn > x1){
+            ++x1, ++y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }
+        if(xn < x1){
+            --x1, --y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }
+    }
+    if(k == -1){
+        if(xn > x1){
+            ++x1, --y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }
+        if(xn < x1){
+            --x1, ++y1, ++age;
+            supprimer_carre(cc);
+            cc = {x1, y1, 3};
+            initialise_carre_centre(cc);
+        }
+    }
+}
+
+void Generator::move(Nourriture& n){
+    cout << "asjfksdf" << endl;
+}
+
+void Defensor::move(Nourriture& n){
+    cout << "asjfksdf" << endl;
+}
+
+void Predator::move(Nourriture& n){
+    cout << "asjfksdf" << endl;
+}

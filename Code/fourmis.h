@@ -9,6 +9,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <cmath>
 #include "squarecell.h"
 #include "message.h"
 #include "nourriture.h"
@@ -29,7 +30,9 @@ public:
     virtual unsigned int get_type() = 0;
     unsigned int get_x();
     unsigned int get_y();
-    unsigned int return_the_one(std::vector<Nourriture> n);
+    unsigned int return_the_one(std::vector<Nourriture>& n);
+    virtual void move(Nourriture& n) = 0;
+    static int compteur1, compteur2;
 };
 
 class Generator : public Fourmis {
@@ -48,6 +51,7 @@ public:
     void ecrire_fourmis(std::ofstream& fichier) override;
     unsigned int get() override;
     unsigned int get_type() override;
+    void move(Nourriture& n) override;
 };
 
 class Collector : public Fourmis{
@@ -56,11 +60,10 @@ private:
     bool food;
     unsigned int side = sizeC;
     Carre cc;
-    //std::vector<Nourriture> n_atteignable;
 public:
 	~Collector() = default;
     Collector(unsigned int x1, unsigned y1, unsigned int age, bool food);
-    void setcc(unsigned int& x2,unsigned int& y2);
+    void setcc(unsigned int& x2, unsigned int& y2);
     bool c_overlap();
     bool big_test(unsigned int countF, Carre& c) override;
     void ini_c(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2);
@@ -68,7 +71,12 @@ public:
     void ecrire_fourmis(std::ofstream& fichier) override;
     unsigned int get() override;
     unsigned int get_type() override;
-    //std::vector<Nourriture> get_n_atteignable();
+    void move(Nourriture& n) override;
+    void choix_chemin1(Nourriture& n, Carre& bebou);
+    void choix_chemin2(Nourriture& n, Carre& bebou);
+    void move1(Nourriture& n);
+    void move2(Nourriture& n);
+    void move_direct(Nourriture& n);
 };
 
 class Defensor : public Fourmis {
@@ -88,6 +96,7 @@ public:
     void ecrire_fourmis(std::ofstream& fichier) override;
     unsigned int get() override;
     unsigned int get_type() override;
+    void move(Nourriture& n) override;
 };
 
 class Predator : public Fourmis {
@@ -106,6 +115,7 @@ public:
     void ecrire_fourmis(std::ofstream& fichier) override;
     unsigned int get() override;
     unsigned int get_type() override;
+    void move(Nourriture& n) override;
 };
 
 bool decodage_ligne_fourmis(std::string line, unsigned int etat, Collector& Col,
