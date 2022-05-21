@@ -63,15 +63,15 @@ void graphic_draw_carre_plein(unsigned int x, unsigned int y,
 }
 void graphic_draw_carre_vide(unsigned int x, unsigned int y, double size, double r,
                              double g, double b){
-    (*ptcr)->set_line_width(0.5);
+    (*ptcr)->set_line_width(0.4);
     (*ptcr)->set_source_rgb(r, g, b);
     (*ptcr)->move_to(x, y);
-    (*ptcr)->line_to(x, y+size);
-    (*ptcr)->move_to(x, y+size);
-    (*ptcr)->line_to(x+size, y+size);
-    (*ptcr)->move_to(x+size, y+size);
-    (*ptcr)->line_to(x+size, y);
-    (*ptcr)->move_to(x+size, y);
+    (*ptcr)->line_to(x, y+size-0.5);
+    (*ptcr)->move_to(x, y+size-0.5);
+    (*ptcr)->line_to(x+size-0.5, y+size-0.5);
+    (*ptcr)->move_to(x+size-0.5, y+size-0.5);
+    (*ptcr)->line_to(x+size-0.5, y);
+    (*ptcr)->move_to(x+size-0.5, y);
     (*ptcr)->line_to(x, y);
     (*ptcr)->stroke();
     }

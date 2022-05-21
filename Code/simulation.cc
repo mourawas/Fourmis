@@ -161,11 +161,11 @@ bool Simulation::test_point_fourmiliere(unsigned int& x, unsigned int& y){
 }
 
 void Simulation::etape_simulation(){
-	//creer_nourriture();
-	/*for (size_t i = 0; i < vfourmiliere.size(); ++i)
+	creer_nourriture();
+	for (size_t i = 0; i < vfourmiliere.size(); ++i)
 	{
 		vfourmiliere[i].naissance_fourmis();
-	}*/
+	}
 	food_col();
 }
 

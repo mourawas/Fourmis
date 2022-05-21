@@ -56,5 +56,6 @@ bool carre_libre_dans_carre(Carre& c);
 
 void deplace_carre_digaonale(Carre& c, unsigned int dir);
 
+int abso(int a);
 
 #endif

@@ -32,7 +32,8 @@ public:
     unsigned int get_y();
     unsigned int return_the_one(std::vector<Nourriture>& n);
     virtual void move(Nourriture& n) = 0;
-    static int compteur1, compteur2, compteur3;
+    static int compteur1, compteur2, obs1, obs2;
+    static bool obstacle, mur1, mur2;
 };
 
 class Generator : public Fourmis {
@@ -57,13 +58,14 @@ public:
 class Collector : public Fourmis{
 private:
     unsigned int age;
-    bool food;
+    bool food, hebs;
     unsigned int side = sizeC;
     Carre cc;
+    int xf, yf, cas;
 public:
 	~Collector() = default;
     Collector(unsigned int x1, unsigned y1, unsigned int age, bool food);
-    void setcc(unsigned int& x2, unsigned int& y2);
+    void setcc(unsigned int x2, unsigned int y2);
     bool c_overlap();
     bool big_test(unsigned int countF, Carre& c) override;
     void ini_c(unsigned int& x2, unsigned int& y2, unsigned int& age2, bool& food2);
@@ -72,12 +74,14 @@ public:
     unsigned int get() override;
     unsigned int get_type() override;
     void move(Nourriture& n) override;
-    void choix_chemin1(Nourriture& n, Carre& bebou, unsigned int& miroir);
-    void choix_chemin2(Nourriture& n, Carre& bebou, unsigned int& miroir);
+    void choix_chemin1(Nourriture& n, Carre& bebou);
+    void choix_chemin2(Nourriture& n, Carre& bebou);
     void move1(Nourriture& n);
     void move2(Nourriture& n);
     void move_direct(Nourriture& n);
-    void move_miroir(Carre& bebou, unsigned int& miroir);
+    void move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chemin, Nourriture& n);
+    void deplace_miroir(int cas);
+    int trouver_cas(Nourriture& n);
 };
 
 class Defensor : public Fourmis {
@@ -91,7 +95,7 @@ public:
     bool d_overlap();
     bool defensor_in_home(unsigned int countF, Carre& c);
     bool big_test(unsigned int countF, Carre& c) override;
-    void setcd(unsigned int& x2,unsigned int& y2);
+    void setcd(unsigned int x2,unsigned int y2);
     void ini_d(unsigned int& x2, unsigned int& y2, unsigned int& age2);
     void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;
@@ -110,7 +114,7 @@ public:
 	~Predator() = default;
     bool p_overlap();
     bool big_test(unsigned int countF, Carre& c) override;
-    void setcp(unsigned int& x2,unsigned int& y2);
+    void setcp(unsigned int x2,unsigned int y2);
     void ini_p(unsigned int& x2, unsigned int& y2, unsigned int& age2);
     void d_ant(double r, double g, double b) override;
     void ecrire_fourmis(std::ofstream& fichier) override;

@@ -233,7 +233,6 @@ void Fourmiliere::naissance_col(){
                 Collector Col(j, i, 0, 0);
                 ajouter_fourmis(new Collector(Col));
                 ++nbC;
-                Col.setcc(j, i);
                 initialise_carre_centre(cCol);
                 return;
             }
@@ -251,7 +250,6 @@ void Fourmiliere::naissance_def(){
                 Defensor Def(j, i, 0);
                 ajouter_fourmis(new Defensor(j, i, 0));
                 ++nbD;
-                Def.setcd(j, i);
                 initialise_carre_centre(cDef);
                 return;
             }
@@ -269,7 +267,6 @@ void Fourmiliere::naissance_pre(){
                 Predator Pre(j, i, 0);
                 ajouter_fourmis(new Predator(j, i, 0));
                 ++nbC;
-                Pre.setcp(j, i);
                 initialise_carre_centre(cPre);
                 return;
             }
@@ -284,35 +281,38 @@ void Fourmiliere::detecte_food(vector<Nourriture>& vnourriture){
 
 		if(vfourmis[i]->get_type() == 1){
 			for (unsigned int j = 0; j < vnourriture.size(); ++j){
+                //cout << "VNOURRITURE j : " << j << " x: " << vnourriture[j].get_x() << "  y: " << vnourriture[j].get_y() << endl;
 				if(atteindre_test(vnourriture[j], i)){
 					n_atteignable.push_back(vnourriture[j]);
 				}
 			}
             for (size_t u = 0; u < n_atteignable.size(); ++u)
             {
-                cout << "n_atteignable " << u << " x : " << n_atteignable[u].get_x() << "  y : " << n_atteignable[u].get_y() << endl;
+                //cout << "n_atteignable " << u << " x : " << n_atteignable[u].get_x() << "  y : " << n_atteignable[u].get_y() << endl;
             }
             
-            cout << "Fourmi " << i << "  position  x : " << vfourmis[i]->get_x() << "  y : " << vfourmis[i]->get_x() << endl;
+            cout << "Fourmi " << i << "  position  x : " << vfourmis[i]->get_x() << "  y : " << vfourmis[i]->get_y() << endl;
 			o = vfourmis[i]->return_the_one(n_atteignable);
             cout << "Nourriture x : " << n_atteignable[o].get_x() << "  y : " << n_atteignable[o].get_y() << endl;
-            cout << "o : " << o << endl;
-            vfourmis[i]->move(n_atteignable[o]); 
+            //cout << "o : " << o << endl;
+            vfourmis[i]->move(n_atteignable[o]);
 		}
     }
 }
 
 bool Fourmiliere::atteindre_test(Nourriture& n, unsigned int& i){
-    if (((vfourmis[i]->get_x() % 2 == 0) and (vfourmis[i]->get_y() % 2 == 0))
-          or ((vfourmis[i]->get_x() % 2 != 0) and (vfourmis[i]->get_y() % 2 != 0))) {
-        if (((n.get_x() % 2 == 0) and (n.get_y() % 2 == 0)) or ((n.get_x() % 2 != 0) and (n.get_y() % 2 != 0))){
+    int x1 = vfourmis[i]->get_x();
+    int y1 = vfourmis[i]->get_y();
+    int x2 = n.get_x();
+    int y2 = n.get_y();
+    if (((x1 % 2 == 0) and (y1 % 2 == 0)) or ((x1 % 2 != 0) and (y1 % 2 != 0))) {
+        if (((x2 % 2 == 0) and (y2 % 2 == 0)) or ((x2 % 2 != 0) and (y2 % 2 != 0))){
             return true;
         }
         else return false;
     }
-    else if (((vfourmis[i]->get_x() % 2 == 0) and (vfourmis[i]->get_y() % 2 != 0))
-               or ((vfourmis[i]->get_x() % 2 != 0) and (vfourmis[i]->get_y() % 2 == 0))){
-        if (((n.get_x() % 2 == 0) and (n.get_y() % 2 != 0)) or ((n.get_x() % 2 != 0) and (n.get_y() % 2 == 0))){
+    else if (((x1 % 2 == 0) and (y1 % 2 != 0)) or ((x1 % 2 != 0) and (y1 % 2 == 0))){
+        if (((x2 % 2 == 0) and (y2 % 2 != 0)) or ((x2 % 2 != 0) and (y2 % 2 == 0))){
             return true;
         }
         else return false;

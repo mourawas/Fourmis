@@ -6,14 +6,18 @@ using namespace std;
 
 int Fourmis::compteur1 = 0;
 int Fourmis::compteur2 = 0;
-int Fourmis::compteur3 = 0;
+int Fourmis::obs1 = 0;
+int Fourmis::obs2 = 0;
+bool Fourmis::obstacle = 0;
+bool Fourmis::mur1 = 0;
+bool Fourmis::mur2 = 0;
 
 Generator::Generator(unsigned int x1, unsigned int y1,
                      unsigned int total_food, Carre cg)
     : Fourmis(x1, y1), total_food(total_food), cg(cg) {}
 
 Collector::Collector(unsigned int x1, unsigned y1, unsigned int age, bool food)
-: Fourmis(x1, y1), age(age), food(food) {}
+: Fourmis(x1, y1), age(age), food(food) {cc.x = x1; cc.y = y1; cc.side = sizeC;}
 
 Defensor::Defensor(unsigned int x1, unsigned int y1, unsigned int age)
     : Fourmis(x1, y1), age(age) {}
@@ -30,7 +34,7 @@ void Collector::ini_c(unsigned int& x2, unsigned int& y2, unsigned int& age2,
     setcc(x2, y2);
 }
 
-void Collector::setcc(unsigned int& x2, unsigned int& y2){
+void Collector::setcc(unsigned int x2, unsigned int y2){
 	cc = {x2, y2, sizeC};
 }
 
@@ -48,7 +52,7 @@ void Defensor::ini_d(unsigned int& x2, unsigned int& y2, unsigned int& age2)
     setcd(x2, y2);
 }
 
-void Defensor::setcd(unsigned int& x2, unsigned int& y2){
+void Defensor::setcd(unsigned int x2, unsigned int y2){
 	cd = {x2, y2, sizeD};
 }
 void Defensor::d_ant(double r, double g, double b){
@@ -64,7 +68,7 @@ void Predator::ini_p(unsigned int& x2, unsigned int& y2, unsigned int& age2)
     setcp(x2, y2);
 }
 
-void Predator::setcp(unsigned int& x2, unsigned int& y2){
+void Predator::setcp(unsigned int x2, unsigned int y2){
 	cp = {x2, y2, sizeP};
 }
 
@@ -266,17 +270,17 @@ unsigned int Fourmis::get_y(){
 
 unsigned int Fourmis::return_the_one(vector<Nourriture>& n){
     int T = 0;
-    int K = 0;
+    int K = 127;
     unsigned int A = 0;
     for(size_t i = 0; i < n.size(); ++i){
-        if (fabs(n[i].get_x()-x1) >= fabs(n[i].get_y()-y1)){
-            T = fabs(n[i].get_x()-x1);
+        if (abso(n[i].get_x()-x1) >= abso(n[i].get_y()-y1)){
+            T = abso(n[i].get_x()-x1);
             if (T < K){
                 K=T;
                 A=i;
             }
         }else{
-            T = fabs(n[i].get_y()-y1);
+            T = abso(n[i].get_y()-y1);
             if (T < K){
                 K=T;
                 A=i;
@@ -287,30 +291,110 @@ unsigned int Fourmis::return_the_one(vector<Nourriture>& n){
 }
 
 void Collector::move(Nourriture& n){
-    unsigned int miroir = 20;
+    int nx = n.get_x(), ny = n.get_y();
+    if(hebs){
+        if((x1 == 1) or (x1 == g_max-2) or (y1 == 1) or(y1 == g_max-2)
+            or (xf != nx) or (yf != ny)){
+            hebs = 0;
+        }else{
+            deplace_miroir(cas);
+        }
+    }
     Carre bebou = cc;
-    cout << "chemin 1"<< endl;
-    choix_chemin1(n, bebou, miroir);
+    double xn = n.get_x(), yn = n.get_y();
+    double xc = bebou.x, yc = bebou.y;
+    double k = (yn - yc)/(xn - xc);
+    cout << k << endl;
+    cout << "avant chemin 1" << endl;
+    choix_chemin1(n, bebou);
+    cout << "chemin 1 ok" << endl;
     bebou = cc;
-    cout << "chemin2"<< endl;
-    choix_chemin2(n, bebou, miroir);
+    choix_chemin2(n, bebou);
+    cout << "chemin 2 ok" << endl;
 
     if(compteur1 > compteur2){
+        if(mur2){
+            hebs = 1;
+            cas = trouver_cas(n);
+            deplace_miroir(cas);
+            xf = xn, yf = yn;
+            return;
+        }
+        cout << "prend chemin 2" << endl;
         move2(n);
     }
     if(compteur1 < compteur2){
+        if(mur1){
+            hebs = 1;
+            cas = trouver_cas(n);
+            deplace_miroir(cas);
+            xf = xn, yf = yn;
+            return;
+        }
+        cout << "prend chemin 1" << endl;
         move1(n);
     }
-    if(compteur1 == compteur2){
+    if((k==1) or  (k== -1)){
+        cout << "chemin diagonal" << endl;
         move_direct(n);
     }
-    compteur1 = 0, compteur2 = 0;
+    if(compteur1 == compteur2){
+        if(obs1 > obs2){
+            if(mur1){
+                hebs = 1;
+                cas = trouver_cas(n);
+                deplace_miroir(cas);
+                xf = xn, yf = yn;
+                return;
+            }
+            cout << "prend chemin 1" << endl;
+            move1(n);
+        }else{
+            if(mur2){
+                hebs = 1;
+                cas = trouver_cas(n);
+                deplace_miroir(cas);
+                xf = xn, yf = yn;
+                return;
+            }
+            cout << "prends chemin 2" << endl;
+            move2(n);
+        }
+    }
+    compteur1 = 0, compteur2 = 0, obs1 = 0, obs2 = 0, obstacle = 0;
 }
 
-void Collector::choix_chemin1(Nourriture& n, Carre& bebou, unsigned int& miroir){
+int Collector::trouver_cas(Nourriture& n){
+    int xn = n.get_x();
+    int yn = n.get_y();
+    int x2 = x1;
+    int y2 = y1;
+
+    if((x2 == g_max-2) and (yn > y2)){
+        return 0;
+    }else if((x2 == g_max-2) and (yn < y2)){
+        return 4;
+    }else if((y2 == g_max-2) and (xn > x2)){
+        return 5;
+    }else if((y2 == g_max-2) and (xn < x2)){
+        return 3;
+    }else if((x2 == 1) and (xn > x2)){
+        return 1;
+    }else if((x2 == 1) and (xn < x2)){
+        return 7;
+    }else if((x2 == 1) and (yn > y2)){
+        return 2;
+    }else if((x2 == 1) and (yn < y2)){
+        return 6;
+    }
+    return 10;
+}
+
+void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
     if((bebou.x == n.get_x()) and (bebou.y == n.get_y())){
         return;
     }
+    if(!obstacle) ++obs1;
     double xn = n.get_x(), yn = n.get_y();
     double xc = bebou.x, yc = bebou.y;
     double k = (yn - yc)/(xn - xc);
@@ -318,246 +402,346 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou, unsigned int& miroir)
         if((xn > xc) and (k > -1) and (k < 1)){
             if((k != 1) and (k != -1) and (x1 = 0)){
                 if(xc == g_max-2){
-                    miroir = 0;
-                    move_miroir(bebou, miroir);
+                    int a = 0;
+                    if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+                    move_miroir(bebou, 0, a, 0, n);
+                    mur1 = true;
+                    compteur1 += a;
+                    return choix_chemin1(n, bebou);
                 }else if(yc == 1){
-                    miroir = 1;
-                    move_miroir(bebou, miroir);
+                    int a = 0;
+                    if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+                    move_miroir(bebou, 1, a, 0, n);
+                    mur1 = true;
+                    compteur1 += a;
+                    return choix_chemin1(n, bebou);
                 }
             }
-            cout << "k1"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur1;
-            cout << "k2"<< endl;
+            //cout << "k1"<< endl;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            //cout << "k2"<< endl;
             deplace_carre_digaonale(bebou, 1);
-            return choix_chemin1(n, bebou, miroir);
+            return choix_chemin1(n, bebou);
         }
         if((xn < xc) and (k > -1) and (k < 1)){
             if(xc == 1){
-                miroir = 2;
-                move_miroir(bebou, miroir);
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+                move_miroir(bebou, 2, a, 0, n);
+                mur1 = true;
+                compteur1 += a;
+                return choix_chemin1(n, bebou);
             }else if(yc == g_max - 2){
-                miroir = 3;
-                move_miroir(bebou, miroir);
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+                move_miroir(bebou, 3, a, 0, n);
+                mur1 = true;
+                compteur1 += a;
+                return choix_chemin1(n, bebou);
             }
-            cout << "k3"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur1;
-            cout << "k4"<< endl;
+            //cout << "k3"<< endl;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            //cout << "k4"<< endl;
             deplace_carre_digaonale(bebou, 3);
-            return choix_chemin1(n, bebou, miroir);
+            return choix_chemin1(n, bebou);
         }
     }
     if((yn - y1) != 0){
         if((yn > yc) and ((k > 1) or (k < -1))){
             if(x1 == g_max-2){
-                miroir = 4;
-                move_miroir(bebou, miroir);
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+                move_miroir(bebou, 4, a, 0, n);
+                mur1 = true;
+                compteur1 += a;
+                return choix_chemin1(n, bebou);
             }else if(y1 == g_max-2){
-                miroir = 5;
-                move_miroir(bebou, miroir);
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+                move_miroir(bebou, 5, a, 0, n);
+                mur1 = true;
+                compteur1 += a;
+                return choix_chemin1(n, bebou);
             }
-            cout << "k5"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur1;
-            cout << "k6"<< endl;
+            //cout << "k5"<< endl;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            //cout << "k6"<< endl;
             deplace_carre_digaonale(bebou, 0);
-            return choix_chemin1(n, bebou, miroir);
+            return choix_chemin1(n, bebou);
         }
         if((yn < yc) and ((k > 1) or (k < -1))){
             if(xc == 1){
-                miroir = 9;
-                move_miroir(bebou, miroir);
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+                move_miroir(bebou, 6, a, 0, n);
+                mur1 = true;
+                compteur1 += a;
+                return choix_chemin1(n, bebou);
             }else if(yc == 1){
-                miroir = 10;
-                move_miroir(bebou, miroir);
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+                move_miroir(bebou, 7, a, 0, n);
+                mur1 = true;
+                compteur1 += a;
+                return choix_chemin1(n, bebou);
             }
-            cout << "k7"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur1;
-            cout << "k8"<< endl;
+            //cout << "k7"<< endl;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            //cout << "k8"<< endl;
             deplace_carre_digaonale(bebou, 2);
-            return choix_chemin1(n, bebou, miroir);
+            return choix_chemin1(n, bebou);
         }
     }
     if((xn == xc) and (yn > yc)){
         if(xc == g_max-2){
-            miroir = 4;
-            move_miroir(bebou, miroir);
+            int a = 0;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            move_miroir(bebou, 4, a, 0, n);
+            mur1 = true;
+            compteur1 += a;
+            return choix_chemin1(n, bebou);
         }else if(yc == g_max-2){
-            miroir = 5;
-            move_miroir(bebou, miroir);
+            int a = 0;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            move_miroir(bebou, 5, a, 0, n);
+            mur1 = true;
+            compteur1 += a;
+            return choix_chemin1(n, bebou);
         }
-        cout << "k9"<< endl;
-        if(carre_libre_dans_carre(bebou)) ++compteur1;
-        cout << "k10"<< endl;
+        //cout << "k9"<< endl;
+        if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+        //cout << "k10"<< endl;
         deplace_carre_digaonale(bebou, 0);
-        return choix_chemin1(n, bebou, miroir);
+        return choix_chemin1(n, bebou);
     }
     if((xn == xc) and (yn < yc)){
         if(xc == 1){
-            miroir = 6;
-            move_miroir(bebou, miroir);
+            int a = 0;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            move_miroir(bebou, 6, a, 0, n);
+            mur1 = true;
+            compteur1 += a;
+            return choix_chemin1(n, bebou);
         }else if(yc == 1){
-            miroir = 8;
-            move_miroir(bebou, miroir);
+            int a = 0;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            move_miroir(bebou, 7, a, 0, n);
+            mur1 = true;
+            compteur1 += a;
+            return choix_chemin1(n, bebou);
         }
-        cout << "k11"<< endl;
-        if(carre_libre_dans_carre(bebou)) ++compteur1;
-        cout << "k12"<< endl;
+        //cout << "k11"<< endl;
+        if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+        //cout << "k12"<< endl;
         deplace_carre_digaonale(bebou, 2);
-        return choix_chemin1(n, bebou, miroir);
+        return choix_chemin1(n, bebou);
     }
     if((k == 1) or (k == -1)){
         if((xn < xc) and (yn > yc)){
-            cout << "k13"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur1;
-            cout << "k14"<< endl;
+            //cout << "k13"<< endl;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            //cout << "k14"<< endl;
             deplace_carre_digaonale(bebou, 3);
-            return choix_chemin1(n, bebou, miroir);
+            return choix_chemin1(n, bebou);
         }
         if((xn > xc) and (yn > yc)){
-            cout << "k15"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur1;
-            cout << "k16"<< endl;
+            //cout << "k15"<< endl;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            //cout << "k16"<< endl;
             deplace_carre_digaonale(bebou, 0);
-            return choix_chemin1(n, bebou, miroir);
+            return choix_chemin1(n, bebou);
         }
         if((xn < xc) and (yn < yc)){
-            cout << "k17"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur1;
-            cout << "k18"<< endl;
+            //cout << "k17"<< endl;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            //cout << "k18"<< endl;
             deplace_carre_digaonale(bebou, 2);
-            return choix_chemin1(n, bebou, miroir);
+            return choix_chemin1(n, bebou);
         }
         if((xn > xc) and (yn < yc)){
-            cout << "k19"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur1;
-            cout << "k20"<< endl;
+            //cout << "k19"<< endl;
+            if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+            //cout << "k20"<< endl;
             deplace_carre_digaonale(bebou, 1);
-            return choix_chemin1(n, bebou, miroir);
+            return choix_chemin1(n, bebou);
         }
     }
 }
 
-void Collector::choix_chemin2(Nourriture& n, Carre& bebou, unsigned int& miroir){
+void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
     if((bebou.x == n.get_x()) and (bebou.y == n.get_y())){
         return;
     }
+    if(!obstacle) ++obs2;
     double xn = n.get_x(), yn = n.get_y();
     double xc = bebou.x, yc = bebou.y;
     double k = (yn - yc)/(xn - xc);
     if((xn - x1) != 0){
-        if(x1 == g_max-2){
-            miroir = 4;
-            move_miroir(bebou, miroir);
-        }else if(y1 == g_max-2){
-            miroir = 5;
-            move_miroir(bebou, miroir);
-        }
+        if((xn > xc) and (k > -1) and (k < 1)){
+            if(x1 == g_max-2){
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+                move_miroir(bebou, 4, a, 1, n);
+                mur2 = true;
+                compteur2 += a;
+                return choix_chemin2(n, bebou);
+            }else if(y1 == g_max-2){
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+                move_miroir(bebou, 5, a, 1, n);
+                mur2 = true;
+                compteur2 += a;
+                return choix_chemin2(n, bebou);
+            }
             cout << "c1"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             cout<<"c2"<< endl;
             deplace_carre_digaonale(bebou, 0);
-            return choix_chemin2(n, bebou, miroir);
+            return choix_chemin2(n, bebou);
         }
         if((xn < xc) and (k > -1) and (k < 1)){
             if(xc == 1){
-            miroir = 9;
-            move_miroir(bebou, miroir);
-        }else if(yc == 1){
-            miroir = 10;
-            move_miroir(bebou, miroir);
-        }
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+                move_miroir(bebou, 6, a, 1, n);
+                mur2 = true;
+                compteur2 += a;
+                return choix_chemin2(n, bebou);
+            }else if(yc == 1){
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+                move_miroir(bebou, 7, a, 1, n);
+                mur2 = true;
+                compteur2 += a;
+                return choix_chemin2(n, bebou);
+            }
             cout << "c3"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             cout << "c4"<< endl;
             deplace_carre_digaonale(bebou, 2);
-            return choix_chemin2(n, bebou, miroir);
+            return choix_chemin2(n, bebou);
         }
     }
     if((yn - yc) != 0){
         if((yn > yc) and ((k > 1) or (k < -1))){
             if(xc == 1){
-                miroir = 2;
-                move_miroir(bebou, miroir);
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+                move_miroir(bebou, 2, a, 1, n);
+                mur2 = true;
+                compteur2 += a;
+                return choix_chemin2(n, bebou);
             }else if(yc == g_max - 2){
-                miroir = 3;
-                move_miroir(bebou, miroir);
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+                move_miroir(bebou, 3, a, 1, n);
+                mur2 = true;
+                compteur2 += a;
+                return choix_chemin2(n, bebou);
             }
             cout << "c5"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             cout << "c6"<< endl;
+            cout << bebou.x << " " << bebou.y << endl;
             deplace_carre_digaonale(bebou, 3);
-            return choix_chemin2(n, bebou, miroir);
+            cout << "ouk" << endl;
+            return choix_chemin2(n, bebou);
         }
         if((yn < yc) and ((k > 1) or (k < -1))){
             if(xc == g_max-2){
-                miroir = 0;
-                move_miroir(bebou, miroir);
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+                move_miroir(bebou, 0, a, 1, n);
+                mur2 = true;
+                compteur2 += a;
+                return choix_chemin2(n, bebou);
             }else if(yc == 1){
-                miroir = 1;
-                move_miroir(bebou, miroir);
+                int a = 0;
+                if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+                move_miroir(bebou, 1, a, 1, n);
+                mur2 = true;
+                compteur2 += a;
+                return choix_chemin2(n, bebou);
             }
             cout << "c7"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             cout << "c8"<< endl;
             deplace_carre_digaonale(bebou, 1);
-            return choix_chemin2(n, bebou, miroir);
+            return choix_chemin2(n, bebou);
         }
     }
     if((xn == xc) and (yn > yc)){
         if(xc == 1){
-            miroir = 2;
-            move_miroir(bebou, miroir);
+            int a = 0;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+            move_miroir(bebou, 2, a, 1, n);
+            mur2 = true;
+            compteur2 += a;
+            return choix_chemin2(n, bebou);
         }else if(yc == g_max - 2){
-            miroir = 3;
-            move_miroir(bebou, miroir);
+            int a = 0;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+            move_miroir(bebou, 3, a, 1, n);
+            mur2 = true;
+            compteur2 += a;
+            return choix_chemin2(n, bebou);
         }
         cout << "c9"<< endl;
-        if(carre_libre_dans_carre(bebou)) ++compteur2;
+        if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
         cout << "c10"<< endl;
         deplace_carre_digaonale(bebou, 3);
-        return choix_chemin2(n, bebou, miroir);
+        return choix_chemin2(n, bebou);
     }
     if((xn == xc) and (yn < yc)){
         if(xc == g_max-2){
-            miroir = 0;
-            move_miroir(bebou, miroir);
+            int a = 0;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+            move_miroir(bebou, 0, a, 1, n);
+            mur2 = true;
+            compteur2 += a;
+            return choix_chemin2(n, bebou);
         }else if(yc == 1){
-            miroir = 1;
-            move_miroir(bebou, miroir);
+            int a = 0;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
+            move_miroir(bebou, 1, a, 1, n);
+            mur2 = true;
+            compteur2 += a;
+            return choix_chemin2(n, bebou);
         }
         cout << "c11"<< endl;
-        if(carre_libre_dans_carre(bebou)) ++compteur2;
+        if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
         cout << "c12"<< endl;
         deplace_carre_digaonale(bebou, 1);
-        return choix_chemin2(n, bebou, miroir);
+        return choix_chemin2(n, bebou);
     }
     if((k == 1) or (k == -1)){
         if((xn < xc) and (yn > yc)){
             cout << "c13"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             cout << "c14"<< endl;
             deplace_carre_digaonale(bebou, 3);
-            return choix_chemin2(n, bebou, miroir);
+            return choix_chemin2(n, bebou);
         }
         if((xn > xc) and (yn > yc)){
             cout << "c15"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             cout << "c16"<< endl;
             deplace_carre_digaonale(bebou, 0);
-            return choix_chemin2(n, bebou, miroir);
+            return choix_chemin2(n, bebou);
         }
         if((xn < xc) and (yn < yc)){
             cout << "c17"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             cout << "c18"<< endl;
             deplace_carre_digaonale(bebou, 2);
-            return choix_chemin2(n, bebou, miroir);
+            return choix_chemin2(n, bebou);
         }
         if((xn > xc) and (yn < yc)){
             cout << "c19"<< endl;
-            if(carre_libre_dans_carre(bebou)) ++compteur2;
+            if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             cout << "c20"<< endl;
             deplace_carre_digaonale(bebou, 1);
-            return choix_chemin2(n, bebou, miroir);
+            return choix_chemin2(n, bebou);
         }
     }
 }
@@ -664,71 +848,150 @@ void Collector::move_direct(Nourriture& n){
     }
 }
 
-void Collector::move_miroir(Carre& bebou, unsigned int& miroir){
+void Collector::move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chemin, Nourriture& n){
+    int vx = n.get_x() - bebou.x;
+    int vy = n.get_y() - bebou.y;
+
+    int l1 = abso(vx - vy);
+    int l2 = abso(vx + vy);
     switch(miroir){
         case 0: {
-            if(compteur3 < 4){
-                deplace_carre_digaonale(bebou, 2);
-            }else{
-                deplace_carre_digaonale(bebou, 1);
+            for (int i = 0; i <= l2; ++i)
+            {
+                if(!obstacle){
+                    if(!chemin) ++obs1; //chemin1
+                    if(chemin) ++obs2;  //chemin2
+                }
+                if(i < l2/2){
+                    deplace_carre_digaonale(bebou, 2);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }else{
+                    deplace_carre_digaonale(bebou, 1);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }
             }
+            break;
         }
         case 1: {
-            if(compteur3 < 4){
-                deplace_carre_digaonale(bebou, 0);
-            }else{
-                deplace_carre_digaonale(bebou, 1);
+            for (int i = 0; i < l1; ++i)
+            {
+                if(!obstacle){
+                    if(!chemin) ++obs1; //chemin1
+                    if(chemin) ++obs2;  //chemin2
+                }
+                if(i < l1/2){
+                    deplace_carre_digaonale(bebou, 0);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }else{
+                    deplace_carre_digaonale(bebou, 1);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }
             }
+            break;
         }
         case 2: {
-            if(compteur3 < 4){
-                deplace_carre_digaonale(bebou, 0);
-            }else{
-                deplace_carre_digaonale(bebou, 3);
+            for (int i = 0; i < l1; ++i)
+            {
+                if(!obstacle){
+                    if(!chemin) ++obs1; //chemin1
+                    if(chemin) ++obs2;  //chemin2
+                }
+                if(i < l1/2){
+                    deplace_carre_digaonale(bebou, 0);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }else{
+                    deplace_carre_digaonale(bebou, 3);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }
             }
+            break;
         }
         case 3: {
-            if(compteur3 < 4){
-                deplace_carre_digaonale(bebou, 2);
-            }else{
-                deplace_carre_digaonale(bebou, 3);
+            for (int i = 0; i < l1; ++i)
+            {
+                if(!obstacle){
+                    if(!chemin) ++obs1; //chemin1
+                    if(chemin) ++obs2;  //chemin2
+                }
+                if(i < l1/2){
+                    deplace_carre_digaonale(bebou, 2);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }else{
+                    deplace_carre_digaonale(bebou, 3);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }
             }
+            break;
         }
         case 4: {
-            if(compteur3 < 4){
-                deplace_carre_digaonale(bebou, 3);
-            }else{
-                deplace_carre_digaonale(bebou, 0);
+            for (int i = 0; i < l1; ++i)
+            {
+                if(!obstacle){
+                    if(!chemin) ++obs1; //chemin1
+                    if(chemin) ++obs2;  //chemin2
+                }
+                if(i < l1/2){
+                    deplace_carre_digaonale(bebou, 3);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }else{
+                    deplace_carre_digaonale(bebou, 0);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }
             }
+            break;
         }
         case 5: {
-            if(compteur3 < 4){
-                deplace_carre_digaonale(bebou, 1);
-            }else{
-                deplace_carre_digaonale(bebou, 0);
+            for (int i = 0; i < l2; ++i)
+            {
+                if(!obstacle){
+                    if(!chemin) ++obs1; //chemin1
+                    if(chemin) ++obs2;  //chemin2
+                }
+                if(i < l2/2){
+                    deplace_carre_digaonale(bebou, 1);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }else{
+                    deplace_carre_digaonale(bebou, 0);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }
             }
+            break;
         }
         case 6: {
-            if(compteur3 < 4){
-                deplace_carre_digaonale(bebou, 1);
-            }else{
-                deplace_carre_digaonale(bebou, 2);
+            for (int i = 0; i < l2; ++i)
+            {
+                if(!obstacle){
+                    if(!chemin) ++obs1; //chemin1
+                    if(chemin) ++obs2;  //chemin2
+                }
+                if(i < l2/2){
+                    deplace_carre_digaonale(bebou, 2);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }else{
+                    deplace_carre_digaonale(bebou, 2);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }
             }
+            break;
         }
         case 7: {
-            if(compteur3 < 4){
-                deplace_carre_digaonale(bebou, 3);
-            }else{
-                deplace_carre_digaonale(bebou, 2);
+            for (int i = 0; i < l2; ++i)
+            {
+                if(!obstacle){
+                    if(!chemin) ++obs1; //chemin1
+                    if(chemin) ++obs2;  //chemin2
+                }
+                if(i < l2/2){
+                    deplace_carre_digaonale(bebou, 3);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }else{
+                    deplace_carre_digaonale(bebou, 2);
+                    if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
+                }
             }
         }
-        case 8: {
-            if(compteur3 < 4){
-                deplace_carre_digaonale(bebou, 3);
-            }else{
-                deplace_carre_digaonale(bebou, 2);
-            }
-        }
+        default:
+        break;
     }
 }
 
@@ -742,4 +1005,8 @@ void Defensor::move(Nourriture& n){
 
 void Predator::move(Nourriture& n){
     cout << "move autre chose" << endl;
+}
+
+void Collector::deplace_miroir(int cas){
+    cout << "youpi" << endl;
 }

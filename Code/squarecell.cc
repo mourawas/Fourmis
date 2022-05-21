@@ -185,6 +185,13 @@ void deplace_carre_digaonale(Carre& c, unsigned int dir){
     }
 }
 
+int abso(int a){
+	if(a < 0){
+		a = (-1)*a;
+	}
+    return a;
+}
+
 void dessin_carre_croix(unsigned int x, unsigned int y, double size, double r,
                         double g, double b)
 {
