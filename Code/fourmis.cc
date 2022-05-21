@@ -6,6 +6,7 @@ using namespace std;
 
 int Fourmis::compteur1 = 0;
 int Fourmis::compteur2 = 0;
+int Fourmis::compteur3 = 0;
 
 Generator::Generator(unsigned int x1, unsigned int y1,
                      unsigned int total_food, Carre cg)
@@ -286,12 +287,13 @@ unsigned int Fourmis::return_the_one(vector<Nourriture>& n){
 }
 
 void Collector::move(Nourriture& n){
+    unsigned int miroir = 20;
     Carre bebou = cc;
     cout << "chemin 1"<< endl;
-    choix_chemin1(n, bebou);
+    choix_chemin1(n, bebou, miroir);
     bebou = cc;
     cout << "chemin2"<< endl;
-    choix_chemin2(n, bebou);
+    choix_chemin2(n, bebou, miroir);
 
     if(compteur1 > compteur2){
         move2(n);
@@ -305,172 +307,257 @@ void Collector::move(Nourriture& n){
     compteur1 = 0, compteur2 = 0;
 }
 
-void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
+void Collector::choix_chemin1(Nourriture& n, Carre& bebou, unsigned int& miroir){
     if((bebou.x == n.get_x()) and (bebou.y == n.get_y())){
         return;
     }
     double xn = n.get_x(), yn = n.get_y();
-    double xc = x1, yc = y1;
+    double xc = bebou.x, yc = bebou.y;
     double k = (yn - yc)/(xn - xc);
-    if((xn - x1) != 0){
-        if((xn > x1) and (k > -1) and (k < 1)){
+    if((xn - xc) != 0){
+        if((xn > xc) and (k > -1) and (k < 1)){
+            if((k != 1) and (k != -1) and (x1 = 0)){
+                if(xc == g_max-2){
+                    miroir = 0;
+                    move_miroir(bebou, miroir);
+                }else if(yc == 1){
+                    miroir = 1;
+                    move_miroir(bebou, miroir);
+                }
+            }
             cout << "k1"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
             cout << "k2"<< endl;
-            ++bebou.x; --bebou.y;
-            return choix_chemin1(n, bebou);
+            deplace_carre_digaonale(bebou, 1);
+            return choix_chemin1(n, bebou, miroir);
         }
-        if((xn < x1) and (k > -1) and (k < 1)){
+        if((xn < xc) and (k > -1) and (k < 1)){
+            if(xc == 1){
+                miroir = 2;
+                move_miroir(bebou, miroir);
+            }else if(yc == g_max - 2){
+                miroir = 3;
+                move_miroir(bebou, miroir);
+            }
             cout << "k3"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
             cout << "k4"<< endl;
-            --bebou.x; ++bebou.y;
-            return choix_chemin1(n, bebou);
+            deplace_carre_digaonale(bebou, 3);
+            return choix_chemin1(n, bebou, miroir);
         }
     }
     if((yn - y1) != 0){
-        if((yn > y1) and ((k > 1) or (k < -1))){
+        if((yn > yc) and ((k > 1) or (k < -1))){
+            if(x1 == g_max-2){
+                miroir = 4;
+                move_miroir(bebou, miroir);
+            }else if(y1 == g_max-2){
+                miroir = 5;
+                move_miroir(bebou, miroir);
+            }
             cout << "k5"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
             cout << "k6"<< endl;
-            ++bebou.x; ++bebou.y;
-            return choix_chemin1(n, bebou);
+            deplace_carre_digaonale(bebou, 0);
+            return choix_chemin1(n, bebou, miroir);
         }
-        if((yn < y1) and ((k > 1) or (k < -1))){
+        if((yn < yc) and ((k > 1) or (k < -1))){
+            if(xc == 1){
+                miroir = 9;
+                move_miroir(bebou, miroir);
+            }else if(yc == 1){
+                miroir = 10;
+                move_miroir(bebou, miroir);
+            }
             cout << "k7"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
             cout << "k8"<< endl;
-            --bebou.x; --bebou.y;
-            return choix_chemin1(n, bebou);
+            deplace_carre_digaonale(bebou, 2);
+            return choix_chemin1(n, bebou, miroir);
         }
     }
-    if((xn == x1) and (yn > y1)){
+    if((xn == xc) and (yn > yc)){
+        if(xc == g_max-2){
+            miroir = 4;
+            move_miroir(bebou, miroir);
+        }else if(yc == g_max-2){
+            miroir = 5;
+            move_miroir(bebou, miroir);
+        }
         cout << "k9"<< endl;
         if(carre_libre_dans_carre(bebou)) ++compteur1;
         cout << "k10"<< endl;
-        ++bebou.x; ++bebou.y;
-        return choix_chemin1(n, bebou);
+        deplace_carre_digaonale(bebou, 0);
+        return choix_chemin1(n, bebou, miroir);
     }
-    if((xn == x1) and (yn < y1)){
+    if((xn == xc) and (yn < yc)){
+        if(xc == 1){
+            miroir = 6;
+            move_miroir(bebou, miroir);
+        }else if(yc == 1){
+            miroir = 8;
+            move_miroir(bebou, miroir);
+        }
         cout << "k11"<< endl;
         if(carre_libre_dans_carre(bebou)) ++compteur1;
         cout << "k12"<< endl;
-        --bebou.x; --bebou.y;
-        return choix_chemin1(n, bebou);
+        deplace_carre_digaonale(bebou, 2);
+        return choix_chemin1(n, bebou, miroir);
     }
     if((k == 1) or (k == -1)){
-        if((xn < x1) and (yn > y1)){
+        if((xn < xc) and (yn > yc)){
             cout << "k13"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
             cout << "k14"<< endl;
-            --bebou.x; ++bebou.y;
-            return choix_chemin1(n, bebou);
+            deplace_carre_digaonale(bebou, 3);
+            return choix_chemin1(n, bebou, miroir);
         }
-        if((xn > x1) and (yn > y1)){
+        if((xn > xc) and (yn > yc)){
             cout << "k15"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
             cout << "k16"<< endl;
-            ++bebou.x; ++bebou.y;
-            return choix_chemin1(n, bebou);
+            deplace_carre_digaonale(bebou, 0);
+            return choix_chemin1(n, bebou, miroir);
         }
-        if((xn < x1) and (yn < y1)){
+        if((xn < xc) and (yn < yc)){
             cout << "k17"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
             cout << "k18"<< endl;
-            --bebou.x; --bebou.y;
-            return choix_chemin1(n, bebou);
+            deplace_carre_digaonale(bebou, 2);
+            return choix_chemin1(n, bebou, miroir);
         }
-        if((xn > x1) and (yn < y1)){
+        if((xn > xc) and (yn < yc)){
             cout << "k19"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
             cout << "k20"<< endl;
-            ++bebou.x; --bebou.y;
-            return choix_chemin1(n, bebou);
+            deplace_carre_digaonale(bebou, 1);
+            return choix_chemin1(n, bebou, miroir);
         }
     }
 }
 
-void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
+void Collector::choix_chemin2(Nourriture& n, Carre& bebou, unsigned int& miroir){
     if((bebou.x == n.get_x()) and (bebou.y == n.get_y())){
         return;
     }
     double xn = n.get_x(), yn = n.get_y();
-    double xc = x1, yc = y1;
+    double xc = bebou.x, yc = bebou.y;
     double k = (yn - yc)/(xn - xc);
     if((xn - x1) != 0){
-        if((xn > x1) and (k > -1) and (k < 1)){
+        if(x1 == g_max-2){
+            miroir = 4;
+            move_miroir(bebou, miroir);
+        }else if(y1 == g_max-2){
+            miroir = 5;
+            move_miroir(bebou, miroir);
+        }
             cout << "c1"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout<<"c2"<< endl;
-            ++bebou.x; ++bebou.y;
-            return choix_chemin2(n, bebou);
+            deplace_carre_digaonale(bebou, 0);
+            return choix_chemin2(n, bebou, miroir);
         }
-        if((xn < x1) and (k > -1) and (k < 1)){
+        if((xn < xc) and (k > -1) and (k < 1)){
+            if(xc == 1){
+            miroir = 9;
+            move_miroir(bebou, miroir);
+        }else if(yc == 1){
+            miroir = 10;
+            move_miroir(bebou, miroir);
+        }
             cout << "c3"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c4"<< endl;
-            --bebou.x; --bebou.y;
-            return choix_chemin2(n, bebou);
+            deplace_carre_digaonale(bebou, 2);
+            return choix_chemin2(n, bebou, miroir);
         }
     }
-    if((yn - y1) != 0){
-        if((yn > y1) and ((k > 1) or (k < -1))){
+    if((yn - yc) != 0){
+        if((yn > yc) and ((k > 1) or (k < -1))){
+            if(xc == 1){
+                miroir = 2;
+                move_miroir(bebou, miroir);
+            }else if(yc == g_max - 2){
+                miroir = 3;
+                move_miroir(bebou, miroir);
+            }
             cout << "c5"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c6"<< endl;
-            --bebou.x; ++bebou.y;
-            return choix_chemin2(n, bebou);
+            deplace_carre_digaonale(bebou, 3);
+            return choix_chemin2(n, bebou, miroir);
         }
-        if((yn < y1) and ((k > 1) or (k < -1))){
+        if((yn < yc) and ((k > 1) or (k < -1))){
+            if(xc == g_max-2){
+                miroir = 0;
+                move_miroir(bebou, miroir);
+            }else if(yc == 1){
+                miroir = 1;
+                move_miroir(bebou, miroir);
+            }
             cout << "c7"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c8"<< endl;
-            ++bebou.x; --bebou.y;
-            return choix_chemin2(n, bebou);
+            deplace_carre_digaonale(bebou, 1);
+            return choix_chemin2(n, bebou, miroir);
         }
     }
-    if((xn == x1) and (yn > y1)){
+    if((xn == xc) and (yn > yc)){
+        if(xc == 1){
+            miroir = 2;
+            move_miroir(bebou, miroir);
+        }else if(yc == g_max - 2){
+            miroir = 3;
+            move_miroir(bebou, miroir);
+        }
         cout << "c9"<< endl;
         if(carre_libre_dans_carre(bebou)) ++compteur2;
         cout << "c10"<< endl;
-        --bebou.x; ++bebou.y;
-        return choix_chemin2(n, bebou);
+        deplace_carre_digaonale(bebou, 3);
+        return choix_chemin2(n, bebou, miroir);
     }
-    if((xn == x1) and (yn < y1)){
+    if((xn == xc) and (yn < yc)){
+        if(xc == g_max-2){
+            miroir = 0;
+            move_miroir(bebou, miroir);
+        }else if(yc == 1){
+            miroir = 1;
+            move_miroir(bebou, miroir);
+        }
         cout << "c11"<< endl;
         if(carre_libre_dans_carre(bebou)) ++compteur2;
         cout << "c12"<< endl;
-        ++bebou.x; --bebou.y;
-        return choix_chemin2(n, bebou);
+        deplace_carre_digaonale(bebou, 1);
+        return choix_chemin2(n, bebou, miroir);
     }
     if((k == 1) or (k == -1)){
-        if((xn < x1) and (yn > y1)){
+        if((xn < xc) and (yn > yc)){
             cout << "c13"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c14"<< endl;
-            --bebou.x; ++bebou.y;
-            return choix_chemin2(n, bebou);
+            deplace_carre_digaonale(bebou, 3);
+            return choix_chemin2(n, bebou, miroir);
         }
-        if((xn > x1) and (yn > y1)){
+        if((xn > xc) and (yn > yc)){
             cout << "c15"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c16"<< endl;
-            ++bebou.x; ++bebou.y;
-            return choix_chemin2(n, bebou);
+            deplace_carre_digaonale(bebou, 0);
+            return choix_chemin2(n, bebou, miroir);
         }
-        if((xn < x1) and (yn < y1)){
+        if((xn < xc) and (yn < yc)){
             cout << "c17"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c18"<< endl;
-            --bebou.x; --bebou.y;
-            return choix_chemin2(n, bebou);
+            deplace_carre_digaonale(bebou, 2);
+            return choix_chemin2(n, bebou, miroir);
         }
-        if((xn > x1) and (yn < y1)){
+        if((xn > xc) and (yn < yc)){
             cout << "c19"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c20"<< endl;
-            ++bebou.x; --bebou.y;
-            return choix_chemin2(n, bebou);
+            deplace_carre_digaonale(bebou, 1);
+            return choix_chemin2(n, bebou, miroir);
         }
     }
 }
@@ -573,6 +660,74 @@ void Collector::move_direct(Nourriture& n){
             supprimer_carre(cc);
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
+        }
+    }
+}
+
+void Collector::move_miroir(Carre& bebou, unsigned int& miroir){
+    switch(miroir){
+        case 0: {
+            if(compteur3 < 4){
+                deplace_carre_digaonale(bebou, 2);
+            }else{
+                deplace_carre_digaonale(bebou, 1);
+            }
+        }
+        case 1: {
+            if(compteur3 < 4){
+                deplace_carre_digaonale(bebou, 0);
+            }else{
+                deplace_carre_digaonale(bebou, 1);
+            }
+        }
+        case 2: {
+            if(compteur3 < 4){
+                deplace_carre_digaonale(bebou, 0);
+            }else{
+                deplace_carre_digaonale(bebou, 3);
+            }
+        }
+        case 3: {
+            if(compteur3 < 4){
+                deplace_carre_digaonale(bebou, 2);
+            }else{
+                deplace_carre_digaonale(bebou, 3);
+            }
+        }
+        case 4: {
+            if(compteur3 < 4){
+                deplace_carre_digaonale(bebou, 3);
+            }else{
+                deplace_carre_digaonale(bebou, 0);
+            }
+        }
+        case 5: {
+            if(compteur3 < 4){
+                deplace_carre_digaonale(bebou, 1);
+            }else{
+                deplace_carre_digaonale(bebou, 0);
+            }
+        }
+        case 6: {
+            if(compteur3 < 4){
+                deplace_carre_digaonale(bebou, 1);
+            }else{
+                deplace_carre_digaonale(bebou, 2);
+            }
+        }
+        case 7: {
+            if(compteur3 < 4){
+                deplace_carre_digaonale(bebou, 3);
+            }else{
+                deplace_carre_digaonale(bebou, 2);
+            }
+        }
+        case 8: {
+            if(compteur3 < 4){
+                deplace_carre_digaonale(bebou, 3);
+            }else{
+                deplace_carre_digaonale(bebou, 2);
+            }
         }
     }
 }

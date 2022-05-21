@@ -165,19 +165,24 @@ bool carre_libre_dans_carre(Carre& c){
 }
 
 void deplace_carre_digaonale(Carre& c, unsigned int dir){
-    cout << "AVANT Carre x : " << c.x << "  y : " << c.y << endl;
     switch(dir){
-        case 0:         //en haut a droite
-        ++c.x, ++c.y;
-        case 1:         //en bas a droite
-        ++c.x, --c.y;
-        case 2:         //en bas a gauche
-        --c.x, --c.y;
-        case 3:         //en haut a gauche
-        --c.x, ++c.y;
+        case 0: {        //en haut a droite
+        Carre t = {c.x + 1, c.y + 1, 3};
+        c = t;
+        break; }
+        case 1: {         //en bas a droite
+        Carre t = {c.x + 1, c.y - 1, 3};
+        c = t;
+        break; }
+        case 2: {        //en bas a gauche
+        Carre t = {c.x - 1, c.y - 1, 3};
+        c = t;
+        break; }
+        case 3: {        //en haut a gauche
+        Carre t = {c.x - 1, c.y + 1, 3};
+        c = t;
+        break; }
     }
-    cout << "APRES Carre x : " << c.x << "  y : " << c.y << endl;
-
 }
 
 void dessin_carre_croix(unsigned int x, unsigned int y, double size, double r,

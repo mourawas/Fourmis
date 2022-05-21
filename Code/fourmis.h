@@ -32,7 +32,7 @@ public:
     unsigned int get_y();
     unsigned int return_the_one(std::vector<Nourriture>& n);
     virtual void move(Nourriture& n) = 0;
-    static int compteur1, compteur2;
+    static int compteur1, compteur2, compteur3;
 };
 
 class Generator : public Fourmis {
@@ -72,11 +72,12 @@ public:
     unsigned int get() override;
     unsigned int get_type() override;
     void move(Nourriture& n) override;
-    void choix_chemin1(Nourriture& n, Carre& bebou);
-    void choix_chemin2(Nourriture& n, Carre& bebou);
+    void choix_chemin1(Nourriture& n, Carre& bebou, unsigned int& miroir);
+    void choix_chemin2(Nourriture& n, Carre& bebou, unsigned int& miroir);
     void move1(Nourriture& n);
     void move2(Nourriture& n);
     void move_direct(Nourriture& n);
+    void move_miroir(Carre& bebou, unsigned int& miroir);
 };
 
 class Defensor : public Fourmis {
