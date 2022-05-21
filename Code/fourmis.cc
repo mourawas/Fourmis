@@ -292,14 +292,18 @@ void Collector::move(Nourriture& n){
     bebou = cc;
     cout << "chemin2"<< endl;
     choix_chemin2(n, bebou);
-
+    cout<<"compteur 1 : "<< compteur1<< endl;
+    cout<< "compteur 2 " << compteur2 << endl;
     if(compteur1 > compteur2){
+        cout <<"AAAAAAAAAA"<< endl;
         move2(n);
     }
     if(compteur1 < compteur2){
+        cout <<"BBBBBBBB"<< endl;
         move1(n);
     }
     if(compteur1 == compteur2){
+        cout <<"CCCCCC"<< endl;
         move_direct(n);
     }
     compteur1 = 0, compteur2 = 0;
@@ -371,6 +375,8 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
             if(carre_libre_dans_carre(bebou)) ++compteur1;
             cout << "k16"<< endl;
             deplace_carre_digaonale(bebou, 0);
+            ++bebou.x;
+            ++bebou.y;
             return choix_chemin1(n, bebou);
         }
         if((xn < x1) and (yn < y1)){
@@ -391,6 +397,9 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
 }
 
 void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
+    if((bebou.x == n.get_x()) and (bebou.y == n.get_y())){
+        return;
+    }
     double xn = n.get_x(), yn = n.get_y();
     double xc = x1, yc = y1;
     double k = (yn - yc)/(xn - xc);
@@ -400,14 +409,14 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout<<"c2"<< endl;
             deplace_carre_digaonale(bebou, 0);
-            return choix_chemin1(n, bebou);
+            return choix_chemin2(n, bebou);
         }
         if((xn < x1) and (k > -1) and (k < 1)){
             cout << "c3"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c4"<< endl;
             deplace_carre_digaonale(bebou, 2);
-            return choix_chemin1(n, bebou);
+            return choix_chemin2(n, bebou);
         }
     }
     if((yn - y1) != 0){
@@ -416,14 +425,14 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c6"<< endl;
             deplace_carre_digaonale(bebou, 3);
-            return choix_chemin1(n, bebou);
+            return choix_chemin2(n, bebou);
         }
         if((yn < y1) and ((k > 1) or (k < -1))){
             cout << "c7"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c8"<< endl;
             deplace_carre_digaonale(bebou, 1);
-            return choix_chemin1(n, bebou);
+            return choix_chemin2(n, bebou);
         }
     }
     if((xn == x1) and (yn > y1)){
@@ -431,14 +440,14 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
         if(carre_libre_dans_carre(bebou)) ++compteur2;
         cout << "c10"<< endl;
         deplace_carre_digaonale(bebou, 3);
-        return choix_chemin1(n, bebou);
+        return choix_chemin2(n, bebou);
     }
     if((xn == x1) and (yn < y1)){
         cout << "c11"<< endl;
         if(carre_libre_dans_carre(bebou)) ++compteur2;
         cout << "c12"<< endl;
         deplace_carre_digaonale(bebou, 1);
-        return choix_chemin1(n, bebou);
+        return choix_chemin2(n, bebou);
     }
     if((k == 1) or (k == -1)){
         if((xn < x1) and (yn > y1)){
@@ -446,28 +455,30 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c14"<< endl;
             deplace_carre_digaonale(bebou, 3);
-            return choix_chemin1(n, bebou);
+            return choix_chemin2(n, bebou);
         }
         if((xn > x1) and (yn > y1)){
             cout << "c15"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c16"<< endl;
             deplace_carre_digaonale(bebou, 0);
-            return choix_chemin1(n, bebou);
+            ++bebou.x;
+            ++bebou.y;
+            return choix_chemin2(n, bebou);
         }
         if((xn < x1) and (yn < y1)){
             cout << "c17"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c18"<< endl;
             deplace_carre_digaonale(bebou, 2);
-            return choix_chemin1(n, bebou);
+            return choix_chemin2(n, bebou);
         }
         if((xn > x1) and (yn < y1)){
             cout << "c19"<< endl;
             if(carre_libre_dans_carre(bebou)) ++compteur2;
             cout << "c20"<< endl;
             deplace_carre_digaonale(bebou, 1);
-            return choix_chemin1(n, bebou);
+            return choix_chemin2(n, bebou);
         }
     }
 }

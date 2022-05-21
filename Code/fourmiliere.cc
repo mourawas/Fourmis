@@ -284,7 +284,7 @@ void Fourmiliere::detecte_food(vector<Nourriture>& vnourriture){
 			}
             cout << "Fourmi " << i << "  position  x : " << vfourmis[i]->get_x() << "  y : " << vfourmis[i]->get_x() << endl;
 			o = vfourmis[i]->return_the_one(n_atteignable);
-            cout << "Nourriture x : " << n_atteignable[0].get_x() << "  y : " << n_atteignable[0].get_y() << endl;
+            cout << "Nourriture x : " << n_atteignable[o].get_x() << "  y : " << n_atteignable[o].get_y() << endl;
             vfourmis[i]->move(n_atteignable[o]); 
 		}
     }
