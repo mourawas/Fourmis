@@ -154,7 +154,6 @@ bool point_dans_carre(unsigned int& x, unsigned int& y, Carre& c){
 }
 
 bool carre_libre_dans_carre(Carre& c){
-    cout<<"oui"<<endl;
     for (size_t i = c.y - c.side/2; i <= c.y + c.side/2; ++i) {
         for (size_t j = c.x - c.side/2; j <= c.x + c.side/2; ++j) {
             if (grid[g_max-i-1][j]) {
@@ -166,6 +165,7 @@ bool carre_libre_dans_carre(Carre& c){
 }
 
 void deplace_carre_digaonale(Carre& c, unsigned int dir){
+    cout << "AVANT Carre x : " << c.x << "  y : " << c.y << endl;
     switch(dir){
         case 0:         //en haut a droite
         ++c.x, ++c.y;
@@ -176,6 +176,8 @@ void deplace_carre_digaonale(Carre& c, unsigned int dir){
         case 3:         //en haut a gauche
         --c.x, ++c.y;
     }
+    cout << "APRES Carre x : " << c.x << "  y : " << c.y << endl;
+
 }
 
 void dessin_carre_croix(unsigned int x, unsigned int y, double size, double r,

@@ -204,8 +204,6 @@ Carre Fourmiliere::get_carre(){
 
 void Fourmiliere::naissance_fourmis(){
     double nbFourmis = vfourmis.size();
-    cout << "nbC : " << nbC << "   nbFourmis : " << nbFourmis << endl;
-    cout << "nbC/nbFourmis : " << nbC/nbFourmis << endl;
     if(mode == 0){
         if(nbC/nbFourmis < prop_free_collector){
             naissance_col();
@@ -226,7 +224,6 @@ void Fourmiliere::naissance_fourmis(){
 }
 
 void Fourmiliere::naissance_col(){
-    cout << "naissance col" << endl;
     for (unsigned int i = c.x + 2; i < c.x + c.side - 1; ++i){
         for(unsigned int j = c.y + 2; j < c.y + c.side - 1; ++j){
             Carre cCol = {j, i, 3};
@@ -243,7 +240,6 @@ void Fourmiliere::naissance_col(){
 }
 
 void Fourmiliere::naissance_def(){
-    cout << "naissance def" << endl;
     for (unsigned int i = c.x + 2; i < c.x + c.side - 1; ++i){
         for(unsigned int j = c.y + 2; j < c.y + c.side - 1; ++j){
             Carre cDef = {j, i, 3};
@@ -260,7 +256,6 @@ void Fourmiliere::naissance_def(){
 }
 
 void Fourmiliere::naissance_pre(){
-    cout << "naissance pre" << endl;
     for (unsigned int i = c.x + 2; i < c.x + c.side - 1; ++i){
         for(unsigned int j = c.y + 2; j < c.y + c.side - 1; ++j){
             Carre cPre = {j, i, 1};
@@ -287,7 +282,9 @@ void Fourmiliere::detecte_food(vector<Nourriture>& vnourriture){
 					n_atteignable.push_back(vnourriture[j]);
 				}
 			}
+            cout << "Fourmi " << i << "  position  x : " << vfourmis[i]->get_x() << "  y : " << vfourmis[i]->get_x() << endl;
 			o = vfourmis[i]->return_the_one(n_atteignable);
+            cout << "Nourriture x : " << n_atteignable[0].get_x() << "  y : " << n_atteignable[0].get_y() << endl;
             vfourmis[i]->move(n_atteignable[o]); 
 		}
     }

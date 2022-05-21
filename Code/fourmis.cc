@@ -368,13 +368,9 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
         }
         if((xn > x1) and (yn > y1)){
             cout << "k15"<< endl;
-            cout << "f: "<< xn<<yn<<" b:"<< bebou.x << bebou.y<<endl;
             if(carre_libre_dans_carre(bebou)) ++compteur1;
-            cout<< k<<endl;
             cout << "k16"<< endl;
             deplace_carre_digaonale(bebou, 0);
-            bebou.x++;
-            bebou.y++;
             return choix_chemin1(n, bebou);
         }
         if((xn < x1) and (yn < y1)){
@@ -579,13 +575,13 @@ void Collector::move_direct(Nourriture& n){
 }
 
 void Generator::move(Nourriture& n){
-    cout << "asjfksdf" << endl;
+    cout << "move autre chose" << endl;
 }
 
 void Defensor::move(Nourriture& n){
-    cout << "asjfksdf" << endl;
+    cout << "move autre chose" << endl;
 }
 
 void Predator::move(Nourriture& n){
-    cout << "asjfksdf" << endl;
+    cout << "move autre chose" << endl;
 }
