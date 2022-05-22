@@ -61,7 +61,7 @@ private:
     bool food, hebs;
     unsigned int side = sizeC;
     Carre cc;
-    int xf, yf, cas;
+    int xf, yf, cas, longueur1, longueur2, cas_pos;
 public:
 	~Collector() = default;
     Collector(unsigned int x1, unsigned y1, unsigned int age, bool food);
@@ -80,7 +80,7 @@ public:
     void move2(Nourriture& n);
     void move_direct(Nourriture& n);
     void move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chemin, Nourriture& n);
-    void deplace_miroir(int cas);
+    void deplace_miroir(int cas, Nourriture& n);
     int trouver_cas(Nourriture& n);
 };
 

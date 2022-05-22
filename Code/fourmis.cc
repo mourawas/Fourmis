@@ -278,14 +278,14 @@ unsigned int Fourmis::return_the_one(vector<Nourriture>& n){
             if (T < K){
                 K=T;
                 A=i;
-                cout << " K = "<< K << endl;
+                //cout << " K = "<< K << endl;
             }
         }else{
             T = abso(n[i].get_y()-y1);
             if (T < K){
                 K=T;
                 A=i;
-                cout << " K = "<< K << endl;
+                //cout << " K = "<< K << endl;
             }
         }
     }
@@ -295,11 +295,11 @@ unsigned int Fourmis::return_the_one(vector<Nourriture>& n){
 void Collector::move(Nourriture& n){
     int nx = n.get_x(), ny = n.get_y();
     if(hebs){
-        if((x1 == 1) or (x1 == g_max-2) or (y1 == 1) or(y1 == g_max-2)
+        if((x1 == 1) or (x1 == g_max-2) or (y1 == 1) or (y1 == g_max-2)
             or (xf != nx) or (yf != ny)){
             hebs = 0;
         }else{
-            deplace_miroir(cas);
+            deplace_miroir(cas, n);
         }
     }
     Carre bebou = cc;
@@ -315,22 +315,28 @@ void Collector::move(Nourriture& n){
     cout << "chemin 2 ok" << endl;
 
     if(compteur1 > compteur2){
-        if(mur2){
+        if(mur2 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
+           ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
             hebs = 1;
-            cas = trouver_cas(n);
-            deplace_miroir(cas);
             xf = xn, yf = yn;
+            longueur1 = ((xf -x1)+(yf-y1))/2;
+            longueur2 = ((xf -x1)-(yf-y1))/2;
+            cas = trouver_cas(n);
+            deplace_miroir(cas, n);
             return;
         }
         cout << "prend chemin 2" << endl;
         move2(n);
     }
     if(compteur1 < compteur2){
-        if(mur1){
+        if(mur1 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
+           ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
             hebs = 1;
-            cas = trouver_cas(n);
-            deplace_miroir(cas);
             xf = xn, yf = yn;
+            longueur1 = ((xf -x1)+(yf-y1))/2;
+            longueur2 = ((xf -x1)-(yf-y1))/2;
+            cas = trouver_cas(n);
+            deplace_miroir(cas, n);
             return;
         }
         cout << "prend chemin 1" << endl;
@@ -342,21 +348,27 @@ void Collector::move(Nourriture& n){
     }
     if(compteur1 == compteur2){
         if(obs1 > obs2){
-            if(mur1){
+            if(mur1 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
+               ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
                 hebs = 1;
-                cas = trouver_cas(n);
-                deplace_miroir(cas);
                 xf = xn, yf = yn;
+                longueur1 = ((xf -x1)+(yf-y1))/2;
+                longueur2 = ((xf -x1)-(yf-y1))/2;
+                cas = trouver_cas(n);
+                deplace_miroir(cas, n);
                 return;
             }
             cout << "prend chemin 1" << endl;
             move1(n);
         }else{
-            if(mur2){
+            if(mur2 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
+               ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
                 hebs = 1;
-                cas = trouver_cas(n);
-                deplace_miroir(cas);
                 xf = xn, yf = yn;
+                longueur1 = ((xf -x1)+(yf-y1))/2;
+                longueur2 = ((xf -x1)-(yf-y1))/2;
+                cas = trouver_cas(n);
+                deplace_miroir(cas, n);
                 return;
             }
             cout << "prends chemin 2" << endl;
@@ -409,6 +421,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                     move_miroir(bebou, 0, a, 0, n);
                     mur1 = true;
                     compteur1 += a;
+                    cas_pos = 2;
                     return choix_chemin1(n, bebou);
                 }else if(yc == 1){
                     int a = 0;
@@ -416,6 +429,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                     move_miroir(bebou, 1, a, 0, n);
                     mur1 = true;
                     compteur1 += a;
+                    cas_pos = 1;
                     return choix_chemin1(n, bebou);
                 }
             }
@@ -432,6 +446,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 2, a, 0, n);
                 mur1 = true;
                 compteur1 += a;
+                cas_pos = 0;
                 return choix_chemin1(n, bebou);
             }else if(yc == g_max - 2){
                 int a = 0;
@@ -439,6 +454,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 3, a, 0, n);
                 mur1 = true;
                 compteur1 += a;
+                cas_pos = 3;
                 return choix_chemin1(n, bebou);
             }
             //cout << "k3"<< endl;
@@ -456,6 +472,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 4, a, 0, n);
                 mur1 = true;
                 compteur1 += a;
+                cas_pos = 2;
                 return choix_chemin1(n, bebou);
             }else if(y1 == g_max-2){
                 int a = 0;
@@ -463,6 +480,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 5, a, 0, n);
                 mur1 = true;
                 compteur1 += a;
+                cas_pos = 3;
                 return choix_chemin1(n, bebou);
             }
             //cout << "k5"<< endl;
@@ -478,6 +496,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 6, a, 0, n);
                 mur1 = true;
                 compteur1 += a;
+                cas_pos = 0;
                 return choix_chemin1(n, bebou);
             }else if(yc == 1){
                 int a = 0;
@@ -485,6 +504,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 7, a, 0, n);
                 mur1 = true;
                 compteur1 += a;
+                cas_pos = 1;
                 return choix_chemin1(n, bebou);
             }
             //cout << "k7"<< endl;
@@ -501,6 +521,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
             move_miroir(bebou, 4, a, 0, n);
             mur1 = true;
             compteur1 += a;
+            cas_pos = 2;
             return choix_chemin1(n, bebou);
         }else if(yc == g_max-2){
             int a = 0;
@@ -508,6 +529,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
             move_miroir(bebou, 5, a, 0, n);
             mur1 = true;
             compteur1 += a;
+            cas_pos = 3;
             return choix_chemin1(n, bebou);
         }
         //cout << "k9"<< endl;
@@ -523,6 +545,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
             move_miroir(bebou, 6, a, 0, n);
             mur1 = true;
             compteur1 += a;
+            cas_pos = 0;
             return choix_chemin1(n, bebou);
         }else if(yc == 1){
             int a = 0;
@@ -530,6 +553,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
             move_miroir(bebou, 7, a, 0, n);
             mur1 = true;
             compteur1 += a;
+            cas_pos = 1;
             return choix_chemin1(n, bebou);
         }
         //cout << "k11"<< endl;
@@ -586,6 +610,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 4, a, 1, n);
                 mur2 = true;
                 compteur2 += a;
+                cas_pos = 2;
                 return choix_chemin2(n, bebou);
             }else if(y1 == g_max-2){
                 int a = 0;
@@ -593,6 +618,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 5, a, 1, n);
                 mur2 = true;
                 compteur2 += a;
+                cas_pos = 3;
                 return choix_chemin2(n, bebou);
             }
             //cout << "c1"<< endl;
@@ -608,6 +634,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 6, a, 1, n);
                 mur2 = true;
                 compteur2 += a;
+                cas_pos = 0;
                 return choix_chemin2(n, bebou);
             }else if(yc == 1){
                 int a = 0;
@@ -615,6 +642,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 7, a, 1, n);
                 mur2 = true;
                 compteur2 += a;
+                cas_pos = 1;
                 return choix_chemin2(n, bebou);
             }
             //cout << "c3"<< endl;
@@ -632,6 +660,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 2, a, 1, n);
                 mur2 = true;
                 compteur2 += a;
+                cas_pos = 0;
                 return choix_chemin2(n, bebou);
             }else if(yc == g_max - 2){
                 int a = 0;
@@ -639,6 +668,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 3, a, 1, n);
                 mur2 = true;
                 compteur2 += a;
+                cas_pos = 3;
                 return choix_chemin2(n, bebou);
             }
             //cout << "c5"<< endl;
@@ -656,6 +686,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 0, a, 1, n);
                 mur2 = true;
                 compteur2 += a;
+                cas_pos = 2;
                 return choix_chemin2(n, bebou);
             }else if(yc == 1){
                 int a = 0;
@@ -663,6 +694,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 move_miroir(bebou, 1, a, 1, n);
                 mur2 = true;
                 compteur2 += a;
+                cas_pos = 1;
                 return choix_chemin2(n, bebou);
             }
             //cout << "c7"<< endl;
@@ -679,6 +711,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
             move_miroir(bebou, 2, a, 1, n);
             mur2 = true;
             compteur2 += a;
+            cas_pos = 0;
             return choix_chemin2(n, bebou);
         }else if(yc == g_max - 2){
             int a = 0;
@@ -686,6 +719,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
             move_miroir(bebou, 3, a, 1, n);
             mur2 = true;
             compteur2 += a;
+            cas_pos = 3;
             return choix_chemin2(n, bebou);
         }
         //cout << "c9"<< endl;
@@ -701,6 +735,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
             move_miroir(bebou, 0, a, 1, n);
             mur2 = true;
             compteur2 += a;
+            cas_pos = 2;
             return choix_chemin2(n, bebou);
         }else if(yc == 1){
             int a = 0;
@@ -708,6 +743,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
             move_miroir(bebou, 1, a, 1, n);
             mur2 = true;
             compteur2 += a;
+            cas_pos = 1;
             return choix_chemin2(n, bebou);
         }
         //cout << "c11"<< endl;
@@ -858,13 +894,13 @@ void Collector::move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chem
     int l2 = abso(vx + vy);
     switch(miroir){
         case 0: {
-            for (int i = 0; i <= l2; ++i)
+            for (int i = 0; i <= l1; ++i)
             {
                 if(!obstacle){
                     if(!chemin) ++obs1; //chemin1
                     if(chemin) ++obs2;  //chemin2
                 }
-                if(i < l2/2){
+                if(i < l1/2){
                     deplace_carre_digaonale(bebou, 2);
                     if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
                 }else{
@@ -926,13 +962,13 @@ void Collector::move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chem
             break;
         }
         case 4: {
-            for (int i = 0; i < l1; ++i)
+            for (int i = 0; i < l2; ++i)
             {
                 if(!obstacle){
                     if(!chemin) ++obs1; //chemin1
                     if(chemin) ++obs2;  //chemin2
                 }
-                if(i < l1/2){
+                if(i < l2/2){
                     deplace_carre_digaonale(bebou, 3);
                     if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
                 }else{
@@ -1009,6 +1045,108 @@ void Predator::move(Nourriture& n){
     cout << "move autre chose" << endl;
 }
 
-void Collector::deplace_miroir(int cas){
-    cout << "youpi" << endl;
+void Collector::deplace_miroir(int cas, Nourriture& n){
+    int xn = n.get_x();
+    int yn = n.get_y();
+    int x2 = x1, y2 = y1;
+
+
+    switch(cas){
+        case 0: {
+            unsigned int dis = (y2 - (yn+g_max-1-xn)/2);
+            if(g_max-1-x1 < dis){
+                --x1; --y1;
+            }else{
+                ++x1; --y1;
+                if(x1 == g_max-2){
+                    hebs = 0;
+                }
+            }
+            break;
+        }
+        case 1: {
+            unsigned int dis = (((xn-yn) -x2)/2);
+            if(y1 < dis){
+                ++x1; ++y1;
+            }else{
+                ++x1; --y1;
+                if(y1 == 1){
+                    hebs = 0;
+                }
+            }
+            break;
+        }
+        case 2: {
+            unsigned int dis = ((yn-xn-y2)/2);
+            if(x1 < dis){
+                ++x1; ++y1;
+            }else{
+                --x1; ++y1;
+                if(x1 == 1){
+                    hebs = 0;
+                }
+            }
+            break;
+        }
+        case 3: {
+            unsigned int dis = ((xn+(g_max-yn)-x2)/2);
+            if(g_max-1-y1 < dis){
+                --x1; --y1;
+            }else{
+                --x1; ++y1;
+                if(y1 == g_max-2){
+                    hebs = 0;
+                }
+            }
+            break;
+        }
+        case 4: {
+            unsigned int dis = (((yn+g_max-1-xn)-y2)/2);
+            for (size_t i = 0; i < dis; i++)
+            if(g_max-1-x1 < dis){
+                --x1; ++y1;
+            }else{
+                ++x1; ++y1;
+                if(x1 == g_max - 2){
+                    hebs = 0;
+                }
+            }
+            break;
+        }
+        case 5: {
+            unsigned int dis = (((xn-g_max+yn)-x2)/2);
+            if(g_max-1-y1 < dis){
+                ++x1; --y1;
+            }else{
+                ++x1; ++y1;
+                if(y1 == g_max - 2){
+                    hebs = 0;
+                }
+            }
+            break;
+        }
+        case 6: {
+            unsigned int dis = ((y2-yn+xn)/2);
+            if(x1 < dis){
+                ++x1; --y1;
+            }else{
+                --x1; --y1;
+                if(x1 == 1){
+                    hebs = 0;
+                }
+            }
+            
+        }
+        case 7: {
+            unsigned int dis = ((x2-xn+yn)/2);
+            if(y1 < dis){
+                --x1; ++y1;
+            }else{
+                --x1; --y1;
+                if(x1 == 1){
+                    hebs = 0;
+                }
+            }
+        }
+    }
 }
