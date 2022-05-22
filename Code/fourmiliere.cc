@@ -288,14 +288,17 @@ void Fourmiliere::detecte_food(vector<Nourriture>& vnourriture){
 			}
             for (size_t u = 0; u < n_atteignable.size(); ++u)
             {
-                //cout << "n_atteignable " << u << " x : " << n_atteignable[u].get_x() << "  y : " << n_atteignable[u].get_y() << endl;
+                cout << "n_atteignable " << u << " x : " << n_atteignable[u].get_x() << "  y : " << n_atteignable[u].get_y() << endl;
             }
-            
+            if (n_atteignable.size()){
             cout << "Fourmi " << i << "  position  x : " << vfourmis[i]->get_x() << "  y : " << vfourmis[i]->get_y() << endl;
+            cout << " c bien la "<< endl;
 			o = vfourmis[i]->return_the_one(n_atteignable);
-            cout << "Nourriture x : " << n_atteignable[o].get_x() << "  y : " << n_atteignable[o].get_y() << endl;
-            //cout << "o : " << o << endl;
+            cout << " SEG FAULT" << endl;
+            //cout << "Nourriture x : " << n_atteignable[o].get_x() << "  y : " << n_atteignable[o].get_y() << endl;
+            cout << "o : " << o << endl;
             vfourmis[i]->move(n_atteignable[o]);
+            }
 		}
     }
 }
