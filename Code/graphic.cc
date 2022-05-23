@@ -26,11 +26,11 @@ void graphic_draw_window()
     (*ptcr)->move_to(127, 0);
     (*ptcr)->line_to(-0.5 ,0);
     (*ptcr)->stroke();
-    for (size_t i(0); i<129; ++i){
+    for (size_t i(0); i<128; ++i){
         (*ptcr)->set_line_width(0.1);
         (*ptcr)->set_source_rgb(0.4, 0.4, 0.4);
         (*ptcr)->move_to(i+0.5, 0);
-        (*ptcr)->line_to(i+0.5, 128);
+        (*ptcr)->line_to(i+0.5, 127);
         
         (*ptcr)->stroke();
     }
@@ -38,7 +38,7 @@ void graphic_draw_window()
         (*ptcr)->set_line_width(0.1);
         (*ptcr)->set_source_rgb(0.4, 0.4, 0.4);
         (*ptcr)->move_to(0, i+0.5);
-        (*ptcr)->line_to(128,i+0.5);
+        (*ptcr)->line_to(127,i+0.5);
         
         (*ptcr)->stroke();
     }

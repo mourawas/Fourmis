@@ -5,7 +5,7 @@
 #include "graphic_gui.h"
 using namespace std;
 
-static Frame default_frame = {-1, 129, -1, 129, 1, 500, 500};
+static Frame default_frame = {-1, 128, -1, 128, 1, 500, 500};
 
 MyArea::MyArea()
 {
