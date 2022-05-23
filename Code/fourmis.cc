@@ -40,9 +40,29 @@ void Collector::setcc(unsigned int x2, unsigned int y2){
 
 void Collector::d_ant(double r, double g, double b){
     double s = sizeC;
-    dessin_carre_croix(x1, y1, s, r, g, b);
+    if(!food){
+        dessin_carre_croix(x1, y1, s, r, g, b);
+    }else{
+        dessin_losange_carre_croix(x1, y1, s, r, g, b);
+    }
 }
- 
+
+void Generator::set(int setter){
+    cout << "oups";
+}
+
+void Collector::set(int setter){
+    food = setter;
+
+}
+
+void Defensor::set(int setter){
+    cout << "oups";
+}
+
+void Predator::set(int setter){
+    cout << "oups";
+}
 
 void Defensor::ini_d(unsigned int& x2, unsigned int& y2, unsigned int& age2)
 {
@@ -186,7 +206,7 @@ void Collector::ecrire_fourmis(ofstream& fichier){
 }
 
 unsigned int Collector::get(){
-    return age;
+    return food;
 }
 
 unsigned int Collector::get_type(){
@@ -293,6 +313,7 @@ unsigned int Fourmis::return_the_one(vector<Nourriture>& n){
 }
 
 void Collector::move(Nourriture& n){
+    //cout << "HEBS : " << hebs << "  CAS : " << cas << endl;
     int nx = n.get_x(), ny = n.get_y();
     if(hebs){
         if((x1 == 1) or (x1 == g_max-2) or (y1 == 1) or (y1 == g_max-2)
@@ -300,20 +321,30 @@ void Collector::move(Nourriture& n){
             hebs = 0;
         }else{
             deplace_miroir(cas, n);
+            return;
         }
     }
+    supprimer_carre(cc);
     Carre bebou = cc;
     double xn = n.get_x(), yn = n.get_y();
     double xc = bebou.x, yc = bebou.y;
-    double k = (yn - yc)/(xn - xc);
-    cout << k << endl;
-    cout << "avant chemin 1" << endl;
+    double k;
+    if(xn == xc){
+        k = 200;
+    }else{
+    k = (yn - yc)/(xn - xc);
+    }
+    //cout << k << endl;
+    //cout << "avant chemin 1" << endl;
     choix_chemin1(n, bebou);
-    cout << "chemin 1 ok" << endl;
+    //cout << "chemin 1 ok" << endl;
+    obstacle = 0;
     bebou = cc;
     choix_chemin2(n, bebou);
-    cout << "chemin 2 ok" << endl;
-
+    //cout << "chemin 2 ok" << endl;
+    //initialise_carre_centre(cc);
+    cout << "compteur1 : " << compteur1 << " compteur2 : " << compteur2 << endl;
+    cout << "obs1 : " << obs1 << " obs2 : " << obs2 << endl;
     if(compteur1 > compteur2){
         if(mur2 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
            ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
@@ -325,8 +356,9 @@ void Collector::move(Nourriture& n){
             deplace_miroir(cas, n);
             return;
         }
-        cout << "prend chemin 2" << endl;
+        cout << "A prend chemin 2" << endl;
         move2(n);
+        cout << "A a pris chemin 2" << endl;
     }
     if(compteur1 < compteur2){
         if(mur1 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
@@ -339,14 +371,16 @@ void Collector::move(Nourriture& n){
             deplace_miroir(cas, n);
             return;
         }
-        cout << "prend chemin 1" << endl;
+        cout << "B prend chemin 1" << endl;
         move1(n);
+        cout << "B a pris chemin 1" << endl;
     }
-    if((k==1) or  (k== -1)){
+    if((k==1) or (k== -1)){
         cout << "chemin diagonal" << endl;
         move_direct(n);
+        cout << "a pris chemin diagonal" << endl;
     }
-    if(compteur1 == compteur2){
+    if((compteur1 == compteur2) and (k !=1) and (k!=-1)){
         if(obs1 > obs2){
             if(mur1 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
                ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
@@ -358,9 +392,10 @@ void Collector::move(Nourriture& n){
                 deplace_miroir(cas, n);
                 return;
             }
-            cout << "prend chemin 1" << endl;
+            cout << "C prend chemin 1" << endl;
             move1(n);
-        }else{
+            cout << "C a pris chemin 1" << endl;
+        }else if(obs1 < obs2){
             if(mur2 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
                ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
                 hebs = 1;
@@ -371,8 +406,14 @@ void Collector::move(Nourriture& n){
                 deplace_miroir(cas, n);
                 return;
             }
-            cout << "prends chemin 2" << endl;
+            cout << "D prends chemin 2" << endl;
             move2(n);
+            cout << "D a pris chemin 2" << endl;
+        }
+        else{
+            cout << "E prends chemin 2" << endl;
+            move1(n);
+            cout << "E a pris chemin 2" << endl;
         }
     }
     compteur1 = 0, compteur2 = 0, obs1 = 0, obs2 = 0, obstacle = 0;
@@ -396,9 +437,9 @@ int Collector::trouver_cas(Nourriture& n){
         return 1;
     }else if((x2 == 1) and (xn < x2)){
         return 7;
-    }else if((x2 == 1) and (yn > y2)){
+    }else if((y2 == 1) and (yn > y2)){
         return 2;
-    }else if((x2 == 1) and (yn < y2)){
+    }else if((y2 == 1) and (yn < y2)){
         return 6;
     }
     return 10;
@@ -408,13 +449,20 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
     if((bebou.x == n.get_x()) and (bebou.y == n.get_y())){
         return;
     }
+    double k;
+    cout << "OBSTACLE 1 : " << obstacle << endl;
     if(!obstacle) ++obs1;
     double xn = n.get_x(), yn = n.get_y();
     double xc = bebou.x, yc = bebou.y;
-    double k = (yn - yc)/(xn - xc);
+    if(xn == xc){
+        k = 200;
+    }else{
+    k = (yn - yc)/(xn - xc);
+    }
+    //cout << "k : " << k << endl;
     if((xn - xc) != 0){
         if((xn > xc) and (k > -1) and (k < 1)){
-            if((k != 1) and (k != -1) and (x1 = 0)){
+            if((k != 1) and (k != -1) and (xc = 1)){
                 if(xc == g_max-2){
                     int a = 0;
                     if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
@@ -434,9 +482,11 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                 }
             }
             //cout << "k1"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
             //cout << "k2"<< endl;
             deplace_carre_digaonale(bebou, 1);
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             return choix_chemin1(n, bebou);
         }
         if((xn < xc) and (k > -1) and (k < 1)){
@@ -458,6 +508,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                 return choix_chemin1(n, bebou);
             }
             //cout << "k3"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
             //cout << "k4"<< endl;
             deplace_carre_digaonale(bebou, 3);
@@ -484,6 +535,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                 return choix_chemin1(n, bebou);
             }
             //cout << "k5"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
             //cout << "k6"<< endl;
             deplace_carre_digaonale(bebou, 0);
@@ -508,9 +560,11 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                 return choix_chemin1(n, bebou);
             }
             //cout << "k7"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
             //cout << "k8"<< endl;
             deplace_carre_digaonale(bebou, 2);
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             return choix_chemin1(n, bebou);
         }
     }
@@ -533,8 +587,10 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
             return choix_chemin1(n, bebou);
         }
         //cout << "k9"<< endl;
+        //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
         if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
         //cout << "k10"<< endl;
+        //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
         deplace_carre_digaonale(bebou, 0);
         return choix_chemin1(n, bebou);
     }
@@ -557,14 +613,17 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
             return choix_chemin1(n, bebou);
         }
         //cout << "k11"<< endl;
+        //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
         if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
         //cout << "k12"<< endl;
+        //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
         deplace_carre_digaonale(bebou, 2);
         return choix_chemin1(n, bebou);
     }
     if((k == 1) or (k == -1)){
         if((xn < xc) and (yn > yc)){
             //cout << "k13"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
             //cout << "k14"<< endl;
             deplace_carre_digaonale(bebou, 3);
@@ -572,6 +631,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
         }
         if((xn > xc) and (yn > yc)){
             //cout << "k15"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
             //cout << "k16"<< endl;
             deplace_carre_digaonale(bebou, 0);
@@ -579,6 +639,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
         }
         if((xn < xc) and (yn < yc)){
             //cout << "k17"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
             //cout << "k18"<< endl;
             deplace_carre_digaonale(bebou, 2);
@@ -586,6 +647,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
         }
         if((xn > xc) and (yn < yc)){
             //cout << "k19"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
             //cout << "k20"<< endl;
             deplace_carre_digaonale(bebou, 1);
@@ -598,13 +660,19 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
     if((bebou.x == n.get_x()) and (bebou.y == n.get_y())){
         return;
     }
+    cout << "OBSTACLE 2 : " << obstacle << endl;
     if(!obstacle) ++obs2;
+    double k;
     double xn = n.get_x(), yn = n.get_y();
     double xc = bebou.x, yc = bebou.y;
-    double k = (yn - yc)/(xn - xc);
+    if(xn == xc){
+        k = 200;
+    }else{
+        k = (yn - yc)/(xn - xc);
+    }
     if((xn - x1) != 0){
         if((xn > xc) and (k > -1) and (k < 1)){
-            if(x1 == g_max-2){
+            if(xc == g_max-2){
                 int a = 0;
                 if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
                 move_miroir(bebou, 4, a, 1, n);
@@ -612,7 +680,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 compteur2 += a;
                 cas_pos = 2;
                 return choix_chemin2(n, bebou);
-            }else if(y1 == g_max-2){
+            }else if(yc == g_max-2){
                 int a = 0;
                 if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
                 move_miroir(bebou, 5, a, 1, n);
@@ -622,6 +690,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 return choix_chemin2(n, bebou);
             }
             //cout << "c1"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             //cout<<"c2"<< endl;
             deplace_carre_digaonale(bebou, 0);
@@ -646,13 +715,14 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 return choix_chemin2(n, bebou);
             }
             //cout << "c3"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             //cout << "c4"<< endl;
             deplace_carre_digaonale(bebou, 2);
             return choix_chemin2(n, bebou);
         }
     }
-    if((yn - yc) != 0){
+    if(yn != yc){
         if((yn > yc) and ((k > 1) or (k < -1))){
             if(xc == 1){
                 int a = 0;
@@ -672,11 +742,10 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 return choix_chemin2(n, bebou);
             }
             //cout << "c5"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             //cout << "c6"<< endl;
-            cout << bebou.x << " " << bebou.y << endl;
             deplace_carre_digaonale(bebou, 3);
-            cout << "ouk" << endl;
             return choix_chemin2(n, bebou);
         }
         if((yn < yc) and ((k > 1) or (k < -1))){
@@ -698,6 +767,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
                 return choix_chemin2(n, bebou);
             }
             //cout << "c7"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             //cout << "c8"<< endl;
             deplace_carre_digaonale(bebou, 1);
@@ -723,8 +793,10 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
             return choix_chemin2(n, bebou);
         }
         //cout << "c9"<< endl;
+        //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
         if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
         //cout << "c10"<< endl;
+        //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
         deplace_carre_digaonale(bebou, 3);
         return choix_chemin2(n, bebou);
     }
@@ -747,28 +819,33 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
             return choix_chemin2(n, bebou);
         }
         //cout << "c11"<< endl;
+        //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
         if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
         //cout << "c12"<< endl;
+        //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
         deplace_carre_digaonale(bebou, 1);
         return choix_chemin2(n, bebou);
     }
     if((k == 1) or (k == -1)){
         if((xn < xc) and (yn > yc)){
-            cout << "c13"<< endl;
+            //cout << "c13"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
-            cout << "c14"<< endl;
+            //cout << "c14"<< endl;
             deplace_carre_digaonale(bebou, 3);
             return choix_chemin2(n, bebou);
         }
         if((xn > xc) and (yn > yc)){
-            cout << "c15"<< endl;
+            //cout << "c15"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
-            cout << "c16"<< endl;
+            //cout << "c16"<< endl;
             deplace_carre_digaonale(bebou, 0);
             return choix_chemin2(n, bebou);
         }
         if((xn < xc) and (yn < yc)){
             //cout << "c17"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             //cout << "c18"<< endl;
             deplace_carre_digaonale(bebou, 2);
@@ -776,6 +853,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
         }
         if((xn > xc) and (yn < yc)){
             //cout << "c19"<< endl;
+            //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
             if(carre_libre_dans_carre(bebou)){ ++compteur2; obstacle = 1; }
             //cout << "c20"<< endl;
             deplace_carre_digaonale(bebou, 1);
@@ -787,31 +865,73 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
 void Collector::move1(Nourriture& n){
     double xn = n.get_x(), yn = n.get_y();
     double xc = x1, yc = y1;
-    double k = (yn - yc)/(xn - xc);
+    double k;
+    unsigned int a, b;
+    if(xn == xc){
+        k = 200;
+    }else{
+        k = (yn - yc)/(xn - xc);
+    }
     if((xn - x1) != 0){
         if((xn > x1) and (k > -1) and (k < 1)){
-            ++x1, --y1, ++age;
+            Carre test = {x1+1, y1-1, 3};
+            //cout << "TEST: x: " << test.x << " y: " << test.y << endl;
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "A ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            ++x1; --y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }   
         if((xn < x1) and (k > -1) and (k < 1)){
-            --x1, ++y1, ++age;
+            Carre test = {x1-1, y1+1, 3};
+            //cout << "TEST: x: " << test.x << " y: " << test.y << endl;
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "B ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            --x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }
     }
     if((yn - y1) != 0){
         if((yn > y1) and ((k > 1) or (k < -1))){
-            ++x1, ++y1, ++age;
+            Carre test = {x1+1, y1+1, 3};
+            //cout << "TEST: x: " << test.x << " y: " << test.y << endl;
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "C ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            ++x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }
         if((yn < y1) and ((k > 1) or (k < -1))){
-            --x1, --y1, ++age;
+            Carre test = {x1-1, y1-1, 3};
+            //cout << "TEST: x: " << test.x << " y: " << test.y << endl;
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "D ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            --x1; --y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }
@@ -821,31 +941,73 @@ void Collector::move1(Nourriture& n){
 void Collector::move2(Nourriture& n){
     double xn = n.get_x(), yn = n.get_y();
     double xc = x1, yc = y1;
-    double k = (yn - yc)/(xn - xc);
+    double k;
+    unsigned int a, b;
+    if(xn == xc){
+        k = 200;
+    }else{
+        k = (yn - yc)/(xn - xc);
+    }
     if((xn - x1) != 0){
         if((xn > x1) and (k > -1) and (k < 1)){
-            ++x1, ++y1, ++age;
+            Carre test = {x1+1, y1+1, 3};
+            //cout << "TEST: x: " << test.x << " y: " << test.y << endl;
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "E ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            ++x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }   
         if((xn < x1) and (k > -1) and (k < 1)){
-            --x1, ++y1, ++age;
+            Carre test = {x1-1, y1+1, 3};
+            //cout << "TEST: x: " << test.x << " y: " << test.y << endl;
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "F ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            --x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }
     }
     if((yn - y1) != 0){
         if((yn > y1) and ((k > 1) or (k < -1))){
-            --x1, ++y1, ++age;
+            Carre test = {x1-1, y1+1, 3};
+            //cout << "TEST: x: " << test.x << " y: " << test.y << endl;
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "G ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            --x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }
         if((yn < y1) and ((k > 1) or (k < -1))){
-            ++x1, --y1, ++age;
+            Carre test = {x1+1, y1-1, 3};
+            //cout << "TEST: x: " << test.x << " y: " << test.y << endl;
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "H ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            ++x1; --y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }
@@ -856,30 +1018,63 @@ void Collector::move_direct(Nourriture& n){
     double xn = n.get_x(), yn = n.get_y();
     double xc = x1, yc = y1;
     double k = (yn - yc)/(xn - xc);
+    unsigned int a, b;
     if(k == 1){
         if(xn > x1){
-            ++x1, ++y1, ++age;
+            Carre test = {x1+1, y1+1, 3};
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "I ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            ++x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }
         if(xn < x1){
-            --x1, --y1, ++age;
+            Carre test = {x1-1, y1-1, 3};
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "J ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            --x1; --y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }
     }
     if(k == -1){
         if(xn > x1){
-            ++x1, --y1, ++age;
+            Carre test = {x1+1, y1-1, 3};
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "K ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            ++x1; --y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }
         if(xn < x1){
-            --x1, ++y1, ++age;
+            Carre test = {x1-1, y1+1, 3};
             supprimer_carre(cc);
+            if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                ++age;
+                initialise_carre_centre(cc);
+                cout << "L ca bouge pas" << endl;
+                return;
+            }
+            cout << "ca bouge" << endl;
+            --x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
         }
@@ -897,6 +1092,7 @@ void Collector::move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chem
             for (int i = 0; i <= l1; ++i)
             {
                 if(!obstacle){
+                    cout << "entree pas d'obstacle, CHEMIN : " << chemin << endl;;
                     if(!chemin) ++obs1; //chemin1
                     if(chemin) ++obs2;  //chemin2
                 }
@@ -1049,15 +1245,37 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
     int xn = n.get_x();
     int yn = n.get_y();
     int x2 = x1, y2 = y1;
-
+    unsigned int a, b;
 
     switch(cas){
         case 0: {
             unsigned int dis = (y2 - (yn+g_max-1-xn)/2);
             if(g_max-1-x1 < dis){
-                --x1; --y1;
+                Carre test = {x1 -1, y1 - 1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "M ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge en bas a gauche" << endl;
+                --x1; --y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
             }else{
-                ++x1; --y1;
+                Carre test = {x1 + 1, y1 - 1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "N ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge en bas a droite" << endl;
+                ++x1; --y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
                 if(x1 == g_max-2){
                     hebs = 0;
                 }
@@ -1067,9 +1285,31 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
         case 1: {
             unsigned int dis = (((xn-yn) -x2)/2);
             if(y1 < dis){
-                ++x1; ++y1;
+                Carre test = {x1+1, y1+1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "O ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge en haut a droite" << endl;
+                ++x1; ++y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
             }else{
-                ++x1; --y1;
+                Carre test = {x1+1, y1-1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "P ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge en bas a droite" << endl;
+                ++x1; --y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
                 if(y1 == 1){
                     hebs = 0;
                 }
@@ -1079,9 +1319,31 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
         case 2: {
             unsigned int dis = ((yn-xn-y2)/2);
             if(x1 < dis){
-                ++x1; ++y1;
+                Carre test = {x1+1, y1+1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "Q ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge en haut a droite" << endl;
+                ++x1; ++y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
             }else{
-                --x1; ++y1;
+                Carre test = {x1-1, y1+1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "R ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                --x1; ++y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
                 if(x1 == 1){
                     hebs = 0;
                 }
@@ -1089,11 +1351,33 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
             break;
         }
         case 3: {
-            unsigned int dis = ((xn+(g_max-yn)-x2)/2);
+            unsigned int dis = ((xn+(g_max-1-yn)-x2)/2);
             if(g_max-1-y1 < dis){
-                --x1; --y1;
+                Carre test = {x1-1, y1-1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "S ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                --x1; --y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
             }else{
-                --x1; ++y1;
+                Carre test = {x1-1, y1+1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "T ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                --x1; ++y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
                 if(y1 == g_max-2){
                     hebs = 0;
                 }
@@ -1104,9 +1388,31 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
             unsigned int dis = (((yn+g_max-1-xn)-y2)/2);
             for (size_t i = 0; i < dis; i++)
             if(g_max-1-x1 < dis){
-                --x1; ++y1;
+                Carre test = {x1-1, y1+1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "U ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                --x1; ++y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
             }else{
-                ++x1; ++y1;
+                Carre test = {x1+1, y1+1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "V ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                ++x1; ++y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
                 if(x1 == g_max - 2){
                     hebs = 0;
                 }
@@ -1114,11 +1420,37 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
             break;
         }
         case 5: {
-            unsigned int dis = (((xn-g_max+yn)-x2)/2);
-            if(g_max-1-y1 < dis){
-                ++x1; --y1;
+            unsigned int dis = (((xn-g_max-1+yn)-x2)/2);
+            cout << "dis " << dis << endl;
+            if(g_max-1-y1 <= dis){
+                Carre test = {x1+1, y1-1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "W ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                ++x1; --y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
             }else{
-                ++x1; ++y1;
+                Carre test = {x1+1, y1+1, 3};
+                supprimer_carre(cc);
+                cout << cc.x << " " << cc.y << endl;
+                cout << test.x << " " << test.y << " " << test.side << endl;
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    cout << "a " << a << " b " << b << endl;
+                    initialise_carre_centre(cc);
+                    cout << "X ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                ++x1; ++y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
                 if(y1 == g_max - 2){
                     hebs = 0;
                 }
@@ -1128,9 +1460,31 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
         case 6: {
             unsigned int dis = ((y2-yn+xn)/2);
             if(x1 < dis){
-                ++x1; --y1;
+                Carre test = {x1+1, y1-1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "Y ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                ++x1; --y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
             }else{
-                --x1; --y1;
+                Carre test = {x1-1, y1-1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "Z ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                --x1; --y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
                 if(x1 == 1){
                     hebs = 0;
                 }
@@ -1140,9 +1494,31 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
         case 7: {
             unsigned int dis = ((x2-xn+yn)/2);
             if(y1 < dis){
-                --x1; ++y1;
+                Carre test = {x1-1, y1+1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "ZA ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                --x1; ++y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
             }else{
-                --x1; --y1;
+                Carre test = {x1-1, y1-1, 3};
+                supprimer_carre(cc);
+                if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
+                    ++age;
+                    initialise_carre_centre(cc);
+                    cout << "ZB ca bouge pas" << endl;
+                    return;
+                }
+                cout << "ca bouge" << endl;
+                --x1; --y1; ++age;
+                cc = {x1, y1, 3};
+                initialise_carre_centre(cc);
                 if(x1 == 1){
                     hebs = 0;
                 }

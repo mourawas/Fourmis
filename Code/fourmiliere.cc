@@ -280,24 +280,36 @@ void Fourmiliere::detecte_food(vector<Nourriture>& vnourriture){
 		vector<Nourriture> n_atteignable;
 
 		if(vfourmis[i]->get_type() == 1){
+            //cout << "FOOD : " << vfourmis[i]->get() << endl;
+            if(vfourmis[i]->get()){
+                //rentrer maison (pas ici appel fonction)
+                continue;
+            }
 			for (unsigned int j = 0; j < vnourriture.size(); ++j){
                 //cout << "VNOURRITURE j : " << j << " x: " << vnourriture[j].get_x() << "  y: " << vnourriture[j].get_y() << endl;
 				if(atteindre_test(vnourriture[j], i)){
 					n_atteignable.push_back(vnourriture[j]);
 				}
 			}
-            for (size_t u = 0; u < n_atteignable.size(); ++u)
-            {
-                cout << "n_atteignable " << u << " x : " << n_atteignable[u].get_x() << "  y : " << n_atteignable[u].get_y() << endl;
-            }
             if (n_atteignable.size()){
-            cout << "Fourmi " << i << "  position  x : " << vfourmis[i]->get_x() << "  y : " << vfourmis[i]->get_y() << endl;
-            cout << " c bien la "<< endl;
-			o = vfourmis[i]->return_the_one(n_atteignable);
-            cout << " SEG FAULT" << endl;
-            //cout << "Nourriture x : " << n_atteignable[o].get_x() << "  y : " << n_atteignable[o].get_y() << endl;
-            cout << "o : " << o << endl;
-            vfourmis[i]->move(n_atteignable[o]);
+                cout << "Fourmi " << i << "  position  x : " << vfourmis[i]->get_x() << "  y : " << vfourmis[i]->get_y() << endl;
+			    o = vfourmis[i]->return_the_one(n_atteignable);
+                cout << "Nourriture x : " << n_atteignable[o].get_x() << "  y : " << n_atteignable[o].get_y() << endl;
+                //cout << "o : " << o << endl;
+                vfourmis[i]->move(n_atteignable[o]);
+                unsigned int xc = vfourmis[i]->get_x();
+                unsigned int yc = vfourmis[i]->get_y();
+                unsigned int xn = n_atteignable[o].get_x();
+                unsigned int yn = n_atteignable[o].get_y();
+                Carre ccc = {xc, yc, sizeC};
+                if(point_dans_carre_centre(xn, yn, ccc)){
+                    vfourmis[i]->set(1);
+                    for (size_t t = 0; t < vnourriture.size(); ++t){
+                        if((xn == vnourriture[t].get_x()) and (yn == vnourriture[t].get_y())){
+                            vnourriture.erase(vnourriture.begin() + t);
+                        }
+                    }
+                }
             }
 		}
     }

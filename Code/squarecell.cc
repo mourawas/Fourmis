@@ -91,6 +91,7 @@ bool sup_coord(Carre c, unsigned int& x, unsigned int& y) {
             if (grid[g_max-i-1][j]) {
                 x = j;
                 y = i;
+                cout << "il y a un obstacle" << endl;
                 return true;
             }
         }
@@ -106,8 +107,8 @@ bool sup(unsigned int& x, unsigned int& y){
 }
 
 void supprimer_carre(Carre& c) {
-    for (size_t i = c.y - c.side/2; i < c.y + c.side/2; ++i) {
-        for (size_t j = c.x - c.side/2; j < c.x + c.side/2; ++j) {
+    for (size_t i = c.y - c.side/2; i <= c.y + c.side/2; ++i) {
+        for (size_t j = c.x - c.side/2; j <= c.x + c.side/2; ++j) {
             grid[g_max-1-i][j] = false;
         }
     }
@@ -148,6 +149,22 @@ bool point_dans_carre(unsigned int& x, unsigned int& y, Carre& c){
         return false;
     }
     if(y > (c.y + c.side)){
+        return false;
+    }
+    return true;
+}
+
+bool point_dans_carre_centre(unsigned int& x, unsigned int& y, Carre& c){
+    if(x < (c.x - c.side/2)){
+        return false;
+    }
+    if(y < (c.y - c.side/2)){
+        return false;
+    }
+    if(x > (c.x + c.side/2)){
+        return false;
+    }
+    if(y > (c.y + c.side/2)){
         return false;
     }
     return true;
@@ -220,4 +237,11 @@ void dessin_carre_vide(unsigned int x, unsigned int y, double size, double r, do
                        double b)
 {
     graphic_draw_carre_vide(x,y,size,r,g,b);
+}
+
+void dessin_losange_carre_croix(unsigned int x, unsigned int y, double size, double r,
+                                double g, double b){
+    dessin_carre_croix(x, y,size, r, g, b);
+    dessin_losange(x,y,1,1,1);
+
 }

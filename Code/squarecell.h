@@ -58,4 +58,9 @@ void deplace_carre_digaonale(Carre& c, unsigned int dir);
 
 int abso(int a);
 
+bool point_dans_carre_centre(unsigned int& x, unsigned int& y, Carre& c);
+
+void dessin_losange_carre_croix(unsigned int x, unsigned int y, double size, double r,
+                        double g, double b);
+
 #endif

@@ -32,6 +32,7 @@ public:
     unsigned int get_y();
     unsigned int return_the_one(std::vector<Nourriture>& n);
     virtual void move(Nourriture& n) = 0;
+    virtual void set(int setter) = 0;
     static int compteur1, compteur2, obs1, obs2;
     static bool obstacle, mur1, mur2;
 };
@@ -53,6 +54,7 @@ public:
     unsigned int get() override;
     unsigned int get_type() override;
     void move(Nourriture& n) override;
+    void set(int setter) override;
 };
 
 class Collector : public Fourmis{
@@ -82,6 +84,7 @@ public:
     void move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chemin, Nourriture& n);
     void deplace_miroir(int cas, Nourriture& n);
     int trouver_cas(Nourriture& n);
+    void set(int setter) override;
 };
 
 class Defensor : public Fourmis {
@@ -102,6 +105,7 @@ public:
     unsigned int get() override;
     unsigned int get_type() override;
     void move(Nourriture& n) override;
+    void set(int setter) override;
 };
 
 class Predator : public Fourmis {
@@ -121,6 +125,7 @@ public:
     unsigned int get() override;
     unsigned int get_type() override;
     void move(Nourriture& n) override;
+    void set(int setter) override;
 };
 
 bool decodage_ligne_fourmis(std::string line, unsigned int etat, Collector& Col,
