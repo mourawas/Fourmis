@@ -477,7 +477,7 @@ bool Fourmiliere::fourmiliere_check(){
 bool Fourmiliere::get_mode(){
     return mode;
 }
-/*void Fourmiliere::defense(){
+void Fourmiliere::defense(){
     for(unsigned int n = 0; n<vfourmis.size();++n){
         if (vfourmis[n]->get_type() == 2){
             Nourriture no{c.side,c.side};
@@ -487,4 +487,4 @@ bool Fourmiliere::get_mode(){
         }
     }
 }
-*/
+

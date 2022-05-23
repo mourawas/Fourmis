@@ -1731,7 +1731,7 @@ int Generator::move(Nourriture& n, unsigned int t1, unsigned int t2){
     cout << "move G" << endl;
 }
 
-int Defensor(Nourriture& n, unsigned int t1, unsigned int t2){
+int Defensor::move(Nourriture& n, unsigned int t1, unsigned int t2){
     cout << "move D" << endl;
 }
 

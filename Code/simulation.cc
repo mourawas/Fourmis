@@ -169,7 +169,7 @@ void Simulation::etape_simulation(){
         vfourmiliere[i].naissance_fourmis();
         vfourmiliere[i].detecte_food(vnourriture);
         vfourmiliere[i].attak_rival(i,vnourriture,vfourmiliere);
-		//vfourmiliere[i].defense();
+		vfourmiliere[i].defense();
     }
 }
 
