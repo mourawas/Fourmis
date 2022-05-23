@@ -16,5 +16,4 @@ void graphic_draw_plus(unsigned int x, unsigned int y, double size, double r, do
 
 void graphic_draw_croix(unsigned int x, unsigned int y, double r, double g, double b);
 
-
 #endif

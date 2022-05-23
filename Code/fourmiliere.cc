@@ -293,7 +293,6 @@ void Fourmiliere::detecte_food(vector<Nourriture>& vnourriture){
                 unsigned int t1;
                 unsigned int t2;
                 vfourmis[i]->move(n_atteignable[o],t1,t2);
-                cout << "-----------------------FOURMIS SUIVANTE------------------"<< endl;
                 unsigned int xc = vfourmis[i]->get_x();
                 unsigned int yc = vfourmis[i]->get_y();
                 unsigned int xn = n_atteignable[o].get_x();
@@ -340,8 +339,8 @@ void Fourmiliere::attak_rival(unsigned int i, std::vector <Nourriture> vn, std::
             unsigned int B = 0;
             unsigned int t1;
             unsigned int t2;
-            cout << " predator: " << j << " de la fourmiliere : " << i <<endl;
-            cout << " de coordonnée : x: "<<vfourmiliere[i].vfourmis[j]->get_x()<<" y: "<<vfourmiliere[i].vfourmis[j]->get_y()<<endl;
+            //cout << " predator: " << j << " de la fourmiliere : " << i <<endl;
+            //cout << " de coordonnée : x: "<<vfourmiliere[i].vfourmis[j]->get_x()<<" y: "<<vfourmiliere[i].vfourmis[j]->get_y()<<endl;
             for (unsigned int h = 0; h < vfourmiliere.size(); ++h){
                 if(vfourmiliere[h].nbC + vfourmiliere[h].nbP){
                     if ( h != i){
@@ -357,10 +356,10 @@ void Fourmiliere::attak_rival(unsigned int i, std::vector <Nourriture> vn, std::
                     }
                 }
             }
-            cout << "vise la fourmis de la fourmiliere: "<< A <<" numero:  "<< B<< endl;
+            //cout << "vise la fourmis de la fourmiliere: "<< A <<" numero:  "<< B<< endl;
             t1=vfourmiliere[A].vfourmis[B]->get_x();
             t2=vfourmiliere[A].vfourmis[B]->get_y();
-            cout << " de coordonée :"<< " x: "<<t1<<" y: "<<t2<< endl;
+            //cout << " de coordonée :"<< " x: "<<t1<<" y: "<<t2<< endl;
             int P;
             P=vfourmiliere[i].vfourmis[j]->move(vn[i], t1, t2);
             if (P==0){return;}
@@ -405,12 +404,12 @@ void Fourmiliere::attak_rival(unsigned int i, std::vector <Nourriture> vn, std::
                             }
                         }
                     }
-                    cout << "vise la fourmis de la fourmiliere: "<< A <<" numero:  "<< B<< endl;
+                    //cout << "vise la fourmis de la fourmiliere: "<< A <<" numero:  "<< B<< endl;
                     t1=vfourmiliere[A].vfourmis[B]->get_x();
                     t2=vfourmiliere[A].vfourmis[B]->get_y();
                     int PO;
                     PO=vfourmiliere[i].vfourmis[j]->contrained_attack(t1,t2,c);
-                    cout << " de coordonée :"<< " x: "<<t1<<" y: "<<t2<< endl;
+                    //cout << " de coordonée :"<< " x: "<<t1<<" y: "<<t2<< endl;
                     int P;
                     if (P==0){return;}
                     if (P==2){
@@ -429,12 +428,12 @@ void Fourmiliere::attak_rival(unsigned int i, std::vector <Nourriture> vn, std::
 void Fourmiliere::taille_fourmiliere(vector<Fourmiliere>& vfourmiliere){
     Carre check_carre = c;
     mode = 0;
-    cout <<"sizeF: "<< sizeF << endl;
+    //cout <<"sizeF: "<< sizeF << endl;
     if ((c.x+sizeF+1<g_max) or (c.y+sizeF+1<g_max)){
         check_carre.side = sizeF+2;
         if (!mode){
             c=check_carre;
-            cout << "charlie"<< endl;
+            //cout << "charlie"<< endl;
             return;
         }
     }
@@ -444,7 +443,7 @@ void Fourmiliere::taille_fourmiliere(vector<Fourmiliere>& vfourmiliere){
         check_carre.side = sizeF+2;
         if (!mode){
             c=check_carre;
-            cout << "Beta"<< endl;
+            //cout << "Beta"<< endl;
             return;
         }
     }
@@ -454,7 +453,7 @@ void Fourmiliere::taille_fourmiliere(vector<Fourmiliere>& vfourmiliere){
         check_carre.side = sizeF+2;
         if (!mode){
             c=check_carre;
-            cout << "Beta"<< endl;
+            //cout << "Beta"<< endl;
             return;
         }
     }
@@ -464,7 +463,7 @@ void Fourmiliere::taille_fourmiliere(vector<Fourmiliere>& vfourmiliere){
         check_carre.side = sizeF+2;
         if (!mode){
             c=check_carre;
-            cout << "Alpha"<< endl;
+            //cout << "Alpha"<< endl;
             return;
         }
     }

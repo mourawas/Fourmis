@@ -1715,7 +1715,7 @@ void Predator::operation_milenium(Carre cf){
                 }
             }
     }
-    cout << "Rentre chez toi" << endl;
+    //cout << "Rentre chez toi" << endl;
 }
 void Collector::operation_milenium(Carre cf){
     //moove();
