@@ -20,7 +20,7 @@ private:
     unsigned int nbC, nbD, nbP;
     bool mode = 0;  //0 free, 1 constrained
     std::vector<std::unique_ptr<Fourmis>> vfourmis;
-    std::vector<std::unique_ptr<Fourmis>> v_collector;
+    unsigned int sizeF = (sqrt(4*((sizeG*sizeG)+(sizeC*sizeC)*nbC+(sizeD*sizeD)*nbD+(sizeP*sizeP)*nbP)));
 public:
     Fourmiliere (Carre c, unsigned int nbC, unsigned int nbD, unsigned int nbP);
     void ajouter_fourmis(Fourmis* nouveau);
@@ -34,14 +34,16 @@ public:
     unsigned int get_nbP();
     unsigned int get_total_food();
     Carre get_carre();
+    void taille_fourmiliere(std::vector<Fourmiliere>& vfourmiliere);
     void naissance_fourmis();
     void naissance_col();
     void naissance_def();
     void naissance_pre();
-    void ajouter_collector (Fourmis* nouveau);
     void detecte_food(std::vector<Nourriture>& vnourriture);
     bool atteindre_test(Nourriture& n, unsigned int& i);
-};
+    bool fourmiliere_check();
+    void attak_rival(unsigned int i, std::vector <Nourriture> vn, std::vector <Fourmiliere>& vfourmiliere);
+    bool get_mode ();};
 
 bool decodage_ligne_fourmiliere(std::string line,
                                 std::vector<Fourmiliere>& vfourmiliere,

@@ -37,6 +37,7 @@ public:
 	void etape_simulation();
 	void creer_coord(unsigned int& x, unsigned int& y);
     void food_col();
+    void predator_en_chasse();
 };
 
 #endif

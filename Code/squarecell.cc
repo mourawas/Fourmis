@@ -245,3 +245,9 @@ void dessin_losange_carre_croix(unsigned int x, unsigned int y, double size, dou
     dessin_losange(x,y,1,1,1);
 
 }
+bool sup_sans_deformation(unsigned int x, unsigned int y){
+    if(grid[g_max-y-1][x]){
+        return true;
+    }
+    return false;
+}

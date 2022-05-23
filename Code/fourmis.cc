@@ -312,7 +312,7 @@ unsigned int Fourmis::return_the_one(vector<Nourriture>& n){
     return A;
 }
 
-void Collector::move(Nourriture& n){
+int Collector::move(Nourriture& n, unsigned int t1, unsigned int t2){
     //cout << "HEBS : " << hebs << "  CAS : " << cas << endl;
     int nx = n.get_x(), ny = n.get_y();
     if(hebs){
@@ -321,7 +321,7 @@ void Collector::move(Nourriture& n){
             hebs = 0;
         }else{
             deplace_miroir(cas, n);
-            return;
+            return 0;
         }
     }
     supprimer_carre(cc);
@@ -354,7 +354,7 @@ void Collector::move(Nourriture& n){
             longueur2 = ((xf -x1)-(yf-y1))/2;
             cas = trouver_cas(n);
             deplace_miroir(cas, n);
-            return;
+            return 0;
         }
         cout << "A prend chemin 2" << endl;
         move2(n);
@@ -369,7 +369,7 @@ void Collector::move(Nourriture& n){
             longueur2 = ((xf -x1)-(yf-y1))/2;
             cas = trouver_cas(n);
             deplace_miroir(cas, n);
-            return;
+            return 0;
         }
         cout << "B prend chemin 1" << endl;
         move1(n);
@@ -390,7 +390,7 @@ void Collector::move(Nourriture& n){
                 longueur2 = ((xf -x1)-(yf-y1))/2;
                 cas = trouver_cas(n);
                 deplace_miroir(cas, n);
-                return;
+                return 0;
             }
             cout << "C prend chemin 1" << endl;
             move1(n);
@@ -404,7 +404,7 @@ void Collector::move(Nourriture& n){
                 longueur2 = ((xf -x1)-(yf-y1))/2;
                 cas = trouver_cas(n);
                 deplace_miroir(cas, n);
-                return;
+                return 0;
             }
             cout << "D prends chemin 2" << endl;
             move2(n);
@@ -417,6 +417,7 @@ void Collector::move(Nourriture& n){
         }
     }
     compteur1 = 0, compteur2 = 0, obs1 = 0, obs2 = 0, obstacle = 0;
+    return 0;
 }
 
 int Collector::trouver_cas(Nourriture& n){
@@ -1229,18 +1230,6 @@ void Collector::move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chem
     }
 }
 
-void Generator::move(Nourriture& n){
-    cout << "move autre chose" << endl;
-}
-
-void Defensor::move(Nourriture& n){
-    cout << "move autre chose" << endl;
-}
-
-void Predator::move(Nourriture& n){
-    cout << "move autre chose" << endl;
-}
-
 void Collector::deplace_miroir(int cas, Nourriture& n){
     int xn = n.get_x();
     int yn = n.get_y();
@@ -1525,4 +1514,269 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
             }
         }
     }
+}
+void Collector::detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k){
+    cout<< "fault"<< endl;
+}
+void Defensor::detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k){
+    cout<< "fault"<< endl;
+}
+void Generator::detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k){
+    cout<< "fault"<< endl;
+}
+void Predator::detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k){
+    double r;
+    double r1= rog_one;
+    double r2= rog_two;
+    double X1=x1;
+    double Y1=y1;
+    r = abso(sqrt(pow(r1-X1,2)+pow(r2-Y1,2)));
+    //cout << "r: " << r << "grogu"<< GROGU << endl;
+    if ( r < GROGU){
+        GROGU = r;
+        A=h;
+        B=k;
+        //cout << "GROGU: "<< GROGU << endl;
+        //cout << "A: " << A << "B: "<< B << "R: " << r << endl;
+        //cout << rog_one << " " << rog_two << endl;
+    }
+    //cout << " good"<< endl;
+    return;
+}
+int Predator::fight(double xb, double yb,double xa, double ya){
+    double r = abso(sqrt(pow(xa-xb,2)+pow(ya-yb,2)));
+    double z =r;
+    cout << "Z: "<< z << endl;
+    cout << "fight"<< endl;
+    if (z){
+        if ((z == 1) or (z==sqrt(2))){
+            cout << " tuer les deux" << endl;
+            return 1;
+        }
+        if ((z==2) or (z==sqrt(5)) or (z==sqrt(8))){
+            cout << "tuer la collector"<< endl;
+            return 2;
+        }
+    }
+    return 3;
+}
+int Collector::fight(double xb, double yb,double xa, double ya){
+    cout<<"fight c"<< endl;
+    return 1;
+}
+int Defensor::fight(double xb, double yb,double xa, double ya){
+    cout <<" fight d"<< endl;
+    return 1;
+}
+int Generator::fight(double xb, double yb,double xa, double ya){
+    cout <<"fight g"<< endl;
+    return 1;
+}
+
+void Predator::operation_milenium(unsigned int cpx, unsigned int cpy){
+    double xa = cpx;
+    double ya = cpy;
+    double xb =x1;
+    double yb = y1;
+    double coef = ((ya-yb)/(xa-xb));
+    int k;
+     cout << "OOOOOOOOOOOOOOOUIIIIIIIIIIII" << endl;
+        cout << "cp.x: " << cp.x << endl;
+        cout << "cp.y: " << cp.y << endl;
+        cout<< "x1: "<< x1<<endl;
+        cout<<"y1: "<<y1<<endl;
+    if ((xa-xb)){
+        /*cout << "OOOOOOOOOOOOOOOUIIIIIIIIIIII" << endl;
+        cout << "cp.x: " << cp.x << endl;
+        cout << "cp.y: " << cp.y << endl;
+        cout<< "x1: "<< x1<<endl;
+        cout<<"y1: "<<y1<<endl;*/
+            if ((xb>xa)and(yb>=ya)){
+
+                if (coef > 1){
+                    cout << "N1"<< endl;
+                    if (sup_sans_deformation(--x1,y1-2)){return;}
+                    k=fight(xb,yb,xa,ya);
+                    --x1;
+                    y1=y1-2;
+                    --xb;
+                    yb=yb-2;
+                    k=fight(xb,yb,xa,ya);
+                }
+                if(coef<=1){
+                    cout<< "N2"<< endl;
+                if (sup_sans_deformation(++x1,y1-2)){return;}
+                ++y1;
+                x1=x1+2;
+                ++yb;
+                xb=xb+2;
+                k=fight(xb,yb,xa,ya);
+            }
+            if ((xb>xa)and (yb<ya)){
+                cout<< "N3"<< endl;
+                if (coef<-1){
+                    if (sup_sans_deformation(--x1,y1+2)){return;}
+                    --x1;
+                    y1=y1+2;
+                    yb=yb+2;
+                    --xb;
+                    k=fight(xb,yb,xa,ya);
+                    }
+                    if(coef>-1){
+                        cout<< "N4"<< endl;
+                        if (sup_sans_deformation(x1-2,++y1)){return;}
+                        ++y1;
+                        x1=x1-2;
+                        ++yb;
+                        xb=xb-2;
+                        k=fight(xb,yb,xa,ya);
+                    }
+
+                }
+            }
+            if ((xb<xa)and(yb<=ya)){
+                if (coef>=1){
+                    cout<< "N5"<< endl;
+                    if(sup_sans_deformation(++x1,y1+2)){return;}
+                    ++x1;
+                    y1=y1+2;
+                    ++xb;
+                    yb=yb+2;
+                    k=fight(xb,yb,xa,ya);
+                }
+                if (coef < 1){
+                    cout<< "N6"<< endl;
+                    if(sup_sans_deformation(x1+2,++y1)){return;}
+                    ++y1;
+                    x1=x1+2;
+                    ++yb;
+                    xb=xb+2;
+                    k=fight(xb,yb,xa,ya);
+                }
+            }
+            if ((xb<xa) and (yb>ya)){
+                if(coef >=-1 ){
+                    cout<< "N7"<< endl;
+                    if(sup_sans_deformation(x1+2,--y1)){return;}
+                    x1= x1 +2;
+                    --yb;
+                    xb=xb+2;
+                    k=fight(xb,yb,xa,ya);
+                }
+                if (coef<-1){
+                    cout<< "N8"<< endl;
+                    if(sup_sans_deformation(++x1,y1-2)){return;}
+                    y1=y1-2;
+                    ++x1;
+                    yb=yb-2;
+                    ++xb;
+                    k=fight(xb,yb,xa,ya);
+                }
+            }
+    }
+    cout << "Rentre chez toi" << endl;
+}
+void Collector::operation_milenium(unsigned int cfx, unsigned int cfy){
+cout << "Collector retour a la casa "<< endl;
+}
+void Defensor::operation_milenium(unsigned int cfx, unsigned int cfy){
+cout << "Defensor retour a la casa "<< endl;
+}
+void Generator::operation_milenium(unsigned int cfx, unsigned int cfy){
+cout << "Generator retour a la casa "<< endl;
+}
+int Generator::move(Nourriture& n, unsigned int t1, unsigned int t2){
+    cout << "move G" << endl;
+}
+
+int Defensor::move(Nourriture& n, unsigned int t1, unsigned int t2){
+    cout << "move D" << endl;
+}
+
+int Predator::move(Nourriture& n, unsigned int t1, unsigned int t2){
+    double xa = t1;
+    double ya = t2;
+    double xb =x1;
+    double yb = y1;
+    double coef = ((ya-yb)/(xa-xb));
+    int k;
+    if ((xa-xb)){
+            if ((xb>xa)and(yb>=ya)){
+
+                if (coef > 1){
+                    if (sup_sans_deformation(--x1,y1-2)){return 0;}
+                    k=fight(xb,yb,xa,ya);
+                    --x1;
+                    y1=y1-2;
+                    --xb;
+                    yb=yb-2;
+                    k=fight(xb,yb,xa,ya);
+                }
+                if(coef<=1){
+                if (sup_sans_deformation(++x1,y1-2)){return 0;}
+                ++y1;
+                x1=x1+2;
+                ++yb;
+                xb=xb+2;
+                k=fight(xb,yb,xa,ya);
+            }
+            if ((xb>xa)and (yb<ya)){
+                if (coef<-1){
+                    if (sup_sans_deformation(--x1,y1+2)){return 0;}
+                    --x1;
+                    y1=y1+2;
+                    yb=yb+2;
+                    --xb;
+                    k=fight(xb,yb,xa,ya);
+                    }
+                    if(coef>-1){
+                        if (sup_sans_deformation(x1-2,++y1)){return 0;}
+                        ++y1;
+                        x1=x1-2;
+                        ++yb;
+                        xb=xb-2;
+                        k=fight(xb,yb,xa,ya);
+                    }
+
+                }
+            }
+            if ((xb<xa)and(yb<=ya)){
+                if (coef>=1){
+                    if(sup_sans_deformation(++x1,y1+2)){return 0;}
+                    ++x1;
+                    y1=y1+2;
+                    ++xb;
+                    yb=yb+2;
+                    k=fight(xb,yb,xa,ya);
+                }
+                if (coef < 1){
+                    if(sup_sans_deformation(x1+2,++y1)){return 0;}
+                    ++y1;
+                    x1=x1+2;
+                    ++yb;
+                    xb=xb+2;
+                    k=fight(xb,yb,xa,ya);
+                }
+            }
+            if ((xb<xa) and (yb>ya)){
+                if(coef >=-1 ){
+                    if(sup_sans_deformation(x1+2,--y1)){return 0;}
+                    --y1;
+                    x1= x1 +2;
+                    --yb;
+                    xb=xb+2;
+                    k=fight(xb,yb,xa,ya);
+                }
+                if (coef<-1){
+                    if(sup_sans_deformation(++x1,y1-2)){return 0;}
+                    y1=y1-2;
+                    ++x1;
+                    yb=yb-2;
+                    ++xb;
+                    k=fight(xb,yb,xa,ya);
+                }
+            }
+    }
+    cout << "move P" << endl;
+    return k;
 }

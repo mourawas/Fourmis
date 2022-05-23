@@ -31,10 +31,14 @@ public:
     unsigned int get_x();
     unsigned int get_y();
     unsigned int return_the_one(std::vector<Nourriture>& n);
-    virtual void move(Nourriture& n) = 0;
     virtual void set(int setter) = 0;
+    virtual int move(Nourriture& n, unsigned int t1, unsigned int t2) = 0;
     static int compteur1, compteur2, obs1, obs2;
     static bool obstacle, mur1, mur2;
+    virtual void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) = 0;
+    virtual int fight(double xb, double yb,double xa, double ya) = 0;
+    virtual void operation_milenium(unsigned int cfx, unsigned int cfy) = 0;
+
 };
 
 class Generator : public Fourmis {
@@ -53,8 +57,11 @@ public:
     void ecrire_fourmis(std::ofstream& fichier) override;
     unsigned int get() override;
     unsigned int get_type() override;
-    void move(Nourriture& n) override;
+    int move(Nourriture& n, unsigned int t1, unsigned int t2) override;
     void set(int setter) override;
+    void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
+    int fight(double xb, double yb,double xa, double ya) override;
+    void operation_milenium(unsigned int cfx, unsigned int cfy)override;
 };
 
 class Collector : public Fourmis{
@@ -75,7 +82,7 @@ public:
     void ecrire_fourmis(std::ofstream& fichier) override;
     unsigned int get() override;
     unsigned int get_type() override;
-    void move(Nourriture& n) override;
+    int move(Nourriture& n, unsigned int t1, unsigned int t2) override;
     void choix_chemin1(Nourriture& n, Carre& bebou);
     void choix_chemin2(Nourriture& n, Carre& bebou);
     void move1(Nourriture& n);
@@ -85,6 +92,9 @@ public:
     void deplace_miroir(int cas, Nourriture& n);
     int trouver_cas(Nourriture& n);
     void set(int setter) override;
+    void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
+    int fight(double xb, double yb,double xa, double ya) override;
+    void operation_milenium(unsigned int cfx, unsigned int cfy)override;
 };
 
 class Defensor : public Fourmis {
@@ -104,8 +114,11 @@ public:
     void ecrire_fourmis(std::ofstream& fichier) override;
     unsigned int get() override;
     unsigned int get_type() override;
-    void move(Nourriture& n) override;
+    int move(Nourriture& n, unsigned int t1, unsigned int t2) override;
     void set(int setter) override;
+    void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
+    int fight(double xb, double yb,double xa, double ya) override;
+    void operation_milenium(unsigned int cfx, unsigned int cfy)override;
 };
 
 class Predator : public Fourmis {
@@ -124,8 +137,11 @@ public:
     void ecrire_fourmis(std::ofstream& fichier) override;
     unsigned int get() override;
     unsigned int get_type() override;
-    void move(Nourriture& n) override;
+    int move(Nourriture& n, unsigned int t1, unsigned int t2) override;
     void set(int setter) override;
+    void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
+    int fight(double xb, double yb,double xa, double ya) override;
+    void operation_milenium(unsigned int cfx, unsigned int cfy)override;
 };
 
 bool decodage_ligne_fourmis(std::string line, unsigned int etat, Collector& Col,

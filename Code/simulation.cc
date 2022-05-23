@@ -161,16 +161,24 @@ bool Simulation::test_point_fourmiliere(unsigned int& x, unsigned int& y){
 }
 
 void Simulation::etape_simulation(){
-	//creer_nourriture();
-	/*for (size_t i = 0; i < vfourmiliere.size(); ++i)
-	{
-		vfourmiliere[i].naissance_fourmis();
-	}*/
-	food_col();
+	creer_nourriture();
+    for (size_t i = 0; i < vfourmiliere.size(); ++i)
+    {
+        cout << "FOURMILIERE: "<< i << endl;
+        vfourmiliere[i].taille_fourmiliere(vfourmiliere);
+        vfourmiliere[i].naissance_fourmis();
+        vfourmiliere[i].detecte_food(vnourriture);
+        vfourmiliere[i].attak_rival(i,vnourriture,vfourmiliere);
+    }
 }
 
 void Simulation::food_col(){
     for(unsigned int i = 0; i < vfourmiliere.size(); ++i){
 		vfourmiliere[i].detecte_food(vnourriture);
 	}
+}
+void Simulation::predator_en_chasse(){
+    for (unsigned int i = 0; i < vfourmiliere.size(); ++i){
+        vfourmiliere[i].attak_rival(i,vnourriture,vfourmiliere);
+    }
 }

@@ -22,6 +22,8 @@ void initialise_grille();
  
 void initialise_carre(Carre& c);
 
+bool sup_sans_deformation(unsigned int x, unsigned int y);
+
 void supprimer_carre(Carre& c);
 
 bool sup_carre(Carre& c1, Carre& c2);
