@@ -370,14 +370,18 @@ void Fourmiliere::attak_rival(unsigned int i, std::vector <Nourriture> vn, std::
                 if (P==0){return;}
                 if (P==2){
                     cout << " detruit collector !" << endl;
-                    vfourmiliere[A].vfourmis.erase(next(vfourmiliere[A].vfourmis.begin())+B);
-                    swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
-                    vfourmiliere[A].vfourmis.pop_back();
-                    cout<< " collector detruite"<<endl;
+                    if ((vfourmiliere[A].vfourmis[B]->get_type() == 1) or (vfourmiliere[A].vfourmis[B]->get_type() == 2) ){
+                        vfourmiliere[A].vfourmis.erase(next(vfourmiliere[A].vfourmis.begin())+B);
+                        swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
+                        vfourmiliere[A].vfourmis.pop_back();
+                        cout<< " collector detruite"<<endl;
+                    }
                 }
                 if (P== 1){
-                    swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
-                    vfourmiliere[A].vfourmis.pop_back();
+                    if ((vfourmiliere[A].vfourmis[B]->get_type() == 1) or (vfourmiliere[A].vfourmis[B]->get_type() == 2) ){
+                        swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
+                        vfourmiliere[A].vfourmis.pop_back();
+                    }
                 }
             }
         }
@@ -422,12 +426,16 @@ void Fourmiliere::attak_rival(unsigned int i, std::vector <Nourriture> vn, std::
                     cout<< "PO :" <<PO<<endl;
                     if (PO==0){return;}
                     if (PO==2){
-                        swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
-                        vfourmiliere[A].vfourmis.pop_back();
+                        if ((vfourmiliere[A].vfourmis[B]->get_type() == 1) or (vfourmiliere[A].vfourmis[B]->get_type() == 2) ){
+                            swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
+                            vfourmiliere[A].vfourmis.pop_back();
+                        }
                     }
                     if (PO== 1){
-                        swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
-                        vfourmiliere[A].vfourmis.pop_back();
+                        if ((vfourmiliere[A].vfourmis[B]->get_type() == 1) or (vfourmiliere[A].vfourmis[B]->get_type() == 2) ){
+                            swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
+                            vfourmiliere[A].vfourmis.pop_back();
+                        }
                     }
                 }
             }
@@ -491,7 +499,11 @@ void Fourmiliere::defense(){
             Nourriture no{c.side,c.side};
             unsigned int t1 = c.x;
             unsigned int t2 = c.y;
-            vfourmis[n]->move(no,c.x,c.y);
+            if (vfourmis[n]->move(no,c.x,c.y)){
+                swap(vfourmis[n],vfourmis.back());
+                vfourmis.pop_back();
+            }
+            
         }
     }
 }
