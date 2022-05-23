@@ -18,12 +18,12 @@ void graphic_draw_window()
     (*ptcr)->set_line_width(1);
     (*ptcr)->set_source_rgb(1, 1, 1);
     (*ptcr)->move_to(0, 0);
-    (*ptcr)->line_to(0, 128.5);
-    (*ptcr)->move_to(0, 128);
-    (*ptcr)->line_to(128.5, 128);
-    (*ptcr)->move_to(128, 128);
-    (*ptcr)->line_to(128, -0.5);
-    (*ptcr)->move_to(128, 0);
+    (*ptcr)->line_to(0, 127.5);
+    (*ptcr)->move_to(0, 127);
+    (*ptcr)->line_to(127.5, 127);
+    (*ptcr)->move_to(127, 127);
+    (*ptcr)->line_to(127, -0.5);
+    (*ptcr)->move_to(127, 0);
     (*ptcr)->line_to(-0.5 ,0);
     (*ptcr)->stroke();
     for (size_t i(0); i<129; ++i){
