@@ -32,7 +32,7 @@ public:
     unsigned int get_nbC();
     unsigned int get_nbD();
     unsigned int get_nbP();
-    unsigned int get_total_food();
+    double get_total_food();
     Carre get_carre();
     void taille_fourmiliere(std::vector<Fourmiliere>& vfourmiliere);
     void naissance_fourmis();
@@ -45,6 +45,7 @@ public:
     void attak_rival(unsigned int i, std::vector <Nourriture> vn, std::vector <Fourmiliere>& vfourmiliere);
     bool get_mode ();
     void defense();
+    void val_food();
     };
 
 bool decodage_ligne_fourmiliere(std::string line,

@@ -127,7 +127,7 @@ bool carre_dans_carre(Carre& c1, Carre& c2) {
 		return true;
 	}
 	
-    return false;	//carre pas dans carre
+    return false;	//carre dans carre
 }
 
 void initialise_carre_centre(Carre& c)

@@ -38,14 +38,16 @@ public:
     virtual void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) = 0;
     virtual int fight(double xb, double yb,double xa, double ya) = 0;
     virtual void operation_milenium(Carre cf) = 0;
+    virtual void generator_eat(size_t nbT) = 0 ;
     virtual int contrained_attack(unsigned int t1,unsigned int t2, Carre cf) = 0;
+    virtual double get_total_food() =0 ;
 
 };
 
 class Generator : public Fourmis {
 private:
     unsigned int side = sizeG;
-    unsigned int total_food;
+    double total_food;
     Carre cg;
 public:
     ~Generator() = default;
@@ -63,7 +65,9 @@ public:
     void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
     int fight(double xb, double yb,double xa, double ya) override;
     void operation_milenium(Carre cf)override;
+    double get_total_food() override ;
     int contrained_attack(unsigned int t1,unsigned int t2, Carre cf) override;
+    void generator_eat(size_t nbT) override;
 };
 
 class Collector : public Fourmis{
@@ -94,10 +98,12 @@ public:
     void deplace_miroir(int cas, Nourriture& n);
     int trouver_cas(Nourriture& n);
     void set(int setter) override;
+    void generator_eat(size_t nbT) override;
     void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
     int fight(double xb, double yb,double xa, double ya) override;
     void operation_milenium(Carre cf)override;
     int contrained_attack(unsigned int t1,unsigned int t2, Carre cf) override;
+    double get_total_food() override ;
 };
 
 class Defensor : public Fourmis {
@@ -122,7 +128,9 @@ public:
     void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
     int fight(double xb, double yb,double xa, double ya) override;
     void operation_milenium(Carre cf)override;
+    void generator_eat(size_t nbT) override;
     int contrained_attack(unsigned int t1,unsigned int t2, Carre cf) override;
+    double get_total_food() override ;
 };
 
 class Predator : public Fourmis {
@@ -146,7 +154,9 @@ public:
     void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
     int fight(double xb, double yb,double xa, double ya) override;
     void operation_milenium(Carre cf)override;
+    void generator_eat(size_t nbT) override;
     int contrained_attack(unsigned int t1,unsigned int t2,Carre cf) override;
+    double get_total_food() override ;
 };
 
 bool decodage_ligne_fourmis(std::string line, unsigned int etat, Collector& Col,

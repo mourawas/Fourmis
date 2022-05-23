@@ -326,7 +326,7 @@ void MyEvent::fourmiliere_info(int& id){
 		info += to_string(id);
 		info += "\n";
 		info += "Total food: ";
-		unsigned int food = s->get_total_food(id);
+		double food = s->get_total_food(id);
 		info += to_string(food);
 		unsigned int nbC = s->get_nbC(id);
 		unsigned int nbD = s->get_nbD(id);

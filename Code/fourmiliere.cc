@@ -188,8 +188,8 @@ unsigned int Fourmiliere::get_nbP(){
     return nbP;
 }
 
-unsigned int Fourmiliere::get_total_food(){
-    return vfourmis[0]->get();
+double Fourmiliere::get_total_food(){
+        return vfourmis[0]->get_total_food();
 }
 
 Carre Fourmiliere::get_carre(){
@@ -286,9 +286,9 @@ void Fourmiliere::detecte_food(vector<Nourriture>& vnourriture){
 				}
 			}
             if (n_atteignable.size()){
-                cout << "Fourmi " << i << "  position  x : " << vfourmis[i]->get_x() << "  y : " << vfourmis[i]->get_y() << endl;
+                //cout << "Fourmi " << i << "  position  x : " << vfourmis[i]->get_x() << "  y : " << vfourmis[i]->get_y() << endl;
 			    o = vfourmis[i]->return_the_one(n_atteignable);
-                cout << "Nourriture x : " << n_atteignable[o].get_x() << "  y : " << n_atteignable[o].get_y() << endl;
+                //cout << "Nourriture x : " << n_atteignable[o].get_x() << "  y : " << n_atteignable[o].get_y() << endl;
                 //cout << "o : " << o << endl;
                 unsigned int t1;
                 unsigned int t2;
@@ -331,59 +331,69 @@ bool Fourmiliere::atteindre_test(Nourriture& n, unsigned int& i){
     return  false;
 }
 void Fourmiliere::attak_rival(unsigned int i, std::vector <Nourriture> vn, std::vector <Fourmiliere>& vfourmiliere){
+    cout << "Fourmiliere "<< i <<" entre en attaque"<< endl;
+    cout << "mode" << mode << endl;
     if (!mode){
-    for (unsigned int j =0 ; j < vfourmiliere[i].vfourmis.size(); ++j){
-        if (vfourmiliere[i].vfourmis[j]->get_type()== 3){
-            unsigned int GROGU=127;
-            unsigned int A = 0;
-            unsigned int B = 0;
-            unsigned int t1;
-            unsigned int t2;
-            //cout << " predator: " << j << " de la fourmiliere : " << i <<endl;
-            //cout << " de coordonnée : x: "<<vfourmiliere[i].vfourmis[j]->get_x()<<" y: "<<vfourmiliere[i].vfourmis[j]->get_y()<<endl;
-            for (unsigned int h = 0; h < vfourmiliere.size(); ++h){
-                if(vfourmiliere[h].nbC + vfourmiliere[h].nbP){
-                    if ( h != i){
-                        for (unsigned int k =0; k< vfourmiliere[h].vfourmis.size(); ++k){
-                            if ((vfourmiliere[h].vfourmis[k]->get_type()== 1)or (vfourmiliere[h].vfourmis[k]->get_type()== 2)){
-                                unsigned int rog_one,rog_two;
-                                rog_one = vfourmiliere[h].vfourmis[k]->get_x();
-                                rog_two = vfourmiliere[h].vfourmis[k]->get_y();
-                                //cout << "rentre dans le test"<< rog_one << " "<< rog_two << endl;
-                                vfourmiliere[i].vfourmis[j]->detection_f_rival(A,B,rog_one,rog_two,GROGU,h,k);
+        cout << " entrez non mode "<< endl;
+        for (unsigned int j =0 ; j < vfourmiliere[i].vfourmis.size(); ++j){
+            if (vfourmiliere[i].vfourmis[j]->get_type()== 3){
+                unsigned int GROGU=127;
+                unsigned int A = 0;
+                unsigned int B = 0;
+                unsigned int t1;
+                unsigned int t2;
+                cout << " predator: " << j << " de la fourmiliere : " << i <<endl;
+                cout << " de coordonnée : x: "<<vfourmiliere[i].vfourmis[j]->get_x()<<" y: "<<vfourmiliere[i].vfourmis[j]->get_y()<<endl;
+                for (unsigned int h = 0; h < vfourmiliere.size(); ++h){
+                    if(vfourmiliere[h].nbC + vfourmiliere[h].nbP){
+                        if ( h != i){
+                            for (unsigned int k =0; k< vfourmiliere[h].vfourmis.size(); ++k){
+                                if ((vfourmiliere[h].vfourmis[k]->get_type()== 1)or (vfourmiliere[h].vfourmis[k]->get_type()== 2)){
+                                    unsigned int rog_one,rog_two;
+                                    rog_one = vfourmiliere[h].vfourmis[k]->get_x();
+                                    rog_two = vfourmiliere[h].vfourmis[k]->get_y();
+                                    cout << "rentre dans le test"<< rog_one << " "<< rog_two << endl;
+                                    vfourmiliere[i].vfourmis[j]->detection_f_rival(A,B,rog_one,rog_two,GROGU,h,k);
+                                }
                             }
                         }
                     }
                 }
-            }
-            //cout << "vise la fourmis de la fourmiliere: "<< A <<" numero:  "<< B<< endl;
-            t1=vfourmiliere[A].vfourmis[B]->get_x();
-            t2=vfourmiliere[A].vfourmis[B]->get_y();
-            //cout << " de coordonée :"<< " x: "<<t1<<" y: "<<t2<< endl;
-            int P;
-            P=vfourmiliere[i].vfourmis[j]->move(vn[i], t1, t2);
-            if (P==0){return;}
-            if (P==2){
-                //cout << " detruit collector !" << endl;
-                //vfourmiliere[A].vfourmis.erase(next(vfourmiliere[A].vfourmis.begin())+B);
-                swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
-                vfourmiliere[A].vfourmis.pop_back();
-                //cout<< " collector detruite"<<endl;
-            }
-            if (P== 1){
-                swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
-                vfourmiliere[A].vfourmis.pop_back();
+                cout << "vise la fourmis de la fourmiliere: "<< A <<" numero:  "<< B<< endl;
+                t1=vfourmiliere[A].vfourmis[B]->get_x();
+                t2=vfourmiliere[A].vfourmis[B]->get_y();
+                cout << " de coordonée :"<< " x: "<<t1<<" y: "<<t2<< endl;
+                int P;
+                cout << "entre dans deter de P"<< endl;
+                P=vfourmiliere[i].vfourmis[j]->move(vn[i], t1, t2);
+                cout << "P : "<< P<< endl;
+                if (P==0){return;}
+                if (P==2){
+                    cout << " detruit collector !" << endl;
+                    vfourmiliere[A].vfourmis.erase(next(vfourmiliere[A].vfourmis.begin())+B);
+                    swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
+                    vfourmiliere[A].vfourmis.pop_back();
+                    cout<< " collector detruite"<<endl;
+                }
+                if (P== 1){
+                    swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
+                    vfourmiliere[A].vfourmis.pop_back();
+                }
             }
         }
     }
-    }if(mode){
+    if(mode){
+        cout << " entrez mode "<< endl;
         for (unsigned int j =0 ; j < vfourmiliere[i].vfourmis.size(); ++j){
             if (vfourmiliere[i].vfourmis[j]->get_type()== 3){
+                cout << "predator "<<i<< " de la Fourmiliere"<< j << endl;
                 Carre Cfourmis = {vfourmiliere[i].vfourmis[j]->get_x(),vfourmiliere[i].vfourmis[j]->get_y(),1};
                 if (carre_dans_carre(c,Cfourmis)){
                     vfourmiliere[i].vfourmis[j]->operation_milenium(c);
+                    cout << "ope milenium "<< endl;
                 }
                 if (!carre_dans_carre(c,Cfourmis)){
+                    cout << "attaque contrainte "<< endl;
                     unsigned int GROGU=127;
                     unsigned int A = 0;
                     unsigned int B = 0;
@@ -409,14 +419,13 @@ void Fourmiliere::attak_rival(unsigned int i, std::vector <Nourriture> vn, std::
                     t2=vfourmiliere[A].vfourmis[B]->get_y();
                     int PO;
                     PO=vfourmiliere[i].vfourmis[j]->contrained_attack(t1,t2,c);
-                    //cout << " de coordonée :"<< " x: "<<t1<<" y: "<<t2<< endl;
-                    int P;
-                    if (P==0){return;}
-                    if (P==2){
+                    cout<< "PO :" <<PO<<endl;
+                    if (PO==0){return;}
+                    if (PO==2){
                         swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
                         vfourmiliere[A].vfourmis.pop_back();
                     }
-                    if (P== 1){
+                    if (PO== 1){
                         swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
                         vfourmiliere[A].vfourmis.pop_back();
                     }
@@ -486,4 +495,6 @@ void Fourmiliere::defense(){
         }
     }
 }
-
+void Fourmiliere::val_food(){
+    vfourmis[0]->generator_eat(vfourmis.size());
+}

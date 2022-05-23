@@ -118,7 +118,7 @@ unsigned int Simulation::get_taillevn(){
 	return vnourriture.size();
 }
 
-unsigned int Simulation::get_total_food(int& id){
+double Simulation::get_total_food(int& id){
 	return vfourmiliere[id].get_total_food();
 }
 
@@ -166,6 +166,7 @@ void Simulation::etape_simulation(){
     {
         cout << "FOURMILIERE: "<< i << endl;
         vfourmiliere[i].taille_fourmiliere(vfourmiliere);
+		vfourmiliere[i].val_food();
         vfourmiliere[i].naissance_fourmis();
         vfourmiliere[i].detecte_food(vnourriture);
         vfourmiliere[i].attak_rival(i,vnourriture,vfourmiliere);

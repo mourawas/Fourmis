@@ -26,7 +26,7 @@ public:
 	void ecrire_fichier(std::ofstream& fichier);
 	int get_taillevf();
 	unsigned int get_taillevn();
-	unsigned int get_total_food(int& id);
+	double get_total_food(int& id);
 	enum Etat_lecture {NBN, NOURRITURE, NBF, FOURMIL};
 	static int etat, count, total_food, totF;
 	unsigned int get_nbC(int& id);
