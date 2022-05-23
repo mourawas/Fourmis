@@ -276,7 +276,7 @@ void Fourmiliere::detecte_food(vector<Nourriture>& vnourriture){
 		if(vfourmis[i]->get_type() == 1){
             //cout << "FOOD : " << vfourmis[i]->get() << endl;
             if(vfourmis[i]->get()){
-                //rentrer maison (pas ici appel fonction)
+                vfourmis[i]->operation_milenium(c);
                 continue;
             }
 			for (unsigned int j = 0; j < vnourriture.size(); ++j){
@@ -293,6 +293,7 @@ void Fourmiliere::detecte_food(vector<Nourriture>& vnourriture){
                 unsigned int t1;
                 unsigned int t2;
                 vfourmis[i]->move(n_atteignable[o],t1,t2);
+                cout << "-----------------------FOURMIS SUIVANTE------------------"<< endl;
                 unsigned int xc = vfourmis[i]->get_x();
                 unsigned int yc = vfourmis[i]->get_y();
                 unsigned int xn = n_atteignable[o].get_x();
@@ -331,7 +332,7 @@ bool Fourmiliere::atteindre_test(Nourriture& n, unsigned int& i){
     return  false;
 }
 void Fourmiliere::attak_rival(unsigned int i, std::vector <Nourriture> vn, std::vector <Fourmiliere>& vfourmiliere){
-    if (mode){
+    if (!mode){
     for (unsigned int j =0 ; j < vfourmiliere[i].vfourmis.size(); ++j){
         if (vfourmiliere[i].vfourmis[j]->get_type()== 3){
             unsigned int GROGU=127;
@@ -376,13 +377,51 @@ void Fourmiliere::attak_rival(unsigned int i, std::vector <Nourriture> vn, std::
             }
         }
     }
-    }if(!mode){
-        cout << "ramener la coupe a la maison"<<endl;
+    }if(mode){
         for (unsigned int j =0 ; j < vfourmiliere[i].vfourmis.size(); ++j){
             if (vfourmiliere[i].vfourmis[j]->get_type()== 3){
-                unsigned int destx = c.x;
-                unsigned int desty = c.y;
-                vfourmiliere[i].vfourmis[j]->operation_milenium(c.x,c.y);
+                Carre Cfourmis = {vfourmiliere[i].vfourmis[j]->get_x(),vfourmiliere[i].vfourmis[j]->get_y(),1};
+                if (carre_dans_carre(c,Cfourmis)){
+                    vfourmiliere[i].vfourmis[j]->operation_milenium(c);
+                }
+                if (!carre_dans_carre(c,Cfourmis)){
+                    unsigned int GROGU=127;
+                    unsigned int A = 0;
+                    unsigned int B = 0;
+                    unsigned int t1;
+                    unsigned int t2;
+                    for (unsigned int h = 0; h < vfourmiliere.size(); ++h){
+                        if(vfourmiliere[h].nbC + vfourmiliere[h].nbP){
+                            if ( h != i){
+                                for (unsigned int k =0; k< vfourmiliere[h].vfourmis.size(); ++k){
+                                    if ((vfourmiliere[h].vfourmis[k]->get_type()== 1)or (vfourmiliere[h].vfourmis[k]->get_type()== 2)){
+                                        unsigned int rog_one,rog_two;
+                                        rog_one = vfourmiliere[h].vfourmis[k]->get_x();
+                                        rog_two = vfourmiliere[h].vfourmis[k]->get_y();
+                                        //cout << "rentre dans le test"<< rog_one << " "<< rog_two << endl;
+                                        vfourmiliere[i].vfourmis[j]->detection_f_rival(A,B,rog_one,rog_two,GROGU,h,k);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    cout << "vise la fourmis de la fourmiliere: "<< A <<" numero:  "<< B<< endl;
+                    t1=vfourmiliere[A].vfourmis[B]->get_x();
+                    t2=vfourmiliere[A].vfourmis[B]->get_y();
+                    int PO;
+                    PO=vfourmiliere[i].vfourmis[j]->contrained_attack(t1,t2,c);
+                    cout << " de coordonée :"<< " x: "<<t1<<" y: "<<t2<< endl;
+                    int P;
+                    if (P==0){return;}
+                    if (P==2){
+                        swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
+                        vfourmiliere[A].vfourmis.pop_back();
+                    }
+                    if (P== 1){
+                        swap(vfourmiliere[A].vfourmis[B],vfourmiliere[A].vfourmis.back());
+                        vfourmiliere[A].vfourmis.pop_back();
+                    }
+                }
             }
         }
     }
@@ -438,3 +477,14 @@ bool Fourmiliere::fourmiliere_check(){
 bool Fourmiliere::get_mode(){
     return mode;
 }
+/*void Fourmiliere::defense(){
+    for(unsigned int n = 0; n<vfourmis.size();++n){
+        if (vfourmis[n]->get_type() == 2){
+            Nourriture no{c.side,c.side};
+            unsigned int t1 = c.x;
+            unsigned int t2 = c.y;
+            vfourmis[n]->move(no,c.x,c.y);
+        }
+    }
+}
+*/

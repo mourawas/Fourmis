@@ -43,7 +43,9 @@ public:
     bool atteindre_test(Nourriture& n, unsigned int& i);
     bool fourmiliere_check();
     void attak_rival(unsigned int i, std::vector <Nourriture> vn, std::vector <Fourmiliere>& vfourmiliere);
-    bool get_mode ();};
+    bool get_mode ();
+    //void defense();
+    };
 
 bool decodage_ligne_fourmiliere(std::string line,
                                 std::vector<Fourmiliere>& vfourmiliere,

@@ -37,7 +37,8 @@ public:
     static bool obstacle, mur1, mur2;
     virtual void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) = 0;
     virtual int fight(double xb, double yb,double xa, double ya) = 0;
-    virtual void operation_milenium(unsigned int cfx, unsigned int cfy) = 0;
+    virtual void operation_milenium(Carre cf) = 0;
+    virtual int contrained_attack(unsigned int t1,unsigned int t2, Carre cf) = 0;
 
 };
 
@@ -61,7 +62,8 @@ public:
     void set(int setter) override;
     void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
     int fight(double xb, double yb,double xa, double ya) override;
-    void operation_milenium(unsigned int cfx, unsigned int cfy)override;
+    void operation_milenium(Carre cf)override;
+    int contrained_attack(unsigned int t1,unsigned int t2, Carre cf) override;
 };
 
 class Collector : public Fourmis{
@@ -94,7 +96,8 @@ public:
     void set(int setter) override;
     void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
     int fight(double xb, double yb,double xa, double ya) override;
-    void operation_milenium(unsigned int cfx, unsigned int cfy)override;
+    void operation_milenium(Carre cf)override;
+    int contrained_attack(unsigned int t1,unsigned int t2, Carre cf) override;
 };
 
 class Defensor : public Fourmis {
@@ -118,7 +121,8 @@ public:
     void set(int setter) override;
     void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
     int fight(double xb, double yb,double xa, double ya) override;
-    void operation_milenium(unsigned int cfx, unsigned int cfy)override;
+    void operation_milenium(Carre cf)override;
+    int contrained_attack(unsigned int t1,unsigned int t2, Carre cf) override;
 };
 
 class Predator : public Fourmis {
@@ -141,7 +145,8 @@ public:
     void set(int setter) override;
     void detection_f_rival(unsigned int& A, unsigned int& B, unsigned int rog_one,unsigned int rog_two, unsigned int& GROGU, unsigned int h, unsigned int k) override;
     int fight(double xb, double yb,double xa, double ya) override;
-    void operation_milenium(unsigned int cfx, unsigned int cfy)override;
+    void operation_milenium(Carre cf)override;
+    int contrained_attack(unsigned int t1,unsigned int t2,Carre cf) override;
 };
 
 bool decodage_ligne_fourmis(std::string line, unsigned int etat, Collector& Col,

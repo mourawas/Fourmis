@@ -316,6 +316,7 @@ int Collector::move(Nourriture& n, unsigned int t1, unsigned int t2){
     //cout << "HEBS : " << hebs << "  CAS : " << cas << endl;
     int nx = n.get_x(), ny = n.get_y();
     if(hebs){
+        cout << "dans if hebs "<<endl;
         if((x1 == 1) or (x1 == g_max-2) or (y1 == 1) or (y1 == g_max-2)
             or (xf != nx) or (yf != ny)){
             hebs = 0;
@@ -331,28 +332,34 @@ int Collector::move(Nourriture& n, unsigned int t1, unsigned int t2){
     double k;
     if(xn == xc){
         k = 200;
+        cout << "dans l 333"<< endl;
     }else{
     k = (yn - yc)/(xn - xc);
+    cout << "dans l 337"<< endl;
     }
-    //cout << k << endl;
-    //cout << "avant chemin 1" << endl;
+    cout << k << endl;
+    cout << "avant chemin 1" << endl;
     choix_chemin1(n, bebou);
-    //cout << "chemin 1 ok" << endl;
+    cout << "chemin 1 ok" << endl;
     obstacle = 0;
     bebou = cc;
     choix_chemin2(n, bebou);
-    //cout << "chemin 2 ok" << endl;
+    cout << "chemin 2 ok" << endl;
     //initialise_carre_centre(cc);
     cout << "compteur1 : " << compteur1 << " compteur2 : " << compteur2 << endl;
-    cout << "obs1 : " << obs1 << " obs2 : " << obs2 << endl;
+    //cout << "obs1 : " << obs1 << " obs2 : " << obs2 << endl;
     if(compteur1 > compteur2){
+        cout << " entrez dans l 351"<<endl;
+        cout << "mur2: "<<mur2<<" cas_pos: "<< cas_pos<<" y1: "<<y1<<endl;
         if(mur2 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
            ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
             hebs = 1;
+            cout <<"hebs"<<endl;
             xf = xn, yf = yn;
             longueur1 = ((xf -x1)+(yf-y1))/2;
             longueur2 = ((xf -x1)-(yf-y1))/2;
             cas = trouver_cas(n);
+            cout << "avant deplace miroir"<< endl;
             deplace_miroir(cas, n);
             return 0;
         }
@@ -361,13 +368,16 @@ int Collector::move(Nourriture& n, unsigned int t1, unsigned int t2){
         cout << "A a pris chemin 2" << endl;
     }
     if(compteur1 < compteur2){
+        cout << "mur2: "<<mur2<<" cas_pos: "<< cas_pos<<" y1: "<<y1<<endl;
         if(mur1 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
            ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
             hebs = 1;
+            cout <<"hebs"<<endl;
             xf = xn, yf = yn;
             longueur1 = ((xf -x1)+(yf-y1))/2;
             longueur2 = ((xf -x1)-(yf-y1))/2;
             cas = trouver_cas(n);
+            cout << "avant deplace miroir"<< endl;
             deplace_miroir(cas, n);
             return 0;
         }
@@ -382,6 +392,7 @@ int Collector::move(Nourriture& n, unsigned int t1, unsigned int t2){
     }
     if((compteur1 == compteur2) and (k !=1) and (k!=-1)){
         if(obs1 > obs2){
+            cout<<"hebs l 393"<<endl;
             if(mur1 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
                ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
                 hebs = 1;
@@ -396,9 +407,11 @@ int Collector::move(Nourriture& n, unsigned int t1, unsigned int t2){
             move1(n);
             cout << "C a pris chemin 1" << endl;
         }else if(obs1 < obs2){
+
             if(mur2 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
                ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
                 hebs = 1;
+                cout<<"hebs l 393"<<endl;
                 xf = xn, yf = yn;
                 longueur1 = ((xf -x1)+(yf-y1))/2;
                 longueur2 = ((xf -x1)-(yf-y1))/2;
@@ -411,9 +424,23 @@ int Collector::move(Nourriture& n, unsigned int t1, unsigned int t2){
             cout << "D a pris chemin 2" << endl;
         }
         else{
-            cout << "E prends chemin 2" << endl;
-            move1(n);
-            cout << "E a pris chemin 2" << endl;
+            cout << "mur2: "<<mur2<<" cas_pos: "<< cas_pos<<" y1: "<<y1<<endl;
+            if(mur2 and (((cas_pos == 0) and (x1 == 1)) or ((cas_pos == 1) and (y1 == 1)) or
+               ((cas_pos == 2) and (x1 == g_max-2)) or ((cas_pos == 3) and (y1 == g_max-2)))){
+                hebs = 1;
+                cout<<"hebs l 393"<<endl;
+                xf = xn, yf = yn;
+                longueur1 = ((xf -x1)+(yf-y1))/2;
+                longueur2 = ((xf -x1)-(yf-y1))/2;
+                cas = trouver_cas(n);
+                deplace_miroir(cas, n);
+                return 0;
+            }
+            else {
+                cout << "E prends chemin 2" << endl;
+                move1(n);
+                cout << "E a pris chemin 2" << endl;
+            }
         }
     }
     compteur1 = 0, compteur2 = 0, obs1 = 0, obs2 = 0, obstacle = 0;
@@ -451,7 +478,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
         return;
     }
     double k;
-    cout << "OBSTACLE 1 : " << obstacle << endl;
+    //cout << "OBSTACLE 1 : " << acle << endl;
     if(!obstacle) ++obs1;
     double xn = n.get_x(), yn = n.get_y();
     double xc = bebou.x, yc = bebou.y;
@@ -460,10 +487,13 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
     }else{
     k = (yn - yc)/(xn - xc);
     }
-    //cout << "k : " << k << endl;
+    cout << "k : " << k << endl;
     if((xn - xc) != 0){
+        cout<<" xn-xc != 0"<< endl;
         if((xn > xc) and (k > -1) and (k < 1)){
+            cout << " entre dans xn > xc , k>-1,k<1"<< endl;
             if((k != 1) and (k != -1) and (xc = 1)){
+                cout << " faut pas rentrez la "<<endl;
                 if(xc == g_max-2){
                     int a = 0;
                     if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
@@ -472,10 +502,14 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
                     compteur1 += a;
                     cas_pos = 2;
                     return choix_chemin1(n, bebou);
-                }else if(yc == 1){
+                }else if(yc == 1){//yc == 2
+                    cout << " faut rentrez la "<<endl;
                     int a = 0;
                     if(carre_libre_dans_carre(bebou)){ ++compteur1; obstacle = 1; }
+                    cout <<"entre dans moove miroir"<< endl;
                     move_miroir(bebou, 1, a, 0, n);
+                    cout << "chemin1: "<<bebou.x<<" "<<bebou.y<<endl;
+                    cout<<"sors de moove miroir"<<endl;
                     mur1 = true;
                     compteur1 += a;
                     cas_pos = 1;
@@ -622,6 +656,7 @@ void Collector::choix_chemin1(Nourriture& n, Carre& bebou){
         return choix_chemin1(n, bebou);
     }
     if((k == 1) or (k == -1)){
+        cout<<"calcul le bon"<<endl;
         if((xn < xc) and (yn > yc)){
             //cout << "k13"<< endl;
             //cout << "BEBOU X : " << bebou.x << "  Y : " << bebou.y << endl;
@@ -661,7 +696,7 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
     if((bebou.x == n.get_x()) and (bebou.y == n.get_y())){
         return;
     }
-    cout << "OBSTACLE 2 : " << obstacle << endl;
+    //cout << "OBSTACLE 2 : " << obstacle << endl;
     if(!obstacle) ++obs2;
     double k;
     double xn = n.get_x(), yn = n.get_y();
@@ -864,27 +899,31 @@ void Collector::choix_chemin2(Nourriture& n, Carre& bebou){
 }
 
 void Collector::move1(Nourriture& n){
+    cout << "move1"<<endl;
     double xn = n.get_x(), yn = n.get_y();
     double xc = x1, yc = y1;
     double k;
+    cout << "xn: "<<xn<<" yn: "<<yn<<" xc: "<<xc<<" yc: "<< yc<<endl;
     unsigned int a, b;
     if(xn == xc){
         k = 200;
     }else{
         k = (yn - yc)/(xn - xc);
     }
+    cout<<" k: "<<k<<endl;
     if((xn - x1) != 0){
         if((xn > x1) and (k > -1) and (k < 1)){
+            cout << "rentre la"<< endl;
             Carre test = {x1+1, y1-1, 3};
             //cout << "TEST: x: " << test.x << " y: " << test.y << endl;
             supprimer_carre(cc);
             if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
                 ++age;
                 initialise_carre_centre(cc);
-                cout << "A ca bouge pas" << endl;
+                //cout << "A ca bouge pas" << endl;
                 return;
             }
-            cout << "ca bouge" << endl;
+            //cout << "ca bouge" << endl;
             ++x1; --y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
@@ -896,10 +935,10 @@ void Collector::move1(Nourriture& n){
             if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
                 ++age;
                 initialise_carre_centre(cc);
-                cout << "B ca bouge pas" << endl;
+                //cout << "B ca bouge pas" << endl;
                 return;
             }
-            cout << "ca bouge" << endl;
+           //cout << "ca bouge" << endl;
             --x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
@@ -913,10 +952,10 @@ void Collector::move1(Nourriture& n){
             if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
                 ++age;
                 initialise_carre_centre(cc);
-                cout << "C ca bouge pas" << endl;
+                //cout << "C ca bouge pas" << endl;
                 return;
             }
-            cout << "ca bouge" << endl;
+            //cout << "ca bouge" << endl;
             ++x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
@@ -928,10 +967,10 @@ void Collector::move1(Nourriture& n){
             if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
                 ++age;
                 initialise_carre_centre(cc);
-                cout << "D ca bouge pas" << endl;
+                //cout << "D ca bouge pas" << endl;
                 return;
             }
-            cout << "ca bouge" << endl;
+            //cout << "ca bouge" << endl;
             --x1; --y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
@@ -957,10 +996,10 @@ void Collector::move2(Nourriture& n){
             if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
                 ++age;
                 initialise_carre_centre(cc);
-                cout << "E ca bouge pas" << endl;
+                //cout << "E ca bouge pas" << endl;
                 return;
             }
-            cout << "ca bouge" << endl;
+            //cout << "ca bouge" << endl;
             ++x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
@@ -972,10 +1011,10 @@ void Collector::move2(Nourriture& n){
             if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
                 ++age;
                 initialise_carre_centre(cc);
-                cout << "F ca bouge pas" << endl;
+                //cout << "F ca bouge pas" << endl;
                 return;
             }
-            cout << "ca bouge" << endl;
+            //cout << "ca bouge" << endl;
             --x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
@@ -989,10 +1028,10 @@ void Collector::move2(Nourriture& n){
             if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
                 ++age;
                 initialise_carre_centre(cc);
-                cout << "G ca bouge pas" << endl;
+                //cout << "G ca bouge pas" << endl;
                 return;
             }
-            cout << "ca bouge" << endl;
+            //cout << "ca bouge" << endl;
             --x1; ++y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
@@ -1004,10 +1043,10 @@ void Collector::move2(Nourriture& n){
             if(sup_coord(test, a, b) and ((a != n.get_x()) and (b != n.get_y()))){
                 ++age;
                 initialise_carre_centre(cc);
-                cout << "H ca bouge pas" << endl;
+                //cout << "H ca bouge pas" << endl;
                 return;
             }
-            cout << "ca bouge" << endl;
+            //cout << "ca bouge" << endl;
             ++x1; --y1; ++age;
             cc = {x1, y1, 3};
             initialise_carre_centre(cc);
@@ -1088,12 +1127,13 @@ void Collector::move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chem
 
     int l1 = abso(vx - vy);
     int l2 = abso(vx + vy);
+    //cout << "vx: "<<vx<<" vy :"<<" l1: "<< l1 <<" l2: "<<l2<< endl;
     switch(miroir){
         case 0: {
             for (int i = 0; i <= l1; ++i)
             {
                 if(!obstacle){
-                    cout << "entree pas d'obstacle, CHEMIN : " << chemin << endl;;
+                    //cout << "entree pas d'obstacle, CHEMIN : " << chemin << endl;;
                     if(!chemin) ++obs1; //chemin1
                     if(chemin) ++obs2;  //chemin2
                 }
@@ -1108,20 +1148,25 @@ void Collector::move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chem
             break;
         }
         case 1: {
+            //cout << "entre dans le bon case"<< endl;
             for (int i = 0; i < l1; ++i)
             {
                 if(!obstacle){
+                    //cout<<" entre l1127"<<endl;
                     if(!chemin) ++obs1; //chemin1
                     if(chemin) ++obs2;  //chemin2
                 }
                 if(i < l1/2){
+                    //cout << " entre la"<<endl;
                     deplace_carre_digaonale(bebou, 0);
                     if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
                 }else{
+                    //cout << " entre la 2"<<endl;
                     deplace_carre_digaonale(bebou, 1);
                     if(carre_libre_dans_carre(bebou)) {++a; obstacle = 1;}
                 }
             }
+            cout << " tout c'est bien passé ?: bebou.x: "<< bebou.x<<" bebou.y: "<< bebou.y<<endl;
             break;
         }
         case 2: {
@@ -1231,6 +1276,7 @@ void Collector::move_miroir(Carre& bebou, unsigned int miroir, int& a, bool chem
 }
 
 void Collector::deplace_miroir(int cas, Nourriture& n){
+    cout<<"deplace miroir"<< endl;
     int xn = n.get_x();
     int yn = n.get_y();
     int x2 = x1, y2 = y1;
@@ -1238,7 +1284,9 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
 
     switch(cas){
         case 0: {
+            cout<< "cas 0, "<< endl;
             unsigned int dis = (y2 - (yn+g_max-1-xn)/2);
+            cout<< "dis :  "<< dis << endl;
             if(g_max-1-x1 < dis){
                 Carre test = {x1 -1, y1 - 1, 3};
                 supprimer_carre(cc);
@@ -1272,7 +1320,9 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
             break;
         }
         case 1: {
+            cout<< "cas 1, "<< endl;
             unsigned int dis = (((xn-yn) -x2)/2);
+            cout<< "dis : "<< dis << endl;
             if(y1 < dis){
                 Carre test = {x1+1, y1+1, 3};
                 supprimer_carre(cc);
@@ -1306,7 +1356,9 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
             break;
         }
         case 2: {
+            cout<< "cas 2 "<< endl;
             unsigned int dis = ((yn-xn-y2)/2);
+            cout<< "dis:  "<< dis << endl;
             if(x1 < dis){
                 Carre test = {x1+1, y1+1, 3};
                 supprimer_carre(cc);
@@ -1340,7 +1392,9 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
             break;
         }
         case 3: {
+            cout<< "cas 3 "<< endl;
             unsigned int dis = ((xn+(g_max-1-yn)-x2)/2);
+            cout<< "dis: "<<dis<< endl;
             if(g_max-1-y1 < dis){
                 Carre test = {x1-1, y1-1, 3};
                 supprimer_carre(cc);
@@ -1374,7 +1428,9 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
             break;
         }
         case 4: {
+            cout<< "cas 4 "<< endl;
             unsigned int dis = (((yn+g_max-1-xn)-y2)/2);
+            cout<< "dis: "<< dis << endl;
             for (size_t i = 0; i < dis; i++)
             if(g_max-1-x1 < dis){
                 Carre test = {x1-1, y1+1, 3};
@@ -1409,8 +1465,9 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
             break;
         }
         case 5: {
+
             unsigned int dis = (((xn-g_max-1+yn)-x2)/2);
-            cout << "dis " << dis << endl;
+            cout << "cas 5, dis: " << dis << endl;
             if(g_max-1-y1 <= dis){
                 Carre test = {x1+1, y1-1, 3};
                 supprimer_carre(cc);
@@ -1448,6 +1505,7 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
         }
         case 6: {
             unsigned int dis = ((y2-yn+xn)/2);
+            cout << "cas 6, dis: " << dis << endl;
             if(x1 < dis){
                 Carre test = {x1+1, y1-1, 3};
                 supprimer_carre(cc);
@@ -1482,6 +1540,7 @@ void Collector::deplace_miroir(int cas, Nourriture& n){
         }
         case 7: {
             unsigned int dis = ((x2-xn+yn)/2);
+            cout << "cas 7, dis: " << dis << endl;
             if(y1 < dis){
                 Carre test = {x1-1, y1+1, 3};
                 supprimer_carre(cc);
@@ -1546,15 +1605,16 @@ void Predator::detection_f_rival(unsigned int& A, unsigned int& B, unsigned int 
 int Predator::fight(double xb, double yb,double xa, double ya){
     double r = abso(sqrt(pow(xa-xb,2)+pow(ya-yb,2)));
     double z =r;
-    cout << "Z: "<< z << endl;
-    cout << "fight"<< endl;
+    //cout << "Z: "<< z << endl;
+    //cout << "fight"<< endl;
+    double SD = sqrt(2);
+    double SC = sqrt(5);
+    double SH = sqrt(8);
     if (z){
-        if ((z == 1) or (z==sqrt(2))){
-            cout << " tuer les deux" << endl;
+        if ((z == 1) or (z ==SD)){
             return 1;
         }
-        if ((z==2) or (z==sqrt(5)) or (z==sqrt(8))){
-            cout << "tuer la collector"<< endl;
+        if (( z== 2) or (z == SC) or (z == SH)){
             return 2;
         }
     }
@@ -1573,123 +1633,105 @@ int Generator::fight(double xb, double yb,double xa, double ya){
     return 1;
 }
 
-void Predator::operation_milenium(unsigned int cpx, unsigned int cpy){
-    double xa = cpx;
-    double ya = cpy;
+void Predator::operation_milenium(Carre cf){
+    double xa = cf.x;
+    double ya = cf.y;
     double xb =x1;
     double yb = y1;
     double coef = ((ya-yb)/(xa-xb));
     int k;
-     cout << "OOOOOOOOOOOOOOOUIIIIIIIIIIII" << endl;
-        cout << "cp.x: " << cp.x << endl;
-        cout << "cp.y: " << cp.y << endl;
-        cout<< "x1: "<< x1<<endl;
-        cout<<"y1: "<<y1<<endl;
     if ((xa-xb)){
-        /*cout << "OOOOOOOOOOOOOOOUIIIIIIIIIIII" << endl;
-        cout << "cp.x: " << cp.x << endl;
-        cout << "cp.y: " << cp.y << endl;
-        cout<< "x1: "<< x1<<endl;
-        cout<<"y1: "<<y1<<endl;*/
-            if ((xb>xa)and(yb>=ya)){
-
-                if (coef > 1){
-                    cout << "N1"<< endl;
-                    if (sup_sans_deformation(--x1,y1-2)){return;}
-                    k=fight(xb,yb,xa,ya);
-                    --x1;
-                    y1=y1-2;
-                    --xb;
-                    yb=yb-2;
-                    k=fight(xb,yb,xa,ya);
-                }
-                if(coef<=1){
-                    cout<< "N2"<< endl;
-                if (sup_sans_deformation(++x1,y1-2)){return;}
-                ++y1;
-                x1=x1+2;
-                ++yb;
-                xb=xb+2;
-                k=fight(xb,yb,xa,ya);
+        if ((xb>xa)and(yb>=ya)){
+            if (coef > 1){
+                //cout << "N1"<< endl;
+                if (sup_sans_deformation(--x1,y1-2)){return;}
+                --x1;
+                y1=y1-2;
+                --xb;
+                yb=yb-2;
+            }
+            if(coef<=1){
+                //cout<< "N2"<< endl;
+                if (sup_sans_deformation(x1-2,--y1)){return;}
+                --y1;
+                x1=x1-2;
+                --yb;
+                 xb=xb-2;
             }
             if ((xb>xa)and (yb<ya)){
-                cout<< "N3"<< endl;
+                //cout<< "N3"<< endl;
                 if (coef<-1){
                     if (sup_sans_deformation(--x1,y1+2)){return;}
                     --x1;
                     y1=y1+2;
                     yb=yb+2;
                     --xb;
-                    k=fight(xb,yb,xa,ya);
                     }
                     if(coef>-1){
-                        cout<< "N4"<< endl;
+                        //cout<< "N4"<< endl;
                         if (sup_sans_deformation(x1-2,++y1)){return;}
                         ++y1;
                         x1=x1-2;
                         ++yb;
                         xb=xb-2;
-                        k=fight(xb,yb,xa,ya);
                     }
 
                 }
             }
             if ((xb<xa)and(yb<=ya)){
                 if (coef>=1){
-                    cout<< "N5"<< endl;
+                    //cout<< "N5"<< endl;
                     if(sup_sans_deformation(++x1,y1+2)){return;}
                     ++x1;
                     y1=y1+2;
                     ++xb;
                     yb=yb+2;
-                    k=fight(xb,yb,xa,ya);
                 }
                 if (coef < 1){
-                    cout<< "N6"<< endl;
+                    //cout<< "N6"<< endl;
                     if(sup_sans_deformation(x1+2,++y1)){return;}
                     ++y1;
                     x1=x1+2;
                     ++yb;
                     xb=xb+2;
-                    k=fight(xb,yb,xa,ya);
                 }
             }
             if ((xb<xa) and (yb>ya)){
                 if(coef >=-1 ){
-                    cout<< "N7"<< endl;
+                    //cout<< "N7"<< endl;
                     if(sup_sans_deformation(x1+2,--y1)){return;}
                     x1= x1 +2;
+                    --y1;
                     --yb;
                     xb=xb+2;
-                    k=fight(xb,yb,xa,ya);
                 }
                 if (coef<-1){
-                    cout<< "N8"<< endl;
+                    //cout<< "N8"<< endl;
                     if(sup_sans_deformation(++x1,y1-2)){return;}
                     y1=y1-2;
                     ++x1;
                     yb=yb-2;
                     ++xb;
-                    k=fight(xb,yb,xa,ya);
                 }
             }
     }
     cout << "Rentre chez toi" << endl;
 }
-void Collector::operation_milenium(unsigned int cfx, unsigned int cfy){
-cout << "Collector retour a la casa "<< endl;
+void Collector::operation_milenium(Carre cf){
+    //moove();
+    cout << "Collector retour a la casa "<< endl;
 }
-void Defensor::operation_milenium(unsigned int cfx, unsigned int cfy){
+void Defensor::operation_milenium(Carre cf){
 cout << "Defensor retour a la casa "<< endl;
 }
-void Generator::operation_milenium(unsigned int cfx, unsigned int cfy){
+void Generator::operation_milenium(Carre cf){
 cout << "Generator retour a la casa "<< endl;
 }
 int Generator::move(Nourriture& n, unsigned int t1, unsigned int t2){
     cout << "move G" << endl;
 }
 
-int Defensor::move(Nourriture& n, unsigned int t1, unsigned int t2){
+int Defensor(Nourriture& n, unsigned int t1, unsigned int t2){
     cout << "move D" << endl;
 }
 
@@ -1705,7 +1747,6 @@ int Predator::move(Nourriture& n, unsigned int t1, unsigned int t2){
 
                 if (coef > 1){
                     if (sup_sans_deformation(--x1,y1-2)){return 0;}
-                    k=fight(xb,yb,xa,ya);
                     --x1;
                     y1=y1-2;
                     --xb;
@@ -1713,11 +1754,11 @@ int Predator::move(Nourriture& n, unsigned int t1, unsigned int t2){
                     k=fight(xb,yb,xa,ya);
                 }
                 if(coef<=1){
-                if (sup_sans_deformation(++x1,y1-2)){return 0;}
-                ++y1;
-                x1=x1+2;
-                ++yb;
-                xb=xb+2;
+                if (sup_sans_deformation(x1-2,--y1)){return 0;}
+                --y1;
+                x1=x1-2;
+                --yb;
+                xb=xb-2;
                 k=fight(xb,yb,xa,ya);
             }
             if ((xb>xa)and (yb<ya)){
@@ -1778,5 +1819,142 @@ int Predator::move(Nourriture& n, unsigned int t1, unsigned int t2){
             }
     }
     cout << "move P" << endl;
+    return k;
+}
+int Collector::contrained_attack(unsigned int t1,unsigned int t2,Carre cf){
+    cout << "rien"<<endl;
+    return 0;
+}
+int Defensor::contrained_attack(unsigned int t1,unsigned int t2,Carre cf){
+    cout << "rien"<<endl;
+    return 0;
+}
+int Generator::contrained_attack(unsigned int t1,unsigned int t2,Carre cf){
+    cout << "rien"<<endl;
+    return 0;
+}
+int Predator::contrained_attack(unsigned int t1,unsigned int t2, Carre cf){
+    double xa = t1;
+    double ya = t2;
+    double xb =x1;
+    double yb = y1;
+    Carre cn = {x1,y1,1};
+    double coef = ((ya-yb)/(xa-xb));
+    int k;
+    if ((xa-xb)){
+        if ((xb>xa)and(yb>=ya)){
+            if (coef > 1){
+                cn.x= --x1;
+                cn.y= y1-2;
+                if (sup_sans_deformation(--x1,y1-2)){return 0;}
+                if (carre_dans_carre(cf,cn)){return 0;}
+                cp.x= --x1;
+                cp.y= y1-2;
+                --x1;
+                y1=y1-2;
+                --xb;
+                yb=yb-2;
+                k=fight(xb,yb,xa,ya);
+                }
+                if(coef<=1){
+                    cn.x=x1-2;
+                    cn.y=--y1;
+                    if (carre_dans_carre(cf,cn)){return 0;}
+                    if (sup_sans_deformation(x1-2,--y1)){return 0;}
+                    cp.x=x1-2;
+                    cp.y=--y1;
+                    --y1;
+                    x1=x1-2;
+                    --yb;
+                    xb=xb-2;
+                    k=fight(xb,yb,xa,ya);
+                }
+            }
+        if ((xb>xa)and (yb<ya)){
+            if (coef<-1){
+                cn.x=--x1;
+                cn.y=y1+2;
+                if (carre_dans_carre(cf,cn)){return 0;}
+                if (sup_sans_deformation(--x1,y1+2)){return 0;}
+                cp.x=--x1;
+                cp.y=y1+2;
+                --x1;
+                y1=y1+2;
+                yb=yb+2;
+                --xb;
+                k=fight(xb,yb,xa,ya);
+            }
+            if(coef>-1){
+                cn.x=x1-2;
+                cn.y=++y1;
+                if (carre_dans_carre(cf,cn)){return 0;}
+                if (sup_sans_deformation(x1-2,++y1)){return 0;}
+                cp.x=x1-2;
+                cp.y=++y1;
+                ++y1;
+                x1=x1-2;
+                ++yb;
+                xb=xb-2;
+                k=fight(xb,yb,xa,ya);
+            }
+        }
+        
+        if ((xb<xa)and(yb<=ya)){
+            if (coef>=1){
+                cn.x=++x1;
+                cn.y=y1+2;
+                if (carre_dans_carre(cf,cn)){return 0;}
+                if(sup_sans_deformation(++x1,y1+2)){return 0;}
+                cp.x=++x1;
+                cp.y=y1+2;
+                ++x1;
+                y1=y1+2;
+                ++xb;
+                yb=yb+2;
+                k=fight(xb,yb,xa,ya);
+            }
+            if (coef < 1){
+                cn.x=x1+2;
+                cn.y=++y1;
+                if (carre_dans_carre(cf,cn)){return 0;}
+                if(sup_sans_deformation(x1+2,++y1)){return 0;}
+                cp.x=x1+2;
+                cp.y=++y1;
+                ++y1;
+                x1=x1+2;
+                ++yb;
+                xb=xb+2;
+                k=fight(xb,yb,xa,ya);
+            }
+        }
+        if ((xb<xa) and (yb>ya)){
+            if(coef >=-1 ){
+                cn.x=x1+2;
+                cn.y=--y1;
+                if (carre_dans_carre(cf,cn)){return 0;}
+                if(sup_sans_deformation(x1+2,--y1)){return 0;}
+                cp.x=x1+2;
+                cp.y=--y1;
+                --y1;
+                x1= x1 +2;
+                --yb;
+                xb=xb+2;
+                k=fight(xb,yb,xa,ya);
+            }
+            if (coef<-1){
+                cn.x=++x1;
+                cn.y=y1-2;
+                if (carre_dans_carre(cf,cn)){return 0;}
+                if(sup_sans_deformation(++x1,y1-2)){return 0;}
+                cp.x=++x1;
+                cp.y=y1-2;
+                y1=y1-2;
+                ++x1;
+                yb=yb-2;
+                ++xb;
+                k=fight(xb,yb,xa,ya);
+            }
+        }
+    }
     return k;
 }
