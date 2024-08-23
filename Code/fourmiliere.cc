@@ -503,7 +503,6 @@ void Fourmiliere::defense(){
                 swap(vfourmis[n],vfourmis.back());
                 vfourmis.pop_back();
             }
-            
         }
     }
 }
