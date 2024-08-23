@@ -38,7 +38,7 @@ public:
     void naissance_fourmis();
     void naissance_col();
     void naissance_def();
-    void naissance_pre();
+    void naissance_pre(); 
     void detecte_food(std::vector<Nourriture>& vnourriture);
     bool atteindre_test(Nourriture& n, unsigned int& i);
     bool fourmiliere_check();
