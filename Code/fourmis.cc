@@ -2067,6 +2067,7 @@ int Predator::contrained_attack(unsigned int t1,unsigned int t2, Carre cf){
     }
     return k;
 }
+
 void Generator::generator_eat(size_t nbT){
     total_food -= nbT*food_rate;
     if (total_food < 0 ){
