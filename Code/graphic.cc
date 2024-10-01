@@ -2,7 +2,7 @@
 //Mouhamad 30%
 //Louis 70%
 #include "graphic_gui.h"
-
+ 
 static const Cairo::RefPtr<Cairo::Context>* ptcr;
 
 void graphic_set_context(const Cairo::RefPtr<Cairo::Context>& cr)
