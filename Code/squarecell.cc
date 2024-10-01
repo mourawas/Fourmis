@@ -3,7 +3,7 @@
 //Louis: 50%
 #include "squarecell.h"
 using namespace std;
-
+ 
 static grille grid;
 
 void initialise_grille() {
