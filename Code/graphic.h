@@ -1,6 +1,6 @@
 #ifndef GRAPHIC_H_INCLUDED
 #define GRAPHIC_H_INCLUDED
-
+ 
 void graphic_draw_window();
 
 void graphic_draw_carre_plein(unsigned int x, unsigned int y, double size, double r,
