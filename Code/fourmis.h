@@ -14,7 +14,7 @@
 #include "message.h"
 #include "nourriture.h"
 #include "constantes.h"
-
+ 
 class Fourmis {
 protected:
     unsigned int x1;
