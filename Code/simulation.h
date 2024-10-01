@@ -12,7 +12,7 @@
 #include "nourriture.h"
 #include "fourmiliere.h"
 #include "message.h"
-
+ 
 class Simulation {
 private:
 	std::vector<Fourmiliere> vfourmiliere;
