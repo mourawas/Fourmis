@@ -5,7 +5,7 @@
 #include <cmath>
 #include "error_squarecell.h"
 #include "graphic.h"
-
+ 
 typedef std::vector<std::vector<bool> > grille;
 
 constexpr short unsigned g_dim(7);
