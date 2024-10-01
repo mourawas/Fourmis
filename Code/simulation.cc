@@ -3,7 +3,7 @@
 //Louis: 50%
 #include "simulation.h"
 using namespace std;
-
+ 
 default_random_engine e;
 
 int Simulation::etat = 0;
